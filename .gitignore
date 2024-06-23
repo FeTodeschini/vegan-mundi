@@ -1,0 +1,7 @@
+node_modules/
+build/
+assets/
+package*
+npm-debug.log*
+.env
+

@@ -1,0 +1,125 @@
+    .header {
+        display: grid;
+        grid-template-areas: 
+            "header__logo header__action-icons"
+            "header__search header__search";
+        grid-row-gap: 1.5rem;
+        padding: 2rem 4rem 0 4rem;
+        background-color: var(--color-primary);
+    }
+
+    .header__logo { grid-area: header__logo; }
+
+    .header__action-icons { 
+        grid-area: header__action-icons; 
+        gap: 1rem;
+        justify-content: end;
+    }
+
+    .header {
+        grid-template-areas: 
+            "header__logo header__search header__action-icons";
+        grid-template-columns: min-content auto min-content;
+
+    }
+
+    .header__logo-menu{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        width: 12rem;
+    }
+
+    .login-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .login-container__icon{
+            width: 4.2rem;
+    }
+
+    .login-container__caption{
+        position: absolute;
+        transform: translateY(260%);
+        color: var(--color-primary-dark-rgb-8);
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+    
+    /* ----- SEARCH BOX ----- */
+    .header__search{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header__search{
+        margin: 0 10%;
+    }
+
+    .search__input{
+        border: none;
+        font-size: 2rem;
+        width: 100%;
+        height: 3rem;
+        transition: all .2s;
+        border-radius: 5px;
+        align-self: center;
+        margin-right: -4.8rem;
+        padding: 2rem 6rem 2rem 1rem;
+    }
+
+    .search__input:focus {
+        outline-color: var(--color-primary-dark);
+    }
+
+    .search__button {
+        border: none;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        height: 4rem;
+        padding: 0 1rem;
+        background-color: var(--color-primary-dark-rgb-8);
+        transition: background-color .2s ease-in-out;
+    }
+
+    .search__button:hover {
+        background-color: var(--color-primary-dark);
+    }
+
+    .search__icon{
+        cursor: pointer;
+        display: block;
+        height: 3rem;
+        border: none;
+    }
+
+    @media only screen and (max-width: 575px){
+        .header {
+            padding: 2rem;
+        }
+
+        .search__input {
+            font-size: 1.6rem;
+        }
+    }
+
+    @media only screen and (max-width: 1500px){
+        .header {
+            grid-template-areas: 
+                "header__logo header__action-icons"
+                "header__search header__search";
+            grid-template-columns: auto 1fr;
+        }
+
+        .header__search {
+            margin: 0;
+            grid-column: 1 / -1;
+        }
+    }

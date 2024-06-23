@@ -1,0 +1,101 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    justify-content: space-between;
+    justify-items: start;
+}
+
+.card:hover .img-medium{
+    transform: scale(1.2);
+}
+
+.card:hover .icon-medium{
+    transform: scale(1.2);
+}
+
+.card__img-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.card__title {
+    display: flex;
+    align-items: center;
+    color: var(--color-primary-dark);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 2.4rem 0 2rem 0;
+}
+
+/* When there is a call out tag to the right of the card title, then a flexbox is needed for aligning the title and the tag */
+.card__call-out-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card__call-out-tag {
+    background-color: var(--color-yellow);
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 0.4rem 1.4rem;
+    border-radius: 100px;
+}
+
+.card__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    position: relative;
+}
+
+.card__description,
+.card__expandable-text--content {
+    color: var(--color-gray-dark);
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    letter-spacing: .1rem;
+}
+
+.card__description {
+    padding: 3rem 0 2rem 0;
+    flex: 1;
+}
+
+.card__items-list{
+    display: flex;
+    gap: 1rem;
+    font-size: 1.8rem;
+    color: var(--color-gray-dark);
+    line-height: 3.6rem;
+}
+
+.card__expandable-text--container{
+    align-self: start;
+    flex: 1;
+}
+
+.card__expandable-text--toggle{
+    color: var(--color-primary-dark);
+    font-size: 1.6rem;;
+}
+
+.card__expandable-text--content {
+    margin-top: 2rem;
+}
+
+@media only screen and (max-width: 575px){
+    .card__title {
+        font-size: 1.8rem;
+    }
+
+    .card__description {
+        font-size: 1.6rem;
+        letter-spacing: 0.1rem;
+    }
+}

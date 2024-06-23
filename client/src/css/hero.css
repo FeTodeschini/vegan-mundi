@@ -1,0 +1,41 @@
+.section-hero {
+    background-color: var(--color-primary);
+    padding: 2rem 0 4rem 0;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+}
+
+.hero__description {
+    font-size: 2rem;
+    line-height: 1.8;
+    margin-bottom: 2.4rem;
+    letter-spacing: 0.05rem;
+}
+
+.hero__cta {
+    display: flex;
+    gap: 2rem;
+}
+
+.hero__intro-video {
+    text-align: center;
+}
+
+@keyframes squish {
+    50%{
+        scale: 1.4 .6;
+    }
+}
+
+@media only screen and (max-width: 920px){
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero__intro-video {
+        padding: 4.8rem 0 2.4rem 0;
+    }
+}

@@ -1,0 +1,45 @@
+.prices__list-card {
+    text-align: center;
+    padding: 4.8rem;
+}
+
+.prices__list-card--great-value {
+    background-color: var(--color-primary);
+}
+
+.prices__list-card-icon {
+    padding-bottom: 1rem;
+    align-self: center;
+}
+
+.prices__list-card-description {
+    padding-bottom: 3.6rem;
+    color: var(--color-gray-dark);
+}
+
+.prices__list-card-price {
+    color: var(--color-primary-dark-rgb-8);
+    font-size: 4.8rem;
+    padding-bottom: 1rem;
+}
+
+.prices__list-card-additional-info {
+    font-size: 1.6rem;
+    /* font-weight: 700; */
+    padding-bottom: 0.6rem;
+}
+
+.prices__list-card-yellow-ribbon {
+    position: absolute;
+    background-color: var(--color-yellow);
+    padding: 1rem 10rem;
+    top: 10%;
+    right: -20%;
+}
+
+@media only screen and (max-width: 762px){
+    .prices__list-card-yellow-ribbon {
+        top: 8%;
+        right: -15%;
+    }
+}

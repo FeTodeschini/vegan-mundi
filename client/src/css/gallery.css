@@ -1,0 +1,37 @@
+.gallery-container{
+    background-color: var(--color-primary);
+    position: relative;
+}
+
+.gallery__content {
+    align-items: start;
+    row-gap: 3.2rem;
+}
+
+.gallery__img--container {
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery__img {
+    width: 32rem;
+    height: 32rem;
+    transition: all .3s ease-in-out;
+}
+
+.gallery__img:hover {
+    scale: 1.2;
+}
+
+.gallery__caption {
+    font-size: 1.6rem;
+    /* font-weight: 600; */
+    color: var(--color-primary-dark);
+    padding-top: .4rem;
+}
+
+@media only screen and (max-width: 575px){
+    .gallery__caption {
+        font-size: 1.6rem;
+    }
+}
