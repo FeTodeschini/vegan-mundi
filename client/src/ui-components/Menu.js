@@ -1,4 +1,4 @@
-import { toggleDarkBackground } from "../Functions";
+import { toggleDarkBackground } from "../utils/functions";
 
 export default function Menu(){
     return (
@@ -8,7 +8,7 @@ export default function Menu(){
                 <span className="menu-icon-top"></span>
                 <span></span>
                 <span className="menu-icon-bottom"></span>
-                <ul class="menu-items">
+                <ul className="menu-items">
                     <a href="#"><li>Delivery Methods</li></a>
                     <a href="#"><li>Classes Catalog</li></a>
                     <a href="#free-classes"><li>Free Classes</li></a>

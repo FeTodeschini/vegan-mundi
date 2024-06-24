@@ -1,47 +1,28 @@
 import { useEffect, useState } from "react";
 import SectionHeader from "./ui-components/SectionHeader.js";
+import { getSectionData, addPreSignedUrl } from './utils/functions.js'
 
 import './css/gallery.css';
 
 export default function Gallery (){
 
     const [isLoading, setIsLoading] = useState(true);
-    const [gallery, setGallery] = useState([]);
     const [images, setImages] = useState([]);
+    const [sectionData, setSectionData] = useState([]);
 
-    //  Fetches the names of all gallery images from the database
+    // Fetch all gallery info from the database
     useEffect( ()=> {
-        async function getGallery() {
-            var data = await fetch('http://3.22.160.2:4000/gallery');
-            data = await data.json();
-            setGallery([...data]);
-        }
-
-        getGallery();
+        getSectionData(setSectionData, 'gallery')
     } , []);
 
-    // Add the pre-signed URL to each item of the gallery images array
-    useEffect(()=> {
-        async function getS3Objects() {
-            const s3Objects = await Promise.all(
-                gallery.map(async (item) => {
-                    const photo = item.PHOTO;
-                    const response = await fetch(`http://3.22.160.2:4000/s3/vegan-mundi-gallery/${photo}`);
-                    const preSignedUrl = await response.json();
-                    return { ...item, preSignedUrl: preSignedUrl}
-                })
-            )
-
-            setImages(s3Objects);
-            setIsLoading(false);
+    // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
+    useEffect( ()=> {
+        if (sectionData.length > 0) {
+            addPreSignedUrl(sectionData, 'vegan-mundi-gallery', setImages, setIsLoading);
         }
+    }, [sectionData])
 
-        if (gallery.length > 0) {
-            getS3Objects();
-        }
-    } , [gallery]);
-
-    // checks if API call is still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
+    // checks if API calls are still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
     if (isLoading){
         return(<p>loading...</p>);
     }
@@ -54,16 +35,16 @@ export default function Gallery (){
                 </div>    
                 <div className="gallery__content grid-auto-fit">
                     {
-                        images.map((image) => {
+                        images.map((item) => {
                             return (
-                                <figure>
+                                <figure key={item.PRE_SIGNED_URL}>
                                     <div className="gallery__img--container">
                                         <img
                                             className="gallery__img" 
-                                            src={image.preSignedUrl}
+                                            src={item.PRE_SIGNED_URL}
                                         />
                                     </div>
-                                    <figcaption className="gallery__caption">{image.LABEL}</figcaption>
+                                    <figcaption className="gallery__caption">{item.LABEL}</figcaption>
                                 </figure>)
                         }
                     )}

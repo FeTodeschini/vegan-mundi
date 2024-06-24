@@ -1,36 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import SectionHeader from './ui-components/SectionHeader.js';
 import Card from './ui-components/Card.js';
+import { getSectionData, addPreSignedUrl } from './utils/functions.js'
 
 import './css/free-classes.css';
 
 export default function FreeClasses() {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [freeClasses, setFreeClasses] = useState([]);
+    const [images, setImages] = useState([]);
+    const [sectionData, setSectionData] = useState([]);
 
+    // Fetch all free classes from the database
     useEffect( ()=> {
-
-        async function getFreeClasses() {
- 
-            try {
-                var data = await fetch('http://3.22.160.2:4000/classes/free');
-                data = await data.json();
-                
-                setFreeClasses([...data]);
-                setIsLoading(false);
-            }
-            catch (e){
-                console.log(`Error: ${e}`);
-            }
- 
-        }
-
-        getFreeClasses();
-        
+        getSectionData(setSectionData, 'classes/free')
     } , []);
 
-    // checks if API call is still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
+    // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
+    useEffect( ()=> {
+        if (sectionData.length > 0) {
+            addPreSignedUrl(sectionData, 'vegan-mundi-thumbnails', setImages, setIsLoading);
+        }
+    }, [sectionData])
+
+    // checks if API calls are still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
     if (isLoading){
         return(<p>Loading...</p>);
     }
@@ -44,14 +37,15 @@ export default function FreeClasses() {
                     subTitle="Free Classes"/>
                 
                 <div className="free-classes__list grid-auto-fit">
-                    {freeClasses.map(item=>(
+                    {images.map(item=>(
                         <Card 
-                            imgSource={`http://3.22.160.2:4000/assets/thumbnails/${item.PHOTO}`}
+                            imgSource={item.PRE_SIGNED_URL}
                             imgLink="/videoplayer" 
                             linkState={item.VIDEO}
                             isVideo={true}
                             title={item.TITLE} 
                             description={item.DESCRIPTION} 
+                            key={item.PRE_SIGNED_URL}
                         />
                     ))}
                 </div>

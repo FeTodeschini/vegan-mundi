@@ -8,10 +8,10 @@ export default function Hero() {
     
     return (
         <section className="section-hero">
-            <div className="hero container align-items-c" style={{backgroundColor: "var(--color-primary);"}}>
+            <div className="hero container align-items-c" style={{backgroundColor: "var(--color-primary)"}}>
                 <div className="hero__text-box">
 
-                    <h1 class="heading-primary">Online and In-Person vegan cooking classes</h1>
+                    <h1 className="heading-primary">Online and In-Person vegan cooking classes</h1>
                     <p className="hero__description">Learn techniques and discover new ingredients for making your own healthy, yummy and sustainable food in incredibly fun and affordable classes</p>
                     
                     <div className="hero__cta">

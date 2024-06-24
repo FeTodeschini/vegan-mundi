@@ -1,29 +1,19 @@
 import { useState, useEffect } from 'react';
-
 import SectionHeader from './ui-components/SectionHeader.js';
 import Button from "./ui-components/Button";
 import Card from './ui-components/Card.js';
+import { getSectionData, addPreSignedUrl } from './utils/functions.js'
 
 export default function DeliveryMethods() {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [deliveryMethods, setDeliveryMethods] = useState([]);
+    const [images, setImages] = useState([]);
+    const [sectionData, setSectionData] = useState([]);
 
     useEffect( ()=> {
-
-        async function getPrices() {
-
-            var data = await fetch('http://3.22.160.2:4000/delivery-methods');
-             data = await data.json();
-
-            setDeliveryMethods([...data]);
-            setIsLoading(false);
-
-        }
-
-        getPrices();
-        
+        getSectionData(setSectionData, 'delivery-methods')
     } , []);
+        
 
     return (
             <section className="delivery-methods container">
@@ -33,10 +23,11 @@ export default function DeliveryMethods() {
 
                 <div className="grid-auto-fit grid-auto-fit--wide-items">
                     {
-                        deliveryMethods.map(method=>
+                        sectionData.map(item=>
                             <Card
-                                title = { <><img src={require(`./assets/${method.ICON}`)} alt="In Person Classes" className="icon-medium" /> {method.TITLE}</>  }
-                                description = {method.DESCRIPTION}
+                                title = { <><img src={require(`./assets/${item.ICON}`)} alt="In Person Classes" className="icon-medium" /> {item.TITLE}</>  }
+                                description = {item.DESCRIPTION}
+                                key= {item.TITLE}
                             >
                                 <Button >Learn More &rarr;</Button>
                             </ Card>

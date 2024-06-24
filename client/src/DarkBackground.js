@@ -1,4 +1,4 @@
-import { toggleDarkBackground } from "./Functions"
+import { toggleDarkBackground } from "./utils/functions"
 
 export default function DarkBackground() {
     return (

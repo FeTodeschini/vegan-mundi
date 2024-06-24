@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 import iconPlay from '../assets/icon-play.svg';
 
 import '../css/card.css';
@@ -14,6 +13,7 @@ export default function Card({ imgSource, imgLink, linkState, isVideo, title, de
             
             {/* 1-Image on the top of the card (it can be either an image or a video) */}
             { imgSource !== undefined &&
+            
                 <div className="card__img-wrapper">
                     <Link to={imgLink} state={linkState}><img className="img-medium" src={imgSource}></img></Link>
                     {/* displays the play button for playing the video in case the image of the card is a link to a video ( playVideo=true) */}
