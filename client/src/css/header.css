@@ -4,7 +4,7 @@
             "header__logo header__action-icons"
             "header__search header__search";
         grid-row-gap: 1.5rem;
-        padding: 2rem 4rem 0 4rem;
+        padding: 2rem 4rem;
         background-color: var(--color-primary);
     }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SectionHeader from './ui-components/SectionHeader.js';
 import Button from './ui-components/Button.js';
 import Card from './ui-components/Card.js';
-import { getSectionData, addPreSignedUrl } from './utils/functions.js'
+import { getSectionData, addPreSignedUrlToArray } from './utils/functions.js'
 
 import './css/main.css';
 import leaf from './assets/icon-leaf.svg';
@@ -21,7 +21,7 @@ export default function ClassesCategories() {
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
     useEffect( ()=> {
         if (sectionData.length > 0) {
-            addPreSignedUrl(sectionData, 'vegan-mundi-thumbnails', setImages, setIsLoading);
+            addPreSignedUrlToArray(sectionData, 'vegan-mundi-thumbnails', setImages, setIsLoading);
         }
     }, [sectionData])
 

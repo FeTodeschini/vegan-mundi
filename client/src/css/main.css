@@ -64,7 +64,7 @@ section {
     display: grid;
     grid-template-columns: repeat(auto-fit, 32rem);
     gap: 8.6rem;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -82,6 +82,11 @@ section {
     column-gap: 4rem;
 }
 
+.flex-col {
+    display: flex;
+    justify-content: space-between;
+}
+
 .btn, 
 .btn--link {
     background-color: #fff;
@@ -89,7 +94,6 @@ section {
     width: 18rem;
     padding: 1rem 0;
     font-size: 2rem;
-    /* font-weight: 600; */
     cursor: pointer;
     transition: all .2s ease-in-out;
 }
@@ -110,6 +114,11 @@ section {
     transform: scale(1.2);
 }
 
+.btn-medium {
+    width: 12rem;
+    font-size: 1.6rem;
+}
+
 .btn--green {
     border: none;
     background-color: var(--color-primary-dark-rgb-8);
@@ -118,6 +127,10 @@ section {
 
 .btn--green:hover {
     background-color: var(--color-primary-dark);
+}
+
+.btn--back-home{
+    margin: 4rem 0;
 }
 
 .img-medium {
@@ -204,6 +217,11 @@ section {
 }
 
 @media only screen and (max-width: 575px){
+
+    html {
+        font-size: 55%;
+    }
+    
     .container {
         max-width: 575px;
         margin: 0 2rem;
@@ -228,10 +246,7 @@ section {
         width: 4rem;
     }
 
-}
-
-@media only screen and (max-width: 575px){
-    html {
-        font-size: 55%;
+    .grid-auto-fit {
+        justify-content: center;
     }
 }

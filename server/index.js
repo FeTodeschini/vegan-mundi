@@ -122,8 +122,6 @@ app.get('/thumbnails/:thumbnail', async (req, res) => {
 
 // GET ALL FREE CLASSES (VEGAN-MUNDI.CLASSES.CATEGORY_ID = 1)
 app.get('/classes/free', async (req, res) => {
-
-
     const dbConnection = await connectToDb();
 
     try {
@@ -175,6 +173,35 @@ app.get('/classes/categories', async (req, res) => {
       dbConnection.end();
     }
 
+})
+
+app.get('/classes/filter/:keyword', async (req, res) => {
+
+  const dbConnection = await connectToDb();
+
+  try {
+
+      dbConnection.query(
+        `SELECT DISTINCT CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO ` +
+         ` FROM ` +
+         ` CLASS CLS ` +
+         ` INNER JOIN CLASS_RECIPE CLR ON ` +
+         `   CLS.CLASS_ID = CLR.CLASS_ID ` +
+         ` INNER JOIN RECIPE RCP ON ` +
+         `   CLR.RECIPE_ID = RCP.RECIPE_ID ` +
+         `   AND RCP.KEYWORD LIKE '%${req.params.keyword}%'`,
+        function (err, result, fields)
+         {
+          if (err) throw err;
+          res.send(result);
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+    finally{
+      dbConnection.end();
+    }
 })
 
 app.get('/delivery-methods', async (req, res) => {

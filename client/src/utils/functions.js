@@ -8,7 +8,7 @@ export async function getSectionData(setSectionData, api) {
 }
 
 // Add to any array of Images the pre-signed URL required from AWS for private S3Bucket objects to be accessed
-export async function addPreSignedUrl(sectionData, bucket, setImages, setIsLoading) {
+export async function addPreSignedUrlToArray(sectionData, bucket, setImages, setIsLoading) {
     const s3Objects = await Promise.all(
         sectionData.map(async (item) => {
             const photo = item.PHOTO;
@@ -17,9 +17,16 @@ export async function addPreSignedUrl(sectionData, bucket, setImages, setIsLoadi
             return { ...item, PRE_SIGNED_URL: preSignedUrl}
         })
     )
-
     setImages(s3Objects);
     setIsLoading(false);
+}
+
+export async function getPreSignedUrl(setPreSignedUrl, bucket, key) {
+    const response = await fetch(`${config.serverEndpoint}s3/${bucket}/${key}`);
+    const data = await response.json();
+    console.log(`Data: ${data}`);
+    setPreSignedUrl(data);
+    return data;
 }
 
 // the parameter isToggleMenu defines if a click on the menuCheckbox should be forced

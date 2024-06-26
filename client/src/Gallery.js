@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SectionHeader from "./ui-components/SectionHeader.js";
-import { getSectionData, addPreSignedUrl } from './utils/functions.js'
+import { getSectionData, addPreSignedUrl, addPreSignedUrlToArray } from './utils/functions.js'
 
 import './css/gallery.css';
 
@@ -18,7 +18,7 @@ export default function Gallery (){
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
     useEffect( ()=> {
         if (sectionData.length > 0) {
-            addPreSignedUrl(sectionData, 'vegan-mundi-gallery', setImages, setIsLoading);
+            addPreSignedUrlToArray(sectionData, 'vegan-mundi-gallery', setImages, setIsLoading);
         }
     }, [sectionData])
 

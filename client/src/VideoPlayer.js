@@ -1,16 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import './utils/functions.js';
+import { getPreSignedUrl } from './utils/functions.js';
 
 export default function VideoPlayer() {
     
     const location = useLocation();
     const[videoName, setVideoName] = useState(location.state);
+    const[preSignedUrl, setPreSignedUrl] = useState("");
+
+    useEffect(()=>{
+        const url = getPreSignedUrl(setPreSignedUrl, 'vegan-mundi-videos', videoName)
+        console.log(`preSignedUrl: ${preSignedUrl}`);
+    },[])
 
     return (
         <div className="video-player">
             <video controls autoPlay style={{width: "100vw", height: "100vh"}}>
-                <source src={`https://vegan-mundi-videos.s3.us-east-2.amazonaws.com/${videoName}`} type="video/mp4"></source>
+                <source src={preSignedUrl} type="video/mp4"></source>
             </video>
         </div>
     )
