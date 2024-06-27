@@ -2,7 +2,7 @@ import config from './config.js';
 
 // Call the proper API that fetches data from the database for a specific session in a page and stores it in the sectionData state variable
 export async function getSectionData(setSectionData, api) {
-    var data = await fetch(`${config.serverEndpoint}${api}`);
+    let data = await fetch(`${config.serverEndpoint}${api}`);
     data = await data.json();
     setSectionData([...data]);
 }
@@ -24,8 +24,7 @@ export async function addPreSignedUrlToArray(sectionData, bucket, setImages, set
 export async function getPreSignedUrl(setPreSignedUrl, bucket, key) {
     const response = await fetch(`${config.serverEndpoint}s3/${bucket}/${key}`);
     const data = await response.json();
-    console.log(`Data: ${data}`);
-    setPreSignedUrl(data);
+    // setPreSignedUrl(data);
     return data;
 }
 

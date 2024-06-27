@@ -13,7 +13,7 @@ export default function FreeClasses() {
 
     // Fetch all free classes from the database
     useEffect( ()=> {
-        getSectionData(setSectionData, 'classes/free')
+        getSectionData(setSectionData, 'classes/free');
     } , []);
 
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
