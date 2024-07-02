@@ -31,6 +31,7 @@
 
     .logo {
         width: 12rem;
+        cursor: pointer;
     }
 
     .login-container{

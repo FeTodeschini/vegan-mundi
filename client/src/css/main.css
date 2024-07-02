@@ -38,6 +38,12 @@ html {
     overflow-x: hidden;
 }
 
+footer {
+    background-color: var(--color-primary-dark-rgb-8);
+    color: #fff;
+    padding: 4rem 0;
+}
+
 .main{
     max-width: 1200px;
     margin: auto;

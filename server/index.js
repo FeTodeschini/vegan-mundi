@@ -175,6 +175,34 @@ app.get('/classes/categories', async (req, res) => {
 
 })
 
+app.get('/classes/category/:category', async (req, res) => {
+  const dbConnection = await connectToDb();
+
+  try {
+
+      dbConnection.query(`SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO FROM ` +
+         ` CLASS_CATEGORY CAT ` + 
+         ` INNER JOIN CLASS CLS ON ` +
+         `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` + 
+         `   AND UPPER(CAT.TITLE) = UPPER('${req.params.category}') ` + 
+         ` INNER JOIN CLASS_RECIPE CLR ON ` +
+         `   CLS.CLASS_ID = CLR.CLASS_ID ` +
+         ` INNER JOIN RECIPE RCP ON ` +
+         `   CLR.RECIPE_ID = RCP.RECIPE_ID `,
+        function (err, result, fields)
+         {
+          if (err) throw err;
+          res.send(result);
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+    finally{
+      dbConnection.end();
+    }
+})
+
 app.get('/classes/filter/:keyword', async (req, res) => {
 
   const dbConnection = await connectToDb();
@@ -182,7 +210,7 @@ app.get('/classes/filter/:keyword', async (req, res) => {
   try {
 
       dbConnection.query(
-        `SELECT DISTINCT CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO ` +
+        `SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO ` +
          ` FROM ` +
          ` CLASS CLS ` +
          ` INNER JOIN CLASS_RECIPE CLR ON ` +

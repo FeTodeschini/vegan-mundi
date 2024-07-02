@@ -7,7 +7,7 @@ import { getSectionData, addPreSignedUrlToArray } from './utils/functions.js'
 import './css/main.css';
 import leaf from './assets/icon-leaf.svg';
 
-export default function ClassesCategories() {
+export default function Categories() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [images, setImages] = useState([]);
@@ -42,6 +42,7 @@ export default function ClassesCategories() {
                             <Card 
                                 title={item.TITLE} 
                                 imgSource={item.PRE_SIGNED_URL}
+                                imgLink={`/category-classes?category=${encodeURIComponent(item.TITLE)}`} 
                                 callOutTag={item.LEVEL}
                                 description={item.DESCRIPTION}
 

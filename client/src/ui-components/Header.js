@@ -2,10 +2,12 @@ import Logo from './Logo.js';
 import SearchInput from './SearchInput.js';
 import Login from './Login.js';
 import Menu from './Menu.js';
+import Footer from './Footer.js';
 
 import "../css/menu.css";
+import { Outlet } from 'react-router-dom';
 
-export default function Header({ children }) {
+export default function Header({ placeholder }) {
 
     return (
         <>
@@ -15,9 +17,15 @@ export default function Header({ children }) {
                     <Login />
                     <Menu />
                 </div>
-                {/* This is the Search Input. It was passes as children to avoid prop drilling, as it requires setFilterResult that is defined in the Landing Page  */}
-                { children }
+                
+                <SearchInput 
+                        placeholder={"What do you want to cook today? (type at least 4 letters)"}
+                />
             </div>
+
+            <Outlet />
+
+            {/* <Footer /> */}
         </>
     )
 }
