@@ -86,8 +86,8 @@ app.get('/thumbnails/:thumbnail', async (req, res) => {
 //       //  No need to pass credentials as the AWS CLI in the EC2 instance that hosts the application is configured to use the Access Key and the Secret Key
 //       // This was done by running the AWS CONFIGURE command in the EC2 instance
 //       //  credentials: {
-//       //     accessKeyId: 'AKIATCKAM7Y7QDREV4ET',
-//       //     secretAccessKey: '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'
+//       //     accessKeyId: '',
+//       //     secretAccessKey: ''
 //       // }
 //   });
 
@@ -180,15 +180,24 @@ app.get('/classes/category/:category', async (req, res) => {
 
   try {
 
-      dbConnection.query(`SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO FROM ` +
-         ` CLASS_CATEGORY CAT ` + 
-         ` INNER JOIN CLASS CLS ON ` +
-         `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` + 
-         `   AND UPPER(CAT.TITLE) = UPPER('${req.params.category}') ` + 
-         ` INNER JOIN CLASS_RECIPE CLR ON ` +
-         `   CLS.CLASS_ID = CLR.CLASS_ID ` +
-         ` INNER JOIN RECIPE RCP ON ` +
-         `   CLR.RECIPE_ID = RCP.RECIPE_ID `,
+      dbConnection.query(`SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO , ` +
+                        ` ( SELECT GROUP_CONCAT(TITLE SEPARATOR '|') 
+                            FROM 
+                              RECIPE R 
+                                INNER JOIN CLASS_RECIPE C ON 
+                                  R.RECIPE_ID = C.RECIPE_ID 
+                                  AND C.CLASS_ID = CLS.CLASS_ID
+                                  AND (SELECT COUNT(TITLE) FROM RECIPE R INNER JOIN CLASS_RECIPE C ON R.RECIPE_ID = C.RECIPE_ID AND C.CLASS_ID = CLS.CLASS_ID ) > 1
+                              ) CLASSES_LIST ` + 
+                      ` FROM ` +
+                        ` CLASS_CATEGORY CAT ` + 
+                        ` INNER JOIN CLASS CLS ON ` +
+                        `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` + 
+                        `   AND UPPER(CAT.TITLE) = UPPER('${req.params.category}') ` + 
+                        ` INNER JOIN CLASS_RECIPE CLR ON ` +
+                        `   CLS.CLASS_ID = CLR.CLASS_ID ` +
+                        ` INNER JOIN RECIPE RCP ON ` +
+                        `   CLR.RECIPE_ID = RCP.RECIPE_ID `,
         function (err, result, fields)
          {
           if (err) throw err;
@@ -203,6 +212,9 @@ app.get('/classes/category/:category', async (req, res) => {
     }
 })
 
+
+// -------------------- SEARCH FOR CLASSES WITH KEYWORD TYPED IN THE SEARCH INPUT --------------------
+
 app.get('/classes/filter/:keyword', async (req, res) => {
 
   const dbConnection = await connectToDb();
@@ -210,7 +222,15 @@ app.get('/classes/filter/:keyword', async (req, res) => {
   try {
 
       dbConnection.query(
-        `SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO ` +
+        `SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO, ` +
+        ` ( SELECT GROUP_CONCAT(TITLE SEPARATOR '|') 
+            FROM 
+            RECIPE R 
+              INNER JOIN CLASS_RECIPE C ON 
+                R.RECIPE_ID = C.RECIPE_ID 
+                AND C.CLASS_ID = CLS.CLASS_ID
+                AND (SELECT COUNT(TITLE) FROM RECIPE R INNER JOIN CLASS_RECIPE C ON R.RECIPE_ID = C.RECIPE_ID AND C.CLASS_ID = CLS.CLASS_ID ) > 1
+            ) CLASSES_LIST ` + 
          ` FROM ` +
          ` CLASS CLS ` +
          ` INNER JOIN CLASS_RECIPE CLR ON ` +

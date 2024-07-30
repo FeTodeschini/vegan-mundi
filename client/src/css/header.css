@@ -12,8 +12,10 @@
 
     .header__action-icons { 
         grid-area: header__action-icons; 
-        gap: 1rem;
+        gap: 3rem;
         justify-content: end;
+        display: flex;
+        align-items: center;
     }
 
     .header {
@@ -34,20 +36,20 @@
         cursor: pointer;
     }
 
-    .login-container{
+    .header-icon-container{
         display: flex;
         flex-direction: column;
         align-items: center;
         cursor: pointer;
     }
 
-    .login-container__icon{
-            width: 4.2rem;
+    .header-icon{
+        width: 4.2rem;
     }
 
-    .login-container__caption{
+    .header-icon__caption{
         position: absolute;
-        transform: translateY(260%);
+        transform: translateY(280%);
         color: var(--color-primary-dark-rgb-8);
         font-size: 1.4rem;
         font-weight: 700;

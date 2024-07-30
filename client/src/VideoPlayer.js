@@ -37,6 +37,12 @@ export default function VideoPlayer() {
         return () => {
              video.removeEventListener('loadedmetadata', handleVideoLoaded);
         }
+
+        // remove loadedmetadata event listener when component is unmounted
+        return function () {
+            video.removeEventListener('loadedmetadata', handleVideoLoaded);
+        }
+
     }, [preSignedUrl])
 
 

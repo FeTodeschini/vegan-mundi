@@ -61,7 +61,7 @@ export default function Categories() {
                                 }
                                 key= {item.PRE_SIGNED_URL}
                             >
-                                <Button additionalClass="top-margin--small">See Classes &rarr;</Button>
+                                <Button additionalClass="top-margin--small" link={`/category-classes?category=${encodeURIComponent(item.TITLE)}`}>See Classes &rarr;</Button>
                             </Card>
                         )}
 

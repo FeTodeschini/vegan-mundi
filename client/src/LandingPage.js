@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { SearchStateContext } from "./SearchStateProvider.js";
+import { StateContext } from "./StateProvider.js";
 
 import Hero from "./Hero.js";
 import Disclaimer from "./Disclaimer.js";
@@ -11,10 +11,16 @@ import Gallery from "./Gallery.js";
 
 export default function LandingPage (){
 
-    const { setKeyword } = useContext(SearchStateContext);
+    const { setKeyword } = useContext(StateContext);
     
     useEffect( ()=> {
         setKeyword("");
+
+        if (localStorage.getItem('cartQuantity')===null) {
+            localStorage.setItem('cartItems', JSON.stringify([]));
+            localStorage.setItem('cartQuantity', 0);
+        }
+
     } , []);
 
     return (

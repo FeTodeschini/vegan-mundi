@@ -64,6 +64,11 @@
 
 .card__description {
     padding: 3rem 0 2rem 0;
+
+}
+
+.card__description-list {
+    padding-bottom: 4rem;
     flex: 1;
 }
 

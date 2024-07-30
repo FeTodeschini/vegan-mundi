@@ -41,6 +41,15 @@ export function toggleDarkBackground(isToggleMenu){
     }
 }
 
+// Removes an item from the shopping cart (remove the item from the array and decrease the quantity of items in the cart)
+export function removeFromCart(cartItems, cartQuantity, setCartItems, setCartQuantity, removeItemTitle){
+    localStorage.setItem('cartItems', JSON.stringify(cartItems.filter((item)=>item.TITLE !== removeItemTitle).map(item=> item)));
+    localStorage.setItem('cartQuantity', cartQuantity - 1);
+
+    setCartItems((items)=>items.filter((item)=>item.TITLE !== removeItemTitle).map(item=> item));
+    setCartQuantity(quantity=>quantity-1);
+}
+
 function toggleMenu(){
     const menuCheckbox = document.getElementById("menuCheckbox")
     menuCheckbox.checked = !menuCheckbox.checked;

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { SearchStateContext } from "./SearchStateProvider.js";
+import { StateContext } from "./StateProvider.js";
 import { addPreSignedUrlToArray } from "./utils/functions.js";
 import FilteredClasses from "./FilteredClasses.js";
 
@@ -13,7 +13,7 @@ export default function SearchResult(){
     const [images, setImages] = useState([]);
     const [filterResult, setFilterResult] = useState([]);
 
-    const { setKeyword } = useContext(SearchStateContext);
+    const { setKeyword } = useContext(StateContext);
 
     // Get the query string from the URL
     const location = useLocation();

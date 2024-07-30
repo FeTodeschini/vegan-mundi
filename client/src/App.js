@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import LandingPage from './LandingPage.js';
 import CategoryClasses from './CategoryClasses.js';
 import DarkBackground from './DarkBackground.js';
+import ShoppingCart from './ShoppingCart.js';
 import VideoPlayer from './VideoPlayer.js';
 import Header from "./ui-components/Header.js";
 import SearchResult from './SearchResult.js';
-import SearchStateProvider from './SearchStateProvider.js';
+import StateProvider from './StateProvider.js';
 
 import {
   Route,
@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <>
-      <SearchStateProvider>
+      <StateProvider>
         
         <DarkBackground />
 
@@ -30,12 +30,13 @@ export default function App() {
               <Route exact path="" element={<LandingPage />}></Route>
               <Route exact path="category-classes" element={<CategoryClasses />}></Route>
               <Route path="search" element={<SearchResult />}></Route>
+              <Route path="cart" element={<ShoppingCart />}></Route>
             </Route>
             <Route path="/videoplayer" element={<VideoPlayer />}></Route>
           </Routes>
         </Router>
 
-      </SearchStateProvider>
+      </StateProvider>
     </>
   );
 }

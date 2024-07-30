@@ -30,6 +30,9 @@ export default function Card({ imgSource, imgLink, linkState, isVideo, title, de
                         {/* <p className='card__title'>{titleIcon && <img className="img-small" src={titleIcon} />} {title}</p> */}
                         <p className='card__title'>{title}</p>
                         <p className='card__description'>{description}</p>
+                        <div className="card__description-list">
+                            { descriptionList }
+                        </div>
                     </>
                 }
                 
@@ -44,7 +47,6 @@ export default function Card({ imgSource, imgLink, linkState, isVideo, title, de
                         <p className="card__description">{description}</p>
 
                         { descriptionList }
-
                     </>
                 }
 

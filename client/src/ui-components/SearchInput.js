@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SearchStateContext } from "../SearchStateProvider.js";
+import { StateContext } from "../StateProvider.js";
 import { useNavigate } from "react-router-dom";
 import magnifyingGlass from "../assets/magnifying-glass.svg";
 
@@ -10,7 +10,7 @@ async function handleKeyUp(e, keyword, navigate) {
     } }
 
 export default function SearchInput({ placeholder }){
-    const { keyword, setKeyword } = useContext(SearchStateContext);
+    const { keyword, setKeyword } = useContext(StateContext);
     const navigate = useNavigate();  
 
     return(

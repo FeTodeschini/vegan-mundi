@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { SearchStateContext } from "./SearchStateProvider.js";
 import { addPreSignedUrlToArray } from "./utils/functions.js";
 import FilteredClasses from "./FilteredClasses.js";
 
@@ -20,7 +19,6 @@ export default function CategoryClasses(){
     // Fetches from the DB all classes matching the category
     async function getResults() {
         let data = await fetch(`${config.serverEndpoint}classes/category/${category}`);
-        console.log(`${config.serverEndpoint}classes/category/${category}`);
         data = await data.json();
         setFilterResult([...data]); 
     }
