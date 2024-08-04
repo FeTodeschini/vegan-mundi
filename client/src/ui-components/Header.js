@@ -31,9 +31,7 @@ export default function Header({ placeholder }) {
                     <Menu />
                 </div>
                 
-                <SearchInput 
-                        placeholder={"What do you want to cook today? (type at least 4 letters)"}
-                />
+                <SearchInput placeholder={"What do you want to cook today? (type at least 4 letters)"}/>
             </div>
 
             <Outlet />

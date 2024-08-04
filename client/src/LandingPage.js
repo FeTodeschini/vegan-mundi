@@ -16,6 +16,7 @@ export default function LandingPage (){
     useEffect( ()=> {
         setKeyword("");
 
+        //  Creates the localStorage for the Shopping Cart the first time the user loads the page
         if (localStorage.getItem('cartQuantity')===null) {
             localStorage.setItem('cartItems', JSON.stringify([]));
             localStorage.setItem('cartQuantity', 0);

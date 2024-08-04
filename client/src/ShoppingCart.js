@@ -32,6 +32,8 @@ export default function ShoppingCart () {
                                             ` There are ${cartQuantity} items in your cart  - subtotal: $` }`} 
                                     subTitle={"Shopping Cart"}/>                    
                 </div>
+
+                {/* Displays the "Empty Cart" and "Checkout' buttons in case the cart is not empty */}
                 {cartQuantity > 0 &&
                     <div className="cart-buttons--btn">
                         <Button type={"button"} onClick={()=>emptyCart()}>Empty Cart</Button>
@@ -40,6 +42,7 @@ export default function ShoppingCart () {
                 }
             </div>
 
+            {/* All classes selected by the User */}
             <div className="grid-auto-fit">
                 {cartItems.map(item=>(
                     <Card 
