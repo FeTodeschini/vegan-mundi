@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import SectionHeader from "./ui-components/SectionHeader.js";
 import { getSectionData, addPreSignedUrl, addPreSignedUrlToArray } from './utils/functions.js'
 
+import Modal from "./ui-components/Modal.js";
+
 import './css/gallery.css';
 
 export default function Gallery (){
@@ -35,21 +37,37 @@ export default function Gallery (){
                 </div>    
                 <div className="gallery__content grid-auto-fit">
                     {
-                        images.map((item) => {
+                        images.map((item, index) => {
                             return (
-                                <figure key={item.PRE_SIGNED_URL}>
-                                    <div className="gallery__img--container">
-                                        <img
-                                            className="gallery__img" 
-                                            src={item.PRE_SIGNED_URL}
-                                        />
-                                    </div>
-                                    <figcaption className="gallery__caption">{item.LABEL}</figcaption>
-                                </figure>)
+                                <>
+                                    <figure key={item.PRE_SIGNED_URL}>
+                                        <div className="gallery__img--container">
+                                            <a href={`/#${index}`}>
+                                                <img
+                                                    className="gallery__img" 
+                                                    src={item.PRE_SIGNED_URL}
+                                                />
+                                            </a>
+                                        </div>
+                                        <figcaption className="gallery__caption">{item.LABEL}</figcaption>
+                                    </figure>
+                            
+                                    <Modal modalId={index} padding={"8"}>
+                                        <div className="gallery-modal-img">
+                                            <img
+                                                className="gallery__img-modal" 
+                                                src={item.PRE_SIGNED_URL}
+                                            />
+                                        </div>
+                                    </Modal>
+                                </>
+                            )
                         }
                     )}
                 </div>
+
              </section>
+
         )
     }
 }

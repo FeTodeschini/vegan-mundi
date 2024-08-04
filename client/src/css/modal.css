@@ -1,0 +1,42 @@
+.modal {
+    position: fixed;
+    background-color: var(--color-gray-dark-rgb-9);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: 0;
+    transition: all .3s;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal:target {
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.modal-container {
+    background-color: white;
+    position: relative;
+}
+
+.modal-close {
+    font-size: 3.4rem;
+    text-decoration: none;
+    position: absolute;
+    color: var(--color-primary-dark);
+    top: 2rem;
+    right: 4rem;
+    z-index: 999;
+    transition: all .3s;
+}
+
+.modal-close:hover {
+    font-weight: 700;
+}
