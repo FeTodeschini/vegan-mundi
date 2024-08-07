@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { addPreSignedUrlToArray } from "./utils/functions.js";
@@ -18,9 +19,8 @@ export default function CategoryClasses(){
 
     // Fetches from the DB all classes matching the category
     async function getResults() {
-        let data = await fetch(`${config.serverEndpoint}classes/category/${category}`);
-        data = await data.json();
-        setFilterResult([...data]); 
+        let response = await axios.get(`${config.serverEndpoint}classes/category/${category}`);
+        setFilterResult([...response.data]); 
     }
 
     useEffect( ()=> {

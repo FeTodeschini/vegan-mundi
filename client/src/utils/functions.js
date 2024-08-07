@@ -1,10 +1,10 @@
+import axios from "axios";
 import config from './config.js';
 
 // Call the proper API that fetches data from the database for a specific session in a page and stores it in the sectionData state variable
 export async function getSectionData(setSectionData, api) {
-    let data = await fetch(`${config.serverEndpoint}${api}`);
-    data = await data.json();
-    setSectionData([...data]);
+    let response = await axios.get(`${config.serverEndpoint}${api}`);
+    setSectionData([...response.data]);
 }
 
 // Add to any array of Images the pre-signed URL required from AWS for private S3Bucket objects to be accessed
@@ -22,7 +22,7 @@ export async function addPreSignedUrlToArray(sectionData, bucket, setImages, set
 }
 
 export async function getPreSignedUrl(setPreSignedUrl, bucket, key) {
-    const response = await fetch(`${config.serverEndpoint}s3/${bucket}/${key}`);
+    const response = await axios(`${config.serverEndpoint}s3/${bucket}/${key}`);
     const data = await response.json();
     // setPreSignedUrl(data);
     return data;

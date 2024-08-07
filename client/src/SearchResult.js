@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { StateContext } from "./StateProvider.js";
@@ -22,9 +23,8 @@ export default function SearchResult(){
 
     // Fetches from the DB all records matching the keyword searched
     async function getResults() {
-        let data = await fetch(`${config.serverEndpoint}classes/filter/${keyword}`);
-        data = await data.json();
-        setFilterResult([...data]); 
+        let response = await axios.get(`${config.serverEndpoint}classes/filter/${keyword}`);
+        setFilterResult([...response.data]); 
     }
 
     useEffect(()=>{
