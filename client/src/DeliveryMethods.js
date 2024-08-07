@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useGetSectionDataWithS3Image } from './hooks/useGetSectionDataWithS3Image.js';
 import SectionHeader from './ui-components/SectionHeader.js';
 import Button from "./ui-components/Button";
 import Card from './ui-components/Card.js';
-import { getSectionData, addPreSignedUrl } from './utils/functions.js'
 
 export default function DeliveryMethods() {
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [images, setImages] = useState([]);
     const [sectionData, setSectionData] = useState([]);
 
-    useEffect( ()=> {
-        getSectionData(setSectionData, 'delivery-methods')
-    } , []);
-        
+    // Retrieves all delivery methods from the database
+    useGetSectionDataWithS3Image(setSectionData, 'delivery-methods')
 
     return (
             <section className="delivery-methods container">

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { StateContext } from "./StateProvider.js";
-import { addPreSignedUrlToArray } from "./utils/functions.js";
+import { useAddPreSignedUrlToArray } from "./hooks/useAddPreSuignedUrlToArray.js";
 import FilteredClasses from "./FilteredClasses.js";
 
 import config from "./utils/config.js";
@@ -36,17 +36,9 @@ export default function SearchResult(){
     },[keyword])
 
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
-    useEffect( ()=> {
-        if (filterResult.length > 0) {
-            addPreSignedUrlToArray(filterResult, 'vegan-mundi-thumbnails', setImages, setIsLoading);
-        } else
-        {
-            setIsLoading(false);
-            setImages([]);
-        }
-    }, [filterResult])
+    useAddPreSignedUrlToArray(filterResult, 'vegan-mundi-thumbnails', setImages, setIsLoading);
 
-    const results = filterResult.length;
+            const results = filterResult.length;
 
     if (isLoading){
         return(<p>Loading...</p>);

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useGetSectionDataWithS3Image } from './hooks/useGetSectionDataWithS3Image.js';
+import { useAddPreSignedUrlToArray } from './hooks/useAddPreSuignedUrlToArray.js';
 import SectionHeader from './ui-components/SectionHeader.js';
 import Button from './ui-components/Button.js';
 import Card from './ui-components/Card.js';
-import { getSectionData, addPreSignedUrlToArray } from './utils/functions.js'
 
 import './css/main.css';
 import leaf from './assets/icon-leaf.svg';
@@ -13,17 +14,11 @@ export default function Categories() {
     const [images, setImages] = useState([]);
     const [sectionData, setSectionData] = useState([]);
 
-    // Fetch all classes categories from the database
-    useEffect( ()=> {
-        getSectionData(setSectionData, 'classes/categories')
-    } , []);
+    // Retrieves all classes categories from the database
+    useGetSectionDataWithS3Image(setSectionData, 'classes/categories');
 
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
-    useEffect( ()=> {
-        if (sectionData.length > 0) {
-            addPreSignedUrlToArray(sectionData, 'vegan-mundi-thumbnails', setImages, setIsLoading);
-        }
-    }, [sectionData])
+    useAddPreSignedUrlToArray(sectionData, 'vegan-mundi-thumbnails', setImages, setIsLoading);
 
     // checks if API calls are still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
     if (isLoading){

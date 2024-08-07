@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useGetSectionDataWithS3Image } from "./hooks/useGetSectionDataWithS3Image.js";
 import SectionHeader from "./ui-components/SectionHeader.js";
-import { getSectionData, addPreSignedUrl, addPreSignedUrlToArray } from './utils/functions.js'
+import { useAddPreSignedUrlToArray } from "./hooks/useAddPreSuignedUrlToArray.js";
 
 import Modal from "./ui-components/Modal.js";
 
@@ -12,17 +13,11 @@ export default function Gallery (){
     const [images, setImages] = useState([]);
     const [sectionData, setSectionData] = useState([]);
 
-    // Fetch all gallery info from the database
-    useEffect( ()=> {
-        getSectionData(setSectionData, 'gallery')
-    } , []);
+    // Retrieves all gallery info from the database
+    useGetSectionDataWithS3Image(setSectionData, 'gallery')
 
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
-    useEffect( ()=> {
-        if (sectionData.length > 0) {
-            addPreSignedUrlToArray(sectionData, 'vegan-mundi-gallery', setImages, setIsLoading);
-        }
-    }, [sectionData])
+    useAddPreSignedUrlToArray(sectionData, 'vegan-mundi-gallery', setImages, setIsLoading);
 
     // checks if API calls are still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
     if (isLoading){
