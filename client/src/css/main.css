@@ -17,6 +17,7 @@
     --color-gray-lightest: #f7f7f7;
     --color-gray-light: #e6e9e8f6; /* rgb(211, 211, 211) */
     --color-gray-dark: #525050;
+    --color-gray-dark-rgb-9: rgba(82, 80, 80, .9);
     
 
     --color-yellow: #ffd43b;

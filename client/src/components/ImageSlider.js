@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import './css/image-slider.css';
+import '../css/image-slider.css';
 
-import chevronLeft from "./assets/chevron-left.svg";
-import chevronRight from "./assets/chevron-right.svg";
+import chevronLeft from "../assets/chevron-left.svg";
+import chevronRight from "../assets/chevron-right.svg";
 
 export default function ImageSlider({ images }) {
 

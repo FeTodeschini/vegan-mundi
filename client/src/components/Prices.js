@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import SectionHeader from './ui-components/SectionHeader.js';
+import SectionHeader from './SectionHeader.js';
 
-import './css/main.css';
-import './css/prices.css';
+import '../css/main.css';
+import '../css/prices.css';
 
 export default function Prices() {
 
@@ -43,7 +43,7 @@ export default function Prices() {
                         
                         {prices.map(price=>(
                                 <div className={ price.GREAT_VALUE ? "card prices__list-card prices__list-card--great-value": "card prices__list-card"} key={price.DESCRIPTION}>
-                                    {<img className="icon-medium prices__list-card-icon" src={require(`./assets/${price.ICON}`)} alt="" />}
+                                    {<img className="icon-medium prices__list-card-icon" src={require(`../assets/${price.ICON}`)} alt="" />}
                                     { price.GREAT_VALUE ? <p className="yellow-ribbon prices__list-card-yellow-ribbon">Great Value</p> : ""}
                                     <p className="heading-tertiary prices__list-card-description">{price.DESCRIPTION}</p>
                                     <p className='prices__list-card-price'>${price.PRICE}</p>

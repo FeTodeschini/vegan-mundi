@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
-import { StateContext } from "./StateProvider.js";
+import { StateContext } from "../StateProvider.js";
 
-import SeactionHeader from './ui-components/SectionHeader.js';
-import Button from "./ui-components/Button.js";
-import Card from "./ui-components/Card.js"
-import { removeFromCart } from './utils/functions.js';
+import SeactionHeader from '../components/SectionHeader.js';
+import Button from "../components/Button.js";
+import Card from "../components/Card.js"
+import { removeFromCart } from '../utils/functions.js';
 
 export default function ShoppingCart () {
     const { setKeyword, cartQuantity, setCartQuantity, cartItems, setCartItems } = useContext(StateContext)

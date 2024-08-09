@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useGetSectionDataWithS3Image } from './hooks/useGetSectionDataWithS3Image.js';
-import SectionHeader from './ui-components/SectionHeader.js';
-import Button from "./ui-components/Button";
-import Card from './ui-components/Card.js';
+import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image.js';
+import SectionHeader from './SectionHeader.js';
+import Button from "./Button.js";
+import Card from './Card.js';
 
 export default function DeliveryMethods() {
 
@@ -21,7 +21,7 @@ export default function DeliveryMethods() {
                     {
                         sectionData.map(item=>
                             <Card
-                                title = { <><img src={require(`./assets/${item.ICON}`)} alt="In Person Classes" className="icon-medium" /> {item.TITLE}</>  }
+                                title = { <><img src={require(`../assets/${item.ICON}`)} alt="In Person Classes" className="icon-medium" /> {item.TITLE}</>  }
                                 description = {item.DESCRIPTION}
                                 key= {item.TITLE}
                             >

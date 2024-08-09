@@ -1,10 +1,10 @@
-import LandingPage from './LandingPage.js';
-import CategoryClasses from './CategoryClasses.js';
-import DarkBackground from './DarkBackground.js';
-import ShoppingCart from './ShoppingCart.js';
-import VideoPlayer from './VideoPlayer.js';
-import Header from "./ui-components/Header.js";
-import SearchResult from './SearchResult.js';
+import LandingPage from './pages/LandingPage.js';
+import CategoryClasses from './pages/CategoryClasses.js';
+import DarkBackground from './components/DarkBackground.js';
+import ShoppingCart from './pages/ShoppingCart.js';
+import VideoPlayer from './pages/VideoPlayer.js';
+import Header from "./components/Header.js";
+import SearchResult from './pages/SearchResult.js';
 import StateProvider from './StateProvider.js';
 
 import {

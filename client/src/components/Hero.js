@@ -1,8 +1,8 @@
-import Button from './ui-components/Button';
+import Button from './Button';
 
-import './css/hero.css';
+import '../css/hero.css';
 
-import introVideo from './assets/intro-video.jpg'
+import introVideo from '../assets/intro-video.jpg'
 
 export default function Hero() {
     

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useGetSectionDataWithS3Image } from './hooks/useGetSectionDataWithS3Image.js';
-import { useAddPreSignedUrlToArray } from './hooks/useAddPreSuignedUrlToArray.js';
-import SectionHeader from './ui-components/SectionHeader.js';
-import Card from './ui-components/Card.js';
+import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image.js';
+import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSuignedUrlToArray.js';
+import SectionHeader from './SectionHeader.js';
+import Card from './Card.js';
 
-import './css/free-classes.css';
+import '../css/free-classes.css';
 
 export default function FreeClasses() {
 

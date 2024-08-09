@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
-import { StateContext } from "./StateProvider.js";
+import { StateContext } from "../StateProvider.js";
 
-import Hero from "./Hero.js";
-import Disclaimer from "./Disclaimer.js";
-import DeliveryMethods from "./DeliveryMethods.js";
-import Categories from "./Categories.js";
-import FreeClasses from "./FreeClasses.js";
-import Prices from "./Prices.js";
-import Gallery from "./Gallery.js";
+import Hero from "../components/Hero.js";
+import Disclaimer from "../components/Disclaimer.js";
+import DeliveryMethods from "../components/DeliveryMethods.js";
+import Categories from "../components/Categories.js";
+import FreeClasses from "../components/FreeClasses.js";
+import Prices from "../components/Prices.js";
+import Gallery from "../components/Gallery.js";
 
 export default function LandingPage (){
 

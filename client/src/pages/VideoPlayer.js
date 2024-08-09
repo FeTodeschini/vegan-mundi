@@ -1,8 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import './utils/functions.js';
-import { getPreSignedUrl } from './utils/functions.js';
+import { getPreSignedUrl } from '../utils/functions.js';
 
 export default function VideoPlayer() {
     
@@ -15,7 +14,7 @@ export default function VideoPlayer() {
 
     useEffect(()=>{
         // gets the pre-signed URL required by AWS for accessing private S3 objects
-        getPreSignedUrl(setPreSignedUrl, 'vegan-mundi-videos', videoName).then((res)=>{
+        getPreSignedUrl('vegan-mundi-videos', videoName).then((res)=>{
             setPreSignedUrl(res);
         })
     },[])

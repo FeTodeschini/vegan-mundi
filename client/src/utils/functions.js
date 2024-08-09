@@ -1,11 +1,12 @@
 import axios from "axios";
 import config from './config.js';
 
-export async function getPreSignedUrl(setPreSignedUrl, bucket, key) {
+export async function getPreSignedUrl(bucket, key) {
+    console.log(`preSignedUrl endpoint: ${config.serverEndpoint}s3/${bucket}/${key}`);
     const response = await axios(`${config.serverEndpoint}s3/${bucket}/${key}`);
-    const data = await response.json();
-    // setPreSignedUrl(data);
-    return data;
+    // const data = await response.json();
+    console.log(`response.data: ${response.data}`)
+    return response.data;
 }
 
 // the parameter isToggleMenu defines if a click on the menuCheckbox should be forced

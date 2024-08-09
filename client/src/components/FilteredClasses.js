@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { StateContext } from "./StateProvider.js";
+import { StateContext } from "../StateProvider.js";
 
-import Card from "./ui-components/Card.js"
-import Button from "./ui-components/Button.js";
-import SeactionHeader from './ui-components/SectionHeader.js';
-import Modal from './ui-components/Modal.js';
+import Card from "./Card.js"
+import Button from "./Button.js";
+import SeactionHeader from './SectionHeader.js';
+import Modal from './Modal.js';
 
-import leaf from './assets/icon-leaf.svg';
-import { removeFromCart } from "./utils/functions.js";
+import leaf from '../assets/icon-leaf.svg';
+import { removeFromCart } from "../utils/functions.js";
 
 export default function FilteredClasses ({images, resultsFound, title, subTitle}){
     const { setCartQuantity, cartQuantity, cartItems, setCartItems } = useContext(StateContext);

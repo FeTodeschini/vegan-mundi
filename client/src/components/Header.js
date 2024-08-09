@@ -16,9 +16,15 @@ export default function Header({ placeholder }) {
     const { cartItems, setCartQuantity, setCartItems } = useContext(StateContext);
 
     useEffect (()=> {
-        setCartQuantity(Number(localStorage.getItem('cartQuantity')));
-        // convert into an array the string that is in the localStorage
-        setCartItems(JSON.parse(localStorage.getItem('cartItems')));
+        setCartQuantity(() => {
+            return Number(localStorage.getItem('cartQuantity'));
+        });
+
+        // // convert the string that is in the localStorage into an array (as localStorage only stores strings)
+        setCartItems(() => {
+            return JSON.parse(localStorage.getItem('cartItems'))
+        });
+
     }, []);
 
     return (

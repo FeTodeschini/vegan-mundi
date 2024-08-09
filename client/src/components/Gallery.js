@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useGetSectionDataWithS3Image } from "./hooks/useGetSectionDataWithS3Image.js";
-import SectionHeader from "./ui-components/SectionHeader.js";
-import { useAddPreSignedUrlToArray } from "./hooks/useAddPreSuignedUrlToArray.js";
+import { useGetSectionDataWithS3Image } from "../hooks/useGetSectionDataWithS3Image.js";
+import SectionHeader from "./SectionHeader.js";
+import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSuignedUrlToArray.js";
 
-import Modal from "./ui-components/Modal.js";
+import Modal from "./Modal.js";
 
-import './css/gallery.css';
+import '../css/gallery.css';
 
 export default function Gallery (){
 

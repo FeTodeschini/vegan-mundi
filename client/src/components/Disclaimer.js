@@ -1,4 +1,4 @@
-import "./css/disclaimer.css";
+import "../css/disclaimer.css";
 
 export default function Disclaimer () {
     return (

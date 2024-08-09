@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useGetSectionDataWithS3Image } from './hooks/useGetSectionDataWithS3Image.js';
-import { useAddPreSignedUrlToArray } from './hooks/useAddPreSuignedUrlToArray.js';
-import SectionHeader from './ui-components/SectionHeader.js';
-import Button from './ui-components/Button.js';
-import Card from './ui-components/Card.js';
+import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image.js';
+import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSuignedUrlToArray.js';
+import SectionHeader from './SectionHeader.js';
+import Button from './Button.js';
+import Card from './Card.js';
 
-import './css/main.css';
-import leaf from './assets/icon-leaf.svg';
+import '../css/main.css';
+import leaf from '../assets/icon-leaf.svg';
 
 export default function Categories() {
 

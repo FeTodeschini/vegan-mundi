@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { StateContext } from "./StateProvider.js";
-import { useAddPreSignedUrlToArray } from "./hooks/useAddPreSuignedUrlToArray.js";
-import FilteredClasses from "./FilteredClasses.js";
+import { StateContext } from "../StateProvider.js";
+import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSuignedUrlToArray.js";
+import FilteredClasses from "../FilteredClasses.js";
 
-import config from "./utils/config.js";
+import config from "../utils/config.js";
 
-import './css/main.css';
+import '../css/main.css';
 
 export default function SearchResult(){
     const [isLoading, setIsLoading] = useState(true);
