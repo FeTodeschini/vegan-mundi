@@ -1,10 +1,11 @@
+import DarkBackground from './components/DarkBackground.js';
+import Header from "./components/Header.js";
 import LandingPage from './pages/LandingPage.js';
 import CategoryClasses from './pages/CategoryClasses.js';
-import DarkBackground from './components/DarkBackground.js';
-import ShoppingCart from './pages/ShoppingCart.js';
-import VideoPlayer from './pages/VideoPlayer.js';
-import Header from "./components/Header.js";
 import SearchResult from './pages/SearchResult.js';
+import ShoppingCart from './pages/ShoppingCart.js';
+import Login from './pages/Login.js';
+import VideoPlayer from './pages/VideoPlayer.js';
 import StateProvider from './StateProvider.js';
 
 import {
@@ -31,6 +32,7 @@ export default function App() {
               <Route exact path="category-classes" element={<CategoryClasses />}></Route>
               <Route path="search" element={<SearchResult />}></Route>
               <Route path="cart" element={<ShoppingCart />}></Route>
+              <Route path="login" element={<Login />}></Route>
             </Route>
             <Route path="/videoplayer" element={<VideoPlayer />}></Route>
           </Routes>

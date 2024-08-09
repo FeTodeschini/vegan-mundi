@@ -4,16 +4,16 @@ import { Outlet } from 'react-router-dom';
 
 import Logo from './Logo.js';
 import SearchInput from './SearchInput.js';
-import Login from './Login.js';
+import LoginIcon from "./LoginIcon.js";
 import Menu from './Menu.js';
 import ShoppingCartIcon from './ShoppingCartIcon.js';
 import Footer from './Footer.js';
 
 import "../css/menu.css";
 
-export default function Header({ placeholder }) {
+export default function Header() {
 
-    const { cartItems, setCartQuantity, setCartItems } = useContext(StateContext);
+    const { setCartQuantity, setCartItems } = useContext(StateContext);
 
     useEffect (()=> {
         setCartQuantity(() => {
@@ -33,7 +33,7 @@ export default function Header({ placeholder }) {
                 <Logo />
                 <div className="header__action-icons">
                     <ShoppingCartIcon />
-                    <Login />
+                    <LoginIcon />
                     <Menu />
                 </div>
                 
