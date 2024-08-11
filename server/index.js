@@ -1,11 +1,29 @@
 const express = require ('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const { createConnection, authPlugins } = require('mysql2');
 const config = require('./config');
 
 const app = express();
 
 app.use(cors());
+
+app.use(bodyParser.json());
+
+// Midlleware error handling function
+app.use((error, req, res, next) =>{
+  // console.log(`Mensagets: ${error}`);
+  // res.status(err.status).json({message: err.message});
+})
+
+// class for throwing errors, with customized messages
+class CustomError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.status = statusCode <= 400 && statusCode < 500 ? 'fail' : 'error';
+  }
+}
 
 app.listen(4000, ()=> {
     console.log('Listening on port 4000...');
@@ -303,7 +321,7 @@ app.get('/prices', async (req, res) => {
 
   try {
 
-      dbConnection.query('SELECT * FROM PRICE', function (err, result, fields) {
+      dbConnection.query('SELECT * FROM PRICE', function (err, result) {
           if (err) throw err;
           res.send(result);
       });
@@ -328,7 +346,7 @@ app.get('/gallery', async (req, res) => {
 
   try {
 
-      dbConnection.query('SELECT * FROM GALLERY', function (err, result, fields) {
+      dbConnection.query('SELECT * FROM GALLERY', function (err, result) {
           if (err) throw err;
           res.send(result);
       });
@@ -368,4 +386,34 @@ app.get('/s3/:bucket/:key' , async (req, res) => {
     console.error(err);
   }
 
+})
+
+
+// -------------------- USER --------------------
+
+// CREATE NEW USER ACCOUNT
+
+app.post('/account/create', async (req, res, next) => {
+  const dbConnection = await connectToDb();
+  const {firstName, lastName, email, password} = req.body;
+
+  dbConnection.query(
+      `INSERT INTO USER VALUES('
+        ${email}', 
+        '${firstName}', 
+        '${lastName}', 
+        '${password}')`,
+    (err, result) => {
+      if (err)if(err.code === 'ER_DUP_ENTRY') {
+        next(new CustomError(`There is already an account registered with the e-mail '${email}'`, 400));
+      }
+      else {
+        next(new CustomError("There was an error while creating your account", 500));
+      }
+      else {
+        dbConnection.end();          
+        res.status(200).send("Account created successfully");
+      }
+        
+  });
 })
