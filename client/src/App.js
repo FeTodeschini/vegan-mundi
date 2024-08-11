@@ -4,7 +4,8 @@ import LandingPage from './pages/LandingPage.js';
 import CategoryClasses from './pages/CategoryClasses.js';
 import SearchResult from './pages/SearchResult.js';
 import ShoppingCart from './pages/ShoppingCart.js';
-import Login from './pages/Login.js';
+import SigninForm from './pages/SigninForm.js';
+import CreateAccount from './pages/CreateAccount.js';
 import VideoPlayer from './pages/VideoPlayer.js';
 import StateProvider from './StateProvider.js';
 
@@ -32,8 +33,9 @@ export default function App() {
               <Route exact path="category-classes" element={<CategoryClasses />}></Route>
               <Route path="search" element={<SearchResult />}></Route>
               <Route path="cart" element={<ShoppingCart />}></Route>
-              <Route path="login" element={<Login />}></Route>
             </Route>
+            <Route path="/signin" element={<SigninForm />}></Route>
+            <Route path="/create-account" element={<CreateAccount />}></Route>
             <Route path="/videoplayer" element={<VideoPlayer />}></Route>
           </Routes>
         </Router>

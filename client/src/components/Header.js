@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
-import { StateContext } from "../StateProvider.js";
+import { StateContext } from "../StateProvider";
 import { Outlet } from 'react-router-dom';
 
-import Logo from './Logo.js';
-import SearchInput from './SearchInput.js';
-import LoginIcon from "./LoginIcon.js";
-import Menu from './Menu.js';
-import ShoppingCartIcon from './ShoppingCartIcon.js';
-import Footer from './Footer.js';
+import LogoHeader from "./LogoHeader";
+import SearchInput from './SearchInput';
+import SigninIcon from "./SigninIcon";
+import Menu from './Menu';
+import ShoppingCartIcon from './ShoppingCartIcon';
+import Footer from './Footer';
 
 import "../css/menu.css";
 
@@ -30,10 +30,10 @@ export default function Header() {
     return (
         <>
             <div className="header">
-                <Logo />
+                <LogoHeader />
                 <div className="header__action-icons">
                     <ShoppingCartIcon />
-                    <LoginIcon />
+                    <SigninIcon />
                     <Menu />
                 </div>
                 

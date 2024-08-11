@@ -101,6 +101,16 @@ p {
     margin-top: 4.2rem;
 }
 
+.success {
+    color: var(--color-primary-dark);
+    font-size: 1.4rem;
+}
+
+.error {
+    color: red;
+    font-size: 1.4rem;
+}
+
 @media only screen and (max-width: 1060px){
     .heading-primary {
         font-size: 3.6em;
