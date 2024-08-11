@@ -14,10 +14,9 @@ import Button from "../components/Button";
 import "../css/form.css";    
 
 export default function CreateAccount() {
-    // const focusElement = useFocus();
+    const focusElement = useFocus();
     const { responseMessage, setResponseMessage, error, setError } = useContext(StateContext);
 
-    const firstNameRef = useRef(null);
     const lastNameRef = useRef(null);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
@@ -30,7 +29,7 @@ export default function CreateAccount() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const firstName = firstNameRef.current.value;
+        const firstName = focusElement.current.value;
         const lastName = lastNameRef.current.value;
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
@@ -43,8 +42,10 @@ export default function CreateAccount() {
             try {
                 const response = await axios.post(`http://localhost:4000/account/create`, accountData);
                 setResponseMessage(response.data);
+                setError("");
             }
             catch (err) {
+                setResponseMessage("");
                 setError(err.message);
                 console.log(`Error received: ${err}`);
             }
@@ -65,7 +66,7 @@ export default function CreateAccount() {
                 </div>
 
                 <label htmlFor="firstName" className='form-label'>First Name:</label>
-                <input ref={firstNameRef} className="form-input" id="firstName" required/>
+                <input ref={focusElement} className="form-input" id="firstName" required/>
 
                 <label htmlFor="lastName" className='form-label'>Last Name:</label>
                 <input ref={lastNameRef} className="form-input" id="lastName" required/>
