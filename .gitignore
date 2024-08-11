@@ -1,0 +1,14 @@
+node_modules/
+build/
+assets/
+package*
+npm-debug.log*
+.env
+
+# Next.js
+.next
+next-env.d.ts
+dist
+
+# Martinis
+martinis/

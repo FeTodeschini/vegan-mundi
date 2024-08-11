@@ -2,12 +2,12 @@ const express = require ('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { createConnection, authPlugins } = require('mysql2');
+const bcrypt = require('bcrypt');
 const config = require('./config');
 
 const app = express();
 
 app.use(cors());
-
 app.use(bodyParser.json());
 
 // Midlleware error handling function
@@ -397,12 +397,16 @@ app.post('/account/create', async (req, res, next) => {
   const dbConnection = await connectToDb();
   const {firstName, lastName, email, password} = req.body;
 
+  // Hash the password with bcrypt
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
   dbConnection.query(
       `INSERT INTO USER VALUES('
         ${email}', 
         '${firstName}', 
         '${lastName}', 
-        '${password}')`,
+        '${hashedPassword}')`,
     (err, result) => {
       if (err)if(err.code === 'ER_DUP_ENTRY') {
         next(new CustomError(`There is already an account registered with the e-mail '${email}'`, 400));
