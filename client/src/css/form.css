@@ -1,0 +1,39 @@
+.form-container {
+    max-width: 60rem;
+    margin: 2rem auto;
+    padding: 0 6rem;
+}
+
+.form-btn {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-gray-dark-rgb-2);
+    padding: 4rem;
+}
+
+.form-title {
+    margin-bottom: -5.6rem;
+}
+
+.form-label {
+    color: var(--color-gray-dark);
+    font-size: 1.8rem;
+    letter-spacing: .1rem;
+    padding-bottom: 1rem;
+}
+
+.form-input {
+    border: 1px solid var(--color-gray-dark-rgb-3);
+    font-size: 1.8rem;
+    margin-bottom: 4rem;
+    padding: 0.5rem 1rem;
+}
+
+.form-input:focus {
+    background-color: var(--color-primary-lightest);
+}
