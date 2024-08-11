@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image.js';
 import SectionHeader from './SectionHeader.js';
 
 import '../css/main.css';
@@ -42,8 +43,9 @@ export default function Prices() {
                     <div className="prices__list grid-auto-fit grid-auto-fit--wide-items">
                         
                         {prices.map(price=>(
+
                                 <div className={ price.GREAT_VALUE ? "card prices__list-card prices__list-card--great-value": "card prices__list-card"} key={price.DESCRIPTION}>
-                                    {<img className="icon-medium prices__list-card-icon" src={require(`../assets/${price.ICON}`)} alt="" />}
+                                    {/* {<Image fill={true} className="icon-medium prices__list-card-icon" src={price.ICON} alt=""/>} */}
                                     { price.GREAT_VALUE ? <p className="yellow-ribbon prices__list-card-yellow-ribbon">Great Value</p> : ""}
                                     <p className="heading-tertiary prices__list-card-description">{price.DESCRIPTION}</p>
                                     <p className='prices__list-card-price'>${price.PRICE}</p>

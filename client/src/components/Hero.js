@@ -22,7 +22,7 @@ export default function Hero() {
                 </div>
 
                 <div className='hero__intro-video'>
-                    <img src={introVideo} className="img-large"alt="Link to introductory video" />
+                    <img src={introVideo.src} className="img-large"alt="Link to introductory video" />
                 </div>
             </div>
         </section>

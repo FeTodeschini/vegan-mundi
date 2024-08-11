@@ -14,8 +14,6 @@ export default function SearchInput({ placeholder }){
     const { keyword, setKeyword } = useContext(StateContext);
     const navigate = useNavigate();  
 
-    // const focusElement = useFocus();
-
     return(
         <>
             <div className="header__search">
@@ -23,7 +21,7 @@ export default function SearchInput({ placeholder }){
                     onChange={(e)=>setKeyword(e.target.value)}
                     onKeyUp={(e)=>handleKeyUp(e, keyword, navigate)}/>
                 <button type="button" className="search__button">
-                    <img className="search__icon"  src={magnifyingGlass} alt="Magnifying Glass" />
+                    <img className="search__icon"  src={magnifyingGlass.src} alt="Magnifying Glass" />
                 </button>
             </div>
         </>

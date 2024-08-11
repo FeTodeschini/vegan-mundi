@@ -8,7 +8,7 @@ export default function CardTopImage({isVideo, imgLink, linkState, imgSource}){
             
             {/* displays the play button for playing the video in case the image of the card is a link to a video ( playVideo=true) */}
             {isVideo && 
-                <Link to={imgLink} state={linkState}><img className='icon-play' src={iconPlay}></img></Link>
+                <Link to={imgLink} state={linkState}><img className='icon-play' src={iconPlay.src}></img></Link>
             }
         </div>
     )

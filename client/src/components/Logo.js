@@ -4,5 +4,5 @@ import logo from "../assets/logo-vegan-mundi.png";
 export default function Logo() {
     const navigate = useNavigate();  
     
-    return <img className="logo" src={logo} alt="Vegan Mundi logo" onClick={()=>navigate("/")}/>
+    return <img className="logo" src={logo.src} alt="Vegan Mundi logo" onClick={()=>navigate("/")}/>
 }

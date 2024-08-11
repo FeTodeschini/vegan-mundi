@@ -1,3 +1,3 @@
 module.exports = {
-    serverEndpoint: process.env.REACT_APP_SERVER_ENDPOINT,
+    serverEndpoint: process.env.NEXT_PUBLIC_SERVER_ENDPOINT,
 }

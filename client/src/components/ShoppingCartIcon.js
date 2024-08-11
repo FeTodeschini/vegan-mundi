@@ -13,7 +13,7 @@ export default function ShoppingCartIcon () {
     return (
         <div className="shopping-cart-icon">
             <figure className="header-icon-container">
-                <img className="header-icon" src={shoppingCart} alt="" onClick={()=>navigate("/cart")}/>
+                <img className="header-icon" src={shoppingCart.src} alt="" onClick={()=>navigate("/cart")}/>
                 <figcaption className='font-primary-dark uppercase bold header-icon__caption'>$0.00</figcaption>
             </figure>
             <p className="shopping-cart-quantity">{cartQuantity}</p>

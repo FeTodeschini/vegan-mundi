@@ -21,7 +21,7 @@ export default function DeliveryMethods() {
                     {
                         sectionData.map(item=>
                             <Card
-                                title = { <><img src={require(`../assets/${item.ICON}`)} alt="In Person Classes" className="icon-medium" /> {item.TITLE}</>  }
+                                title = { <><img src={require(`../assets/${item.ICON}`).src} alt="In Person Classes" className="icon-medium" /> {item.TITLE}</>  }
                                 description = {item.DESCRIPTION}
                                 key= {item.TITLE}
                             >

@@ -47,7 +47,7 @@ export default function Categories() {
                                     item.DESCRIPTION_ITEMS_LIST.split("|").map(item => {
                                         return (
                                             <div className='card__items-list' key={item}>
-                                                <img className='icon-list' src={leaf} alt="Leaf icon" />
+                                                <img className='icon-list' src={leaf.src} alt="Leaf icon" />
                                                 <p>{item}</p>
                                             </div>
                                         )
