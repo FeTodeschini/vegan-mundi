@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { StateContext } from "../StateProvider.js";
+import { StateContext } from "../StateProvider";
 import { useNavigate } from "react-router-dom";
+// import { useFocus } from "../hooks/useFocus"
 import magnifyingGlass from "../assets/magnifying-glass.svg";
 
 async function handleKeyUp(e, keyword, navigate) {
@@ -12,6 +13,8 @@ async function handleKeyUp(e, keyword, navigate) {
 export default function SearchInput({ placeholder }){
     const { keyword, setKeyword } = useContext(StateContext);
     const navigate = useNavigate();  
+
+    // const focusElement = useFocus();
 
     return(
         <>

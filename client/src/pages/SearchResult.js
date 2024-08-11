@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { StateContext } from "../StateProvider.js";
 import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSuignedUrlToArray.js";
-import FilteredClasses from "../FilteredClasses.js";
+import FilteredClasses from "../components/FilteredClasses.js";
 
 import config from "../utils/config.js";
 

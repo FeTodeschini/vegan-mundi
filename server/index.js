@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 
 // Midlleware error handling function
 app.use((error, req, res, next) =>{
-  // console.log(`Mensagets: ${error}`);
-  // res.status(err.status).json({message: err.message});
+  console.log(`Middleware error: ${error}`);
+  res.status(err.status).json({message: err.message});
 })
 
 // class for throwing errors, with customized messages

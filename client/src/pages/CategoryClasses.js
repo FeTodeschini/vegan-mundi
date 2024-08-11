@@ -2,7 +2,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSuignedUrlToArray.js";
-import FilteredClasses from "../FilteredClasses.js";
+import FilteredClasses from "../components/FilteredClasses.js";
 
 import config from "../utils/config.js";
 import '../css/main.css';
