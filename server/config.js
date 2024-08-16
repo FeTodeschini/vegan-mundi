@@ -9,5 +9,7 @@ module.exports = {
 
     awsRegion: process.env.AWS_REGION,
     awsAccessKey: process.env.AWS_ACCESS_KEY,
-    awsSecretKey: process.env.AWS_SECRET_KEY
+    awsSecretKey: process.env.AWS_SECRET_KEY,
+
+    jwtSecretKey: process.env.JWT_SECRET_KEY
 }

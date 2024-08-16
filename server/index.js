@@ -211,7 +211,7 @@ app.get('/classes/category/:category', async (req, res) => {
                         ` CLASS_CATEGORY CAT ` + 
                         ` INNER JOIN CLASS CLS ON ` +
                         `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` + 
-                        `   AND UPPER(CAT.TITLE) = UPPER('${req.params.category}') ` + 
+                        `   AND UPPER(CAT.CATEGORY_ID) = ${req.params.category} ` + 
                         ` INNER JOIN CLASS_RECIPE CLR ON ` +
                         `   CLS.CLASS_ID = CLR.CLASS_ID ` +
                         ` INNER JOIN RECIPE RCP ON ` +
@@ -402,8 +402,8 @@ app.post('/account/create', async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   dbConnection.query(
-      `INSERT INTO USER VALUES('
-        ${email}', 
+      `INSERT INTO USER VALUES(
+        '${email}', 
         '${firstName}', 
         '${lastName}', 
         '${hashedPassword}')`,
@@ -419,5 +419,47 @@ app.post('/account/create', async (req, res, next) => {
         res.status(200).send("Account created successfully");
       }
         
+  });
+})
+
+
+// SIGNIN
+
+app.post('/signin', async (req, res, next) => {
+  const dbConnection = await connectToDb();
+  const {email, password} = req.body;
+
+  dbConnection.query(
+      `SELECT * FROM USER WHERE EMAIL = '${email}'`,
+    (err, result) => {
+      if (err) {
+        next(new CustomError(`There was an error while signin in`, 500));
+        return;
+      }
+      else if (result.length === 0) {
+          next(new CustomError(`There e-mail ${email} is not registered in this site`, 400));
+          return;
+      }
+      else {
+
+        bcrypt.compare(password, result[0].PASSWORD, (err, result) => {
+          if (err) {
+            next(new CustomError(`There was an error while signin in`, 500));
+            return;
+          }
+          else {
+            if (result) {
+              res.status(200).send("Signin successfull");
+            }
+            else {
+              console.log("Invalid credentials")
+              next(new CustomError(`Invalid credentials`, 400));
+            }
+          }
+        });
+      }
+
+      dbConnection.end();          
+
   });
 })
