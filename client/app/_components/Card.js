@@ -3,7 +3,7 @@ import CardContent from './CardContent';
 
 import '../_styles/card.css';
 
-export default function Card({ imgSource, imgLink, linkState, isVideo, title, description, descriptionList, bgColor, callOutTag, children}){
+export default function Card({ imgSource, imgLink, isVideo, title, description, descriptionList, bgColor, callOutTag, children}){
     // Creates an object for applying a background color style in case a bgColor was received by the Card 
     const style = bgColor !== undefined ? {backgroundColor: bgColor} : {};
 
@@ -14,7 +14,6 @@ export default function Card({ imgSource, imgLink, linkState, isVideo, title, de
                 <CardTopImage 
                     isVideo={isVideo}
                     imgLink={imgLink}
-                    linkState={linkState}
                     imgSource={imgSource}
                 />
             }
