@@ -198,7 +198,7 @@ app.get('/classes/category/:category', async (req, res) => {
 
   try {
 
-      dbConnection.query(`SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO , ` +
+      dbConnection.query(`SELECT DISTINCT CAT.TITLE AS CATEGORY_TITLE, CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO , ` +
                         ` ( SELECT GROUP_CONCAT(TITLE SEPARATOR '|') 
                             FROM 
                               RECIPE R 
@@ -219,7 +219,16 @@ app.get('/classes/category/:category', async (req, res) => {
         function (err, result, fields)
          {
           if (err) throw err;
-          res.send(result);
+
+          // Adds the description of the category being searched by its ID to the returned result, so the front-end doesn't  need
+          // to make another call just to get the description of the gaterory based onits ID
+          const categoryTitle= result[0].CATEGORY_TITLE;
+          const resultObject = {
+            categoryTitle,
+            classes: result,
+          }
+          console.log(`resultObject: ${JSON.stringify(resultObject)}`);
+          res.send(resultObject);
       });
 
     } catch (err) {
@@ -402,7 +411,7 @@ app.post('/account/create', async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   dbConnection.query(
-      `INSERT INTO USER VALUES(
+      `INSERT INTO ACCOUNT VALUES(
         '${email}', 
         '${firstName}', 
         '${lastName}', 
@@ -430,7 +439,7 @@ app.post('/signin', async (req, res, next) => {
   const {email, password} = req.body;
 
   dbConnection.query(
-      `SELECT * FROM USER WHERE EMAIL = '${email}'`,
+      `SELECT * FROM ACCOUNT WHERE EMAIL = '${email}'`,
     (err, result) => {
       if (err) {
         next(new CustomError(`There was an error while signin in`, 500));

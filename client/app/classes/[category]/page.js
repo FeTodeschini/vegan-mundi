@@ -16,13 +16,14 @@ export default function CategoryClasses(){
 
     const params = useParams()
     const category = params.category;
+    const [categoryTitle, setCategoryTitle] = useState("");
 
     useEffect( ()=> {
         // Retrieves from the DB all classes matching the category
         async function getResults() {
             let response = await axios.get(`${config.serverEndpoint}classes/category/${category}`);
-            console.log(`endPoint: ${`${config.serverEndpoint}classes/category/${category}`}`);
-            setFilterResult([...response.data]); 
+            setCategoryTitle(response.data.categoryTitle);
+            setFilterResult([...response.data.classes]); 
         }
 
         getResults();
@@ -31,9 +32,8 @@ export default function CategoryClasses(){
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
     useAddPreSignedUrlToArray(filterResult, 'vegan-mundi-thumbnails', setImages, setIsLoading);
     const classes = filterResult.length;
-    console.log(`classes: ${classes}`);
     
     return (
-        <FilteredClasses images={images} title={`${classes} class${classes !== 1 ? "es" : "" } in this category`} subTitle={`Category: ${category}`}/>            
+        <FilteredClasses images={images} title={`${classes} class${classes !== 1 ? "es" : "" } in this category`} subTitle={`Category: ${categoryTitle}`}/>            
     )
 }
