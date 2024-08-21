@@ -43,6 +43,11 @@ html {
     overflow-x: hidden;
 }
 
+
+input[type="radio"] {
+    accent-color: var(--color-primary-dark);
+}
+
 footer {
     background-color: var(--color-primary-dark-rgb-8);
     color: #fff;
@@ -89,6 +94,14 @@ section {
     grid-template-columns: repeat(3, 32rem);
 }
 
+.grid-merge-columns{
+    grid-column: 1 / -1;
+}
+
+.grid-col-2 {
+    grid-column: 2;
+}
+
 .col-gap-medium {
     column-gap: 4rem;
 }
@@ -132,6 +145,14 @@ section {
 
 .btn-full {
     width: 100%;
+}
+
+.btn-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
 }
 
 .btn--green {
