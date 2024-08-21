@@ -35,8 +35,7 @@ export default function FreeClasses() {
                     {images.map(item=>(
                         <Card 
                             imgSource={item.PRE_SIGNED_URL}
-                            imgLink="/videoplayer" 
-                            linkState={item.VIDEO}
+                            imgLink={`/videoplayer/${item.VIDEO}`} 
                             isVideo={true}
                             title={item.TITLE} 
                             description={item.DESCRIPTION} 

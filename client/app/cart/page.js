@@ -5,11 +5,13 @@ import { StateContext } from "../StateProvider.js";
 
 import SeactionHeader from '../_components/SectionHeader.js';
 import Button from "../_components/Button.js";
+import ButtonRemoveFromCart from "../_components/ButtonRemoveFromCart.js";
 import Card from "../_components/Card.js"
-import { removeFromCart } from '../_lib/functions.js';
+
+import "../_styles/card.css";
 
 export default function ShoppingCart () {
-    const { setKeyword, cartQuantity, setCartQuantity, cartItems, setCartItems } = useContext(StateContext)
+    const { setKeyword, cartQuantity, setCartQuantity, cartItems, setCartItems, cartAmount, setCartAmount } = useContext(StateContext)
 
     useEffect (()=> {
         setKeyword("");
@@ -18,6 +20,7 @@ export default function ShoppingCart () {
     function emptyCart(){
         setCartItems([]);
         setCartQuantity(0);
+        setCartAmount(0);
 
         localStorage.setItem('cartItems', JSON.stringify([]));
         localStorage.setItem('cartQuantity', 0);
@@ -30,8 +33,8 @@ export default function ShoppingCart () {
             <div className="cart-buttons">
                 <div className="cart-buttons--title">
                     <SeactionHeader title={`${cartQuantity === 0 ? `Your cart is empty ` : 
-                                                cartQuantity ===  1 ? ` There is 1 item in your cart - subtotal: $` : 
-                                            ` There are ${cartQuantity} items in your cart  - subtotal: $` }`} 
+                                                cartQuantity ===  1 ? ` There is 1 item in your cart - subtotal: $${cartAmount} ` : 
+                                            ` There are ${cartQuantity} items in your cart  - subtotal: $${cartAmount}` }`} 
                                     subTitle={"Shopping Cart"}/>                    
                 </div>
 
@@ -44,18 +47,22 @@ export default function ShoppingCart () {
                 }
             </div>
 
-            {/* All classes selected by the User */}
+            {/* Display all classes selected by the User */}
             <div className="grid-auto-fit">
-                {cartItems.map(item=>(
+                {cartItems.map(item=> (
                     <Card 
                         imgSource={item.PRE_SIGNED_URL}
                         imgLink={"/classes"}
                         title={item.TITLE} 
-                        // description={item.DESCRIPTION} 
                         key={item.PRE_SIGNED_URL}
                     >
+                        <div className="cart--class-detail card__description">
+                                <p>Class Type: <span className="bold">{item.CATEGORY_TITLE}</span></p>
+                                <p>Price: <span className="bold">${item.PRICE}</span></p>
+                                {item.MULTIPLE_STUDENTS && <p>Students: <span className="bold">{item.STUDENTS}</span></p>}
+                        </div>
                         <div className="flex-col">
-                            <Button bgColor={"green"} type={"button"} size={"medium"} onClick={()=>removeFromCart(cartItems, cartQuantity, setCartItems, setCartQuantity, item.TITLE)}>Remove Item</Button>
+                            <ButtonRemoveFromCart itemTitle={item.TITLE} />
                         </div>
                     </Card>
                 ))}

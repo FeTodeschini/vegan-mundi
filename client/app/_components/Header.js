@@ -1,17 +1,13 @@
+'use client'
+
 import { useContext, useEffect } from "react";
 import { StateContext } from "../StateProvider";
-import { Outlet } from 'react-router-dom';
 
 import LogoHeader from "./LogoHeader";
 import SearchInput from './SearchInput';
-
-// import dynamic from 'next/dynamic';
-// const SearchInput = dynamic(() => import('../_components/SearchInput'), { ssr: false });
-
 import SigninIcon from "./SigninIcon";
 import Menu from './Menu';
-import ShoppingCartIcon from './ShoppingCartIcon';
-import Footer from './Footer';
+import CartIcon from './CartIcon';
 
 import "../_styles/menu.css";
 
@@ -36,17 +32,13 @@ export default function Header() {
             <div className="header">
                 <LogoHeader />
                 <div className="header__action-icons">
-                    <ShoppingCartIcon />
+                    <CartIcon />
                     <SigninIcon />
                     <Menu />
                 </div>
                 
                 <SearchInput placeholder={"What do you want to cook today? (type at least 4 letters)"}/>
             </div>
-
-            <Outlet />
-
-            {/* <Footer /> */}
         </>
     )
 }

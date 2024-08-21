@@ -93,12 +93,42 @@ p {
     letter-spacing: 0.2rem;
 }
 
+.regular-text,
+.regular-text-small
+ {
+    color: var(--color-gray-dark);
+}
+
+.regular-text {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    letter-spacing: .1rem;
+}
+
+.regular-text-small {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: .1rem;
+}
+
+.bold {
+    font-weight: 700;
+}
+
 .top-margin--small {
     margin-top: 2.4rem;
 }
 
 .top-margin--large {
     margin-top: 4.2rem;
+}
+
+.bottom-margin--small {
+    margin-bottom: 2.4rem;
+}
+
+.bottom-margin--large {
+    margin-bottom: 4.2rem;
 }
 
 .success {

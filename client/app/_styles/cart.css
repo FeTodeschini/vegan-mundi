@@ -1,0 +1,67 @@
+.shopping-cart-icon {
+    position: relative;
+}
+
+.shopping-cart-quantity {
+    position: absolute;
+    background-color: var(--color-yellow);
+    top: 0;
+    right: 0;
+    transform: translate(45%, -40%);
+    border-radius: 100%;
+    padding: 0.7rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.cart-buttons--title {
+    flex: 1;
+}
+.cart-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+
+.cart-buttons--btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.cart--class-detail {
+    margin-top: -12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    row-gap: 0.5rem;
+}
+
+/*  Styles for the Add To Cart (atc) Modal */
+
+.modal-act--content {
+    margin-top: -4rem;
+    max-width: 40rem;
+}
+
+.modal-atc--content-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    column-gap: 2rem;
+}
+
+.modal-act--schedule {
+    margin: 4rem 0;
+}
+
+.modal-atc--buttons{
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal-atc--item-counter {
+    margin-top: .5rem;
+}

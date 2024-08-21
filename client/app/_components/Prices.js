@@ -1,30 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image.js';
 import SectionHeader from './SectionHeader.js';
+import { useGetPrices } from '../hooks/useGetPrices.js';
 
-import '../_styles/main.css';
 import '../_styles/prices.css';
 
 export default function Prices() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [prices, setPrices] = useState([]);
-
-    useEffect( ()=> {
-
-        async function getPrices() {
-
-            var data = await fetch('http://3.22.160.2:4000/prices');
-            data = await data.json();
-
-            setPrices([...data]);
-            setIsLoading(false);
-
-        }
-
-        getPrices();
-        
-    } , []);
+    
+    useGetPrices(prices, setPrices, isLoading, setIsLoading);
 
     // checks if API call is still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
     if (isLoading){
