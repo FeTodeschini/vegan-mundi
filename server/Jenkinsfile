@@ -9,7 +9,7 @@ pipeline {
             steps {
                 // Here, we assume you deploy the Node.js application to an EC2 instance
                 sh '''
-                echo "Deploying Node.js application..."
+                echo "Deploying Node.js application"
                 '''
             }
         }
