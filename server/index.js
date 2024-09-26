@@ -139,6 +139,10 @@ app.get('/thumbnails/:thumbnail', async (req, res) => {
 
 // }
 
+app.get('/makebah', async (req, res) => {
+  res.send("frewe")
+})
+
 // GET ALL FREE CLASSES (VEGAN-MUNDI.CLASSES.CATEGORY_ID = 1)
 app.get('/classes/free', async (req, res) => {
     const dbConnection = await connectToDb();
@@ -377,7 +381,6 @@ app.get('/gallery/picture/:pictureName', (req, res) => {
 
 //  Get any S3 object based on the bucket name and the object name (key)
 // API call example:
-// http://localhost:4000/s3/vegan-mundi-thumbnails/seitan.jpg
 app.get('/s3/:bucket/:key' , async (req, res) => {
 
   try {
