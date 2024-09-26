@@ -320,6 +320,10 @@ app.get('/assets/videos/:videoName', (req, res) => {
 })
 
 
+app.get('/xupeta', async (req, res) => {
+  res.send("xupeta")
+})
+
 // -------------------- PRICES --------------------
 
 // GET A LIST OF PRICES
