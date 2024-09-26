@@ -57,6 +57,7 @@ async function connectToDb(){
 
   // const token = await signer.getAuthToken();
 
+  console.log("Passing connection params...");
   const dbConnection = createConnection({
       host: config.dbHost,
       user: config.dbUserName,
@@ -66,6 +67,7 @@ async function connectToDb(){
       //   mysql_clear_password: authPlugins.mysql_clear_password
       // }
   });
+  console.log("Connected successfully!");
 
   return dbConnection;
 }
@@ -227,7 +229,6 @@ app.get('/classes/category/:category', async (req, res) => {
             categoryTitle,
             classes: result,
           }
-          console.log(`resultObject: ${JSON.stringify(resultObject)}`);
           res.send(resultObject);
       });
 
@@ -325,11 +326,10 @@ app.get('/assets/videos/:videoName', (req, res) => {
 
 app.get('/prices', async (req, res) => {
 
-
   const dbConnection = await connectToDb();
 
   try {
-
+      console.log("Retieving prices");
       dbConnection.query('SELECT * FROM PRICE', function (err, result) {
           if (err) throw err;
           res.send(result);
