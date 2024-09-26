@@ -57,7 +57,6 @@ async function connectToDb(){
 
   // const token = await signer.getAuthToken();
 
-  console.log("Passing connection params...");
   const dbConnection = createConnection({
       host: config.dbHost,
       user: config.dbUserName,
