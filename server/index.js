@@ -329,7 +329,6 @@ app.get('/prices', async (req, res) => {
   const dbConnection = await connectToDb();
 
   try {
-      console.log("Retieving prices...");
       dbConnection.query('SELECT * FROM PRICE', function (err, result) {
           if (err) throw err;
           res.send(result);
