@@ -330,21 +330,22 @@ app.get('/xupeta', async (req, res) => {
 
 app.get('/prices', async (req, res) => {
 
-  const dbConnection = await connectToDb();
+  res.send("prices")
+  // const dbConnection = await connectToDb();
 
-  try {
-      console.log("Retieving prices...");
-      dbConnection.query('SELECT * FROM PRICE', function (err, result) {
-          if (err) throw err;
-          res.send(result);
-      });
+  // try {
+  //     console.log("Retieving prices...");
+  //     dbConnection.query('SELECT * FROM PRICE', function (err, result) {
+  //         if (err) throw err;
+  //         res.send(result);
+  //     });
 
-    } catch (err) {
-      console.log(err);
-    }
-    finally{
-      dbConnection.end();
-    }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   finally{
+  //     dbConnection.end();
+  //   }
 
 })
 
