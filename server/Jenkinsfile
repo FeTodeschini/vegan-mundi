@@ -10,13 +10,7 @@ pipeline {
                 // Use sshagent to access the SSH key stored in Jenkins credentials
                 sshagent (credentials: ['ssh-key-application-server']) {
                     sh '''
-                        echo "Deploying Node.js application to Test..."
-                        # Debugging: Check if the environment variable is set correctly
-                        echo "EC2 User: ${EC2_USER}"
-                        echo "EC2 Host: ${EC2_APP_HOST}"
-                        echo "Remote Directory: ${REMOTE_DIR}"
-                        # Use the SSH private key to perform SCP
-                        scp -o StrictHostKeyChecking=no server/index.js ${EC2_USER}@${EC2_APP_HOST}:${REMOTE_DIR}/index.js
+                        scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/index.js ${EC2_USER}@${EC2_APP_HOST}:${REMOTE_DIR}/index.js
                     '''
                 }
             }
