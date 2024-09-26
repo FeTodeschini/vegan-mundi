@@ -138,9 +138,6 @@ app.get('/thumbnails/:thumbnail', async (req, res) => {
 //     }
 
 // }
-app.get('/pip', async (req, res) => {
-  res.send("pip")
-})
 
 // GET ALL FREE CLASSES (VEGAN-MUNDI.CLASSES.CATEGORY_ID = 1)
 app.get('/classes/free', async (req, res) => {
