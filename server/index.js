@@ -319,6 +319,9 @@ app.get('/assets/videos/:videoName', (req, res) => {
   res.sendFile(`${dir}${req.params.videoName}`);
 })
 
+app.get('/xups', async (req, res) => {
+  res.send("xups");
+})
 
 // -------------------- PRICES --------------------
 
