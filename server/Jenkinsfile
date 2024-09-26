@@ -11,7 +11,12 @@ pipeline {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     sh '''
                         scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/index.js ${EC2_USER}@${EC2_APP_HOST}:${REMOTE_DIR}/index.js
-                        ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_APP_HOST} '/home/ubuntu/.nvm/versions/node/v21.7.2/bin/pm2 stop server && /home/ubuntu/.nvm/versions/node/v21.7.2/bin/pm2 start index.js --name "server" --cwd /var/www/vegan-mundi/server'
+                        
+                        ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_APP_HOST} '
+                            . $HOME/.nvm/nvm.sh &&  # Load nvm
+                            /home/ubuntu/.nvm/versions/node/v21.7.2/bin/pm2 stop server && 
+                            /home/ubuntu/.nvm/versions/node/v21.7.2/bin/pm2 start index.js --name "server" --cwd /var/www/vegan-mundi/server
+                        '
                     '''
                 }
             }
