@@ -319,6 +319,7 @@ app.get('/assets/videos/:videoName', (req, res) => {
   res.sendFile(`${dir}${req.params.videoName}`);
 })
 
+
 // -------------------- PRICES --------------------
 
 // GET A LIST OF PRICES
