@@ -1,17 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('Deploy Node.js App') {
-            // Trigger the pipeline only if there are changes in the "server" folder
+        stage('Deploy Node.js App-Test') {
+            // Trigger the pipeline only if there are coomits in the "server" folder
             when {
                 changeset "**/server/**"
             }
             steps {
-                // Here, we assume you deploy the Node.js application to an EC2 instance
-                sh '''
-                echo "Deploying Node.js application..."
-                '''
+                sshagent (credentials: ['ssh-key-application-server']){
+                    sh '''
+                        echo "Deploying Node.js application to Test..."
+                        scp -o StrictHostKeyChecking=no server/index.js ${EC2_USER}@${EC2_HOST}:${REMOTE_DIR}/index.js
+                    '''
+                }
             }
+
         }
     }
 }
