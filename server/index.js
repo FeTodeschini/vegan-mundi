@@ -320,7 +320,7 @@ app.get('/assets/videos/:videoName', (req, res) => {
 })
 
 app.get('/xups', async (req, res) => {
-  res.send("xupyyyysss");
+  res.send("xupyyyysssss");
 })
 
 // -------------------- PRICES --------------------
