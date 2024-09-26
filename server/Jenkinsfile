@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Deploy Node.js App-Test') {
+        stage('Deploy Node.js Server to TEST Environment') {
             // Trigger the pipeline only if there are commits in the "server" folder
             when {
                 changeset "**/server/**"
