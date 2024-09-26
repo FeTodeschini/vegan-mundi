@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Deploy Node.js App-Test') {
             // Trigger the pipeline only if there are commits in the "server" folder
             when {
@@ -20,5 +26,11 @@ pipeline {
                 }
             }
         }
+
+        stage('List Files') {
+            steps {
+                sh 'ls -la server'
+            }
+        }       
     }
 }
