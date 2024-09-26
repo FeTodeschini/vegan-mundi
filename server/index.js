@@ -138,9 +138,7 @@ app.get('/thumbnails/:thumbnail', async (req, res) => {
 //     }
 
 // }
-app.get('/poutz', async (req, res) => {
-  res.send("dsdcsa")
-})
+
 // GET ALL FREE CLASSES (VEGAN-MUNDI.CLASSES.CATEGORY_ID = 1)
 app.get('/classes/free', async (req, res) => {
     const dbConnection = await connectToDb();
