@@ -10,7 +10,7 @@ pipeline {
                 sshagent (credentials: ['ssh-key-application-server']){
                     sh '''
                         echo "Deploying Node.js application to Test..."
-                        scp -o StrictHostKeyChecking=no server/index.js ${EC2_USER}@${EC2_HOST}:${REMOTE_DIR}/index.js
+                        scp -o StrictHostKeyChecking=no server/index.js ${EC2_USER}@${EC2_APP_HOST}:${REMOTE_DIR}/index.js
                     '''
                 }
             }
