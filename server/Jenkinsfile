@@ -11,7 +11,6 @@ pipeline {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     sh '''
                         scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${APP_HOST_TEST}:${REMOTE_DIR}/
-                        scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/package.json ${EC2_USER}@${APP_HOST_TEST}:${REMOTE_DIR}/
                         
                         ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${APP_HOST_TEST} '
                             . $HOME/.nvm/nvm.sh &&  # Load nvm
