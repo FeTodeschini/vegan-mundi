@@ -2,11 +2,27 @@ const express = require ('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { createConnection, authPlugins } = require('mysql2');
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+
+// Load environment variables based on the NODE_ENV
+const envFile = process.env.NODE_ENV === 'development' 
+  ? path.resolve(__dirname, '.env.development') 
+  : process.env.NODE_ENV === 'test'
+  ? path.resolve(__dirname, '.env.test')
+  : path.resolve(__dirname, '.env.production');
+
+  if (fs.existsSync(envFile)) {
+    dotenv.config({ path: envFile });
+  } else {
+    console.error(`Warning: ${envFile} does not exist. Using default environment variables or process.env.`);
+  }
+
 const config = require('./config');
 
 const app = express();
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -44,19 +60,6 @@ async function generatePreSignedUrl({ bucket, key }) {
 }
 
 async function connectToDb(){
-
-  // Not authenticating with IAM for now as the mysql_clear_password parameter required by mysql2 for doing so is not working (the node package has a bug, as seen in their Github) 
-  // const { Signer } = require("@aws-sdk/rds-signer");
-
-  // const signer = new Signer({
-  //   hostname: config.dbHost,
-  //   port: config.dbPort,
-  //   username: config.dbUsername,
-  //   region: config.awsRegion,
-  // });
-
-  // const token = await signer.getAuthToken();
-
   const dbConnection = createConnection({
       host: config.dbHost,
       user: config.dbUserName,
@@ -66,7 +69,6 @@ async function connectToDb(){
       //   mysql_clear_password: authPlugins.mysql_clear_password
       // }
   });
-  console.log("Connected successfully!");
 
   return dbConnection;
 }
@@ -77,12 +79,6 @@ app.get('/thumbnails/:thumbnail', async (req, res) => {
 
   const client = new S3Client({
       region: "us-east-2",
-      //  No need to pass credentials as the AWS CLI in the EC2 instance that hosts the application is configured to use the Access Key and the Secret Key
-      // This was done by running the AWS CONFIGURE command in the EC2 instance
-      //  credentials: {
-      //     accessKeyId: 'XXXXXXXXXXX',
-      //     secretAccessKey: 'XXXXXXXXXXX'
-      // }
   });
 
   const command = new GetObjectCommand({
