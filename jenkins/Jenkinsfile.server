@@ -9,23 +9,19 @@ pipeline {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     withCredentials([string(credentialsId: 'env-test', variable: 'ENV_TEST')]) {
                         sh '''
-                            # Copy JavaScript files
-                            scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ubuntu@172.31.29.148:/var/www/vegan-mundi/server/
+                            # Create or overwrite deploy.sh
+                            echo "#!/bin/bash" > /path/to/deploy.sh
+                            echo "export NVM_DIR=\"/home/ubuntu/.nvm\"" >> /path/to/deploy.sh
+                            echo "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" >> /path/to/deploy.sh
+                            echo "export PATH=\"\$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH\"" >> /path/to/deploy.sh
+                            echo "nvm use default || nvm install node" >> /path/to/deploy.sh
+                            echo "pm2 restart server" >> /path/to/deploy.sh
 
-                            # The .env.test file is stored in the Jenkins Credentials plugin
-                            echo '${ENV_TEST}' | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
+                            # Ensure it is executable
+                            chmod +x /path/to/deploy.sh
 
-                            # Create and run a deployment script
-                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
-                                echo "#!/bin/bash" > /tmp/deploy.sh
-                                echo "source /home/ubuntu/.bashrc" >> /tmp/deploy.sh
-                                echo "export NVM_DIR=\"/home/ubuntu/.nvm\"" >> /tmp/deploy.sh
-                                echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> /tmp/deploy.sh
-                                echo "export PATH=\"\$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH\"" >> /tmp/deploy.sh
-                                echo "pm2 restart server" >> /tmp/deploy.sh
-                                chmod +x /tmp/deploy.sh
-                                /tmp/deploy.sh
-                            '
+                            # Execute the script with bash
+                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'bash /path/to/deploy.sh'
                         '''
                     }
                 }
