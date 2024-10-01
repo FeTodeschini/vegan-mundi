@@ -20,7 +20,7 @@ pipeline {
                                 bash -l -c "
                                 export NVM_DIR=\"/home/ubuntu/.nvm\"
                                 [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"
-                                export PATH=\"\$NVM_DIR/versions/node/v21.7.2/bin:\$PATH\"  # Replace with your Node version
+                                export PATH=\"\$NVM_DIR:\$NVM_DIR/versions/node/v21.7.2/bin:\$PATH\"  # Adding NVM directory to PATH
                                 echo 'Current shell: \$SHELL'
                                 echo 'Current PATH: \$PATH'
                                 echo 'Checking NVM and PM2:'
