@@ -7,13 +7,13 @@ pipeline {
             }
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
-                    withCredentials([string(credentialsId: 'env-test', variable: 'ENV_TEST')]) {
+                    withCredentials([file(credentialsId: 'env-test', variable: 'ENV_TEST_FILE')]) {
                         sh '''
                             # Copy JavaScript files
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ubuntu@172.31.29.148:/var/www/vegan-mundi/server/
 
                             # The .env.test file is stored in the Jenkins Credentials plugin
-                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 "echo '${ENV_TEST}' > /var/www/vegan-mundi/server/.env.test"
+                            cat "$ENV_TEST_FILE" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
 
                             # Restart the server in a login shell
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
