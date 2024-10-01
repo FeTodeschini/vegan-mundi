@@ -23,11 +23,11 @@ pipeline {
                             # Update the .env.test file
                             echo '${ENV_TEST}' | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
 
-                            # Restart the server
+                            # Restart the server using pm2
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
                                 export NVM_DIR="/root/.nvm"
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                                pm2 restart server
+                                nvm use default && pm2 restart server
                             '
                         '''
                     }
