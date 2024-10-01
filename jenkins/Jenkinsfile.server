@@ -2,14 +2,15 @@ pipeline {
     agent any
     stages {
         stage('Deploy Node.js Server to TEST Environment') {
-            when {
-                changeset "**/server/**"
-            }
+            // when {
+            //     changeset "**/server/**"
+            // }
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     withCredentials([string(credentialsId: 'env-test', variable: 'ENV_TEST')]) {
                         sh '''
                             # Copy JavaScript files
+                            whoami
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ubuntu@172.31.29.148:/var/www/vegan-mundi/server/
 
                             # The .env.test file is stored in the Jenkins Credentials plugin
