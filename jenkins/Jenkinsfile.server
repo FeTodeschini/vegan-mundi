@@ -21,7 +21,7 @@ pipeline {
 
                             # Restart the server using pm2
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
-                                bash -c "
+                                bash -l -c "
                                 export NVM_DIR=\\"/home/ubuntu/.nvm\\"
                                 [ -s \\"$NVM_DIR/nvm.sh\\" ] && . \\"$NVM_DIR/nvm.sh\\"
                                 
