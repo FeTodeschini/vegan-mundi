@@ -14,14 +14,13 @@ pipeline {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     sh '''
                         scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${APP_HOST_TEST}:${REMOTE_DIR}/
-                        scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${params.envTestFile} ubuntu@172.31.29.148:/var/www/vegan-mundi/server/.env.test
                     '''
 
                     script {
                         // Copy the .env.test file from the local machine to the EC2 instance
                         // The file content is stored in the Jenkins Credentials Plugin
                         sh """
-                            echo "$ENV_TEST" > /var/www/vegan-mundi/server/.env.test
+                            echo '${ENV_TEST}' > /var/www/vegan-mundi/server/.env.test
                         """
                     }
 
