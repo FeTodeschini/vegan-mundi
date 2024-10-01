@@ -8,6 +8,8 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 
 // Load environment variables based on the NODE_ENV
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
+
 const envFile = process.env.NODE_ENV === 'development' 
   ? path.resolve(__dirname, '.env.development') 
   : process.env.NODE_ENV === 'test'
@@ -63,13 +65,6 @@ async function generatePreSignedUrl({ bucket, key }) {
 }
 
 async function connectToDb(){
-  console.log('Env variables:', {
-    host: config.dbHost,
-    user: config.dbUserName,
-    password: config.dbSecret,
-    database: config.dbName,
-});
-
   const dbConnection = createConnection({
       host: config.dbHost,
       user: config.dbUserName,
