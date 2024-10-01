@@ -26,6 +26,9 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+console.log('DB_USER:', process.env.DB_USER);
+console.log('Trimmed DB_USER:', process.env.DB_USER?.trim());
+
 // Midlleware error handling function
 app.use((error, req, res, next) =>{
   console.log(`Middleware error: ${error}`);
@@ -60,6 +63,13 @@ async function generatePreSignedUrl({ bucket, key }) {
 }
 
 async function connectToDb(){
+  console.log('Connecting with:', {
+    host: config.dbHost,
+    user: config.dbUserName,
+    password: config.dbSecret ? '******' : 'undefined',
+    database: config.dbName,
+});
+
   const dbConnection = createConnection({
       host: config.dbHost,
       user: config.dbUserName,
