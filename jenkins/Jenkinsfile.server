@@ -17,7 +17,7 @@ pipeline {
                             command -v nvm || echo "nvm not found"
                             echo "NVM loaded: $(command -v nvm)"
 
-                            # Ensure nvm is installed and set the default node version
+                            # Ensure the desired Node.js version is installed
                             nvm install 21.7.2
                             nvm alias default 21.7.2
 
@@ -31,6 +31,11 @@ pipeline {
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
                                 export NVM_DIR="/root/.nvm"
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                
+                                # Check if nvm is available
+                                command -v nvm || echo "nvm not found"
+                                echo "NVM loaded: $(command -v nvm)"
+                                
                                 nvm use default && pm2 restart server
                             '
                         '''
