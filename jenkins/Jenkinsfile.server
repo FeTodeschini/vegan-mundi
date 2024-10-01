@@ -14,7 +14,7 @@ pipeline {
                         sh '''
                             # Load nvm
                             export NVM_DIR="/root/.nvm"
-                            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+                            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
                             # Copy JavaScript files
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ubuntu@172.31.29.148:/var/www/vegan-mundi/server/
@@ -25,7 +25,7 @@ pipeline {
                             # Restart the server
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
                                 export NVM_DIR="/root/.nvm"
-                                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" &&  # Load nvm
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" &&  # Load nvm
                                 /home/ubuntu/.nvm/versions/node/v21.7.2/bin/pm2 restart server
                             '
                         '''
