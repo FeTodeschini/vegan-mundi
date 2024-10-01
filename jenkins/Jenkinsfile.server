@@ -16,17 +16,22 @@ pipeline {
                             echo '${ENV_TEST}' | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
 
                             # Create or overwrite deploy.sh
-                            echo "#!/bin/bash" > /tmp/deploy.sh
-                            echo "export NVM_DIR=\"/home/ubuntu/.nvm\"" >> /tmp/deploy.sh
-                            echo "[ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"" >> /tmp/deploy.sh
-                            echo "export PATH=\"\$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH\"" >> /tmp/deploy.sh
-                            echo "nvm use default || nvm install node" >> /tmp/deploy.sh
-                            echo "pm2 restart server" >> /tmp/deploy.sh
+                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
+                                echo "#!/bin/bash" > /tmp/deploy.sh
+                                echo "export NVM_DIR=\\"/home/ubuntu/.nvm\\"" >> /tmp/deploy.sh
+                                echo "[ -s \\"$NVM_DIR/nvm.sh\\" ] && . \\"$NVM_DIR/nvm.sh\\"" >> /tmp/deploy.sh
+                                echo "export PATH=\\"$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH\\"" >> /tmp/deploy.sh
+                                echo "export PATH=\$PATH:/home/ubuntu/.nvm/versions/node/v21.7.2/bin" >> /tmp/deploy.sh
+                                echo "echo \\"Current shell: \$SHELL\\"" >> /tmp/deploy.sh
+                                echo "echo \\"Current PATH: \$PATH\\"" >> /tmp/deploy.sh
+                                echo "command -v nvm || { echo \\"nvm not found\\"; exit 1; }" >> /tmp/deploy.sh
+                                echo "command -v pm2 || { echo \\"pm2 not found\\"; exit 1; }" >> /tmp/deploy.sh
+                                echo "nvm use default || nvm install node" >> /tmp/deploy.sh
+                                echo "pm2 restart server" >> /tmp/deploy.sh
+                                chmod +x /tmp/deploy.sh
+                            '
 
-                            # Ensure it is executable
-                            chmod +x /tmp/deploy.sh
-
-                            # Execute the script with bash
+                            # Run the deploy.sh script
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'bash /tmp/deploy.sh'
                         '''                    
                     }
