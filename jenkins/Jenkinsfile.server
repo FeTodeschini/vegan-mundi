@@ -19,8 +19,10 @@ pipeline {
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
                                 bash -l -c "
                                 export NVM_DIR=\"/home/ubuntu/.nvm\"
+                                # Load NVM
                                 [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"
-                                export PATH=\"\$NVM_DIR:\$NVM_DIR/versions/node/v21.7.2/bin:\$PATH\"  # Adding NVM directory to PATH
+                                # Add NVM and Node.js to PATH
+                                export PATH=\"\$NVM_DIR:\$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH\"
                                 echo 'Current shell: \$SHELL'
                                 echo 'Current PATH: \$PATH'
                                 echo 'Checking NVM and PM2:'
