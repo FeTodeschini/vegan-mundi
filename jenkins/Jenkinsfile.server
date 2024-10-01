@@ -9,13 +9,9 @@ pipeline {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     withCredentials([string(credentialsId: 'env-test', variable: 'ENV_TEST')]) {
                         sh '''
-                            # Load nvm
-                            export NVM_DIR="/root/.nvm"
+                            # Load nvm locally
+                            export NVM_DIR="/home/ubuntu/.nvm"
                             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-                            # Check if nvm is available
-                            command -v nvm || echo "nvm not found"
-                            echo "NVM loaded: $(command -v nvm)"
 
                             # Copy JavaScript files
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ubuntu@172.31.29.148:/var/www/vegan-mundi/server/
@@ -25,15 +21,18 @@ pipeline {
 
                             # Restart the server using pm2
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
-                                bash -l -c "
-                                export NVM_DIR=\\"/root/.nvm\\"
+                                bash -c "
+                                export NVM_DIR=\\"/home/ubuntu/.nvm\\"
                                 [ -s \\"$NVM_DIR/nvm.sh\\" ] && . \\"$NVM_DIR/nvm.sh\\"
                                 
                                 # Check if nvm is available
                                 command -v nvm || echo \\"nvm not found\\"
-                                echo \\"NVM loaded: \$(command -v nvm)\\"
                                 
-                                nvm use default && pm2 restart server
+                                # Ensure a Node.js version is set
+                                nvm use default || nvm install node
+                                
+                                # Restart pm2
+                                pm2 restart server
                                 "
                             '
                         '''
