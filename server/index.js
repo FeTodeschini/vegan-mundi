@@ -63,7 +63,7 @@ async function generatePreSignedUrl({ bucket, key }) {
 }
 
 async function connectToDb(){
-  console.log('Connecting with:', {
+  console.log('Env variables:', {
     host: config.dbHost,
     user: config.dbUserName,
     password: config.dbSecret,

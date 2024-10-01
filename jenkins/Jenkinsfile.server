@@ -14,7 +14,7 @@ pipeline {
 
                             # The .env.test file is stored in the Jenkins Credentials plugin
                             # tr -d '\r' removes garbage line breaks
-                            cat "$ENV_TEST_FILE" | tr -d '\r' | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
+                            cat "$ENV_TEST_FILE" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
                             
                             # Restart the server in a login shell
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
