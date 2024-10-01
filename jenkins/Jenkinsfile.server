@@ -16,24 +16,17 @@ pipeline {
                             echo '${ENV_TEST}' | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
 
                             # Create or overwrite deploy.sh
-                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /tmp/deploy.sh' << 'EOF'
-                            #!/bin/bash
-                            export NVM_DIR="/home/ubuntu/.nvm"
-                            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                            export PATH="$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH"
-                            echo "Current shell: \$SHELL"
-                            echo "Current PATH: \$PATH"
-                            command -v nvm || { echo "nvm not found"; exit 1; }
-                            command -v pm2 || { echo "pm2 not found"; exit 1; }
-                            nvm use default || nvm install node
-                            pm2 restart server
-                            EOF
-
-                            # Make the script executable
-                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'chmod +x /tmp/deploy.sh'
+                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
+                                echo "#!/bin/bash
+                                export NVM_DIR=\"/home/ubuntu/.nvm\"
+                                [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"
+                                export PATH=\"$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH\"
+                                pm2 restart server" > /tmp/deploy.sh
+                                chmod +x /tmp/deploy.sh
+                            '
 
                             # Execute the script
-                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '/tmp/deploy.sh'
+                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'bash /tmp/deploy.sh'
                         '''                    
                     }
                 }
