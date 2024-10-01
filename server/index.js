@@ -66,7 +66,7 @@ async function connectToDb(){
   console.log('Connecting with:', {
     host: config.dbHost,
     user: config.dbUserName,
-    password: config.dbSecret ? '******' : 'undefined',
+    password: config.dbSecret,
     database: config.dbName,
 });
 
@@ -101,49 +101,6 @@ app.get('/thumbnails/:thumbnail', async (req, res) => {
   res.send(data);
 
 });
-
-// app.get('/s3/:s3Object', async (req, res) => {
-
-//   const { GetObjectCommand, S3Client } = require("@aws-sdk/client-s3");
-
-//   const client = new S3Client({
-//       region: "us-east-2",
-//       //  No need to pass credentials as the AWS CLI in the EC2 instance that hosts the application is configured to use the Access Key and the Secret Key
-//       // This was done by running the AWS CONFIGURE command in the EC2 instance
-//       //  credentials: {
-//       //     accessKeyId: '',
-//       //     secretAccessKey: ''
-//       // }
-//   });
-
-//   const command = new GetObjectCommand({
-//       Bucket: "vegan-mundi-videos",
-//       Key: `${req.params.s3Object}`,
-//   });
-
-//   const data = await client.send(command);
-//   res.send(data);
-// });
-
-// async function executeQuery(statement) {
-
-//   const dbConnection = await connectToDb();
-
-//   try {
-
-//       dbConnection.query(statement, function (err, result, fields) {
-//           if (err) throw err;
-//           res.send(result);
-//       });
-
-//     } catch (err) {
-//       console.log(err);
-//     }
-//     finally{
-//       dbConnection.end();
-//     }
-
-// }
 
 // GET ALL FREE CLASSES (VEGAN-MUNDI.CLASSES.CATEGORY_ID = 1)
 app.get('/classes/free', async (req, res) => {
