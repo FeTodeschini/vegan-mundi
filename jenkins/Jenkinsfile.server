@@ -13,7 +13,11 @@ pipeline {
                             export NVM_DIR="/root/.nvm"
                             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-                            # Install and set Node.js version
+                            # Check if nvm is available
+                            command -v nvm || echo "nvm not found"
+                            echo "NVM loaded: $(command -v nvm)"
+
+                            # Ensure nvm is installed and set the default node version
                             nvm install 21.7.2
                             nvm alias default 21.7.2
 
