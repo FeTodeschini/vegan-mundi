@@ -12,6 +12,7 @@ pipeline {
                     // Use withCredentials to handle the ENV_TEST securely
                     withCredentials([string(credentialsId: 'env-test', variable: 'ENV_TEST')]) {
                         sh """
+                            whoami
                             # Copy JavaScript files
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ubuntu@172.31.29.148:/var/www/vegan-mundi/server/
 
