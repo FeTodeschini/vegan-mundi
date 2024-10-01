@@ -9,29 +9,18 @@ pipeline {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     withCredentials([string(credentialsId: 'env-test', variable: 'ENV_TEST')]) {
                         sh '''
-                            # Load nvm locally
-                            export NVM_DIR="/home/ubuntu/.nvm"
-                            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
                             # Copy JavaScript files
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ubuntu@172.31.29.148:/var/www/vegan-mundi/server/
 
-                            # Update the .env.test file
+                            # The .env.test file is stored in the Jenkins Credentials plugin
                             echo '${ENV_TEST}' | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 'cat > /var/www/vegan-mundi/server/.env.test'
 
-                            # Restart the server using pm2
+                            # Restart the server in a login shell
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ubuntu@172.31.29.148 '
                                 bash -l -c "
-                                export NVM_DIR=\\"/home/ubuntu/.nvm\\"
-                                [ -s \\"$NVM_DIR/nvm.sh\\" ] && . \\"$NVM_DIR/nvm.sh\\"
-                                
-                                # Check if nvm is available
-                                command -v nvm || echo \\"nvm not found\\"
-                                
-                                # Ensure a Node.js version is set
+                                export NVM_DIR=\"/home/ubuntu/.nvm\"
+                                [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"
                                 nvm use default || nvm install node
-                                
-                                # Restart pm2
                                 pm2 restart server
                                 "
                             '
