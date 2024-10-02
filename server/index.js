@@ -7,8 +7,8 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 
-// Load environment variables based on the NODE_ENV
-console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
+// Load environment variables based on the NODE_ENV, which can be sent either by pm2 when a  Jenkins pipeline is triggered
+// or via the package.json scripts when executed in the local machine
 const envFile = process.env.NODE_ENV === 'development' 
   ? path.resolve(__dirname, '.env.development') 
   : process.env.NODE_ENV === 'test'
@@ -28,8 +28,6 @@ const config = require('./config');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-
-console.log('DB_ENDPOINT:', process.env.DB_ENDPOINT);
 
 // Midlleware error handling function
 app.use((error, req, res, next) =>{
