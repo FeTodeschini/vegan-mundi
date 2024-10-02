@@ -70,7 +70,7 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }) {
                         const discount = calculateDiscount(price, studentCount);
                         const adjustedPrice = price.MULTIPLE_STUDENTS ? price.PRICE * studentCount - discount : price.PRICE;
                         return (
-                            <div className="modal-atc--content-item bottom-margin--small">
+                            <div key={price.PRICE_ID} className="modal-atc--content-item bottom-margin--small">
                                 <input 
                                     type="radio" 
                                     name="delyveryMethod"
@@ -98,7 +98,7 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }) {
                         )
                     })}
                     <div className="modal-act--schedule regular-text-small">
-                        <p>Schedule classes with an Instructor after purchasing them by visiting the "My Classes" page</p>
+                        <p>Schedule classes with an Instructor after purchasing them by visiting the &quot;My Classes&quot; page</p>
                     </div>
                 </div>
             </div>                

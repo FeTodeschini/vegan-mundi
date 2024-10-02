@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useContext, useEffect } from "react";
 import { StateContext } from "../StateProvider.js";

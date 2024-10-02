@@ -6,8 +6,11 @@ export default function StateProvider ({ children }) {
     const [keyword, setKeyword] = useState();
     const [cartQuantity, setCartQuantity] = useState(0);
     const [cartItems, setCartItems] = useState([]);
+    const [cartAmount, setCartAmount] = useState(Number(0));
     const [error, setError] = useState("");
     const [responseMessage, setResponseMessage] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedClass, setSelectedClass] = useState(null);
 
     return (
         <StateContext.Provider value={{
@@ -16,11 +19,17 @@ export default function StateProvider ({ children }) {
             cartQuantity, 
             setCartQuantity, 
             cartItems, 
-            setCartItems, 
+            setCartItems,
+            cartAmount,
+            setCartAmount, 
             error, 
             setError,
             responseMessage, 
-            setResponseMessage}}>
+            setResponseMessage,
+            isModalOpen,
+            setIsModalOpen,
+            selectedClass,
+            setSelectedClass}}>
             {children}
         </StateContext.Provider>
     );

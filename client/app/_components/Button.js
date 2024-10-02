@@ -12,7 +12,9 @@ export default function Button({ bgColor, additionalClass, isSubmit=false, type=
         size === "medium" ? 
             " btn-medium" :
             size === "full" ?
-                " btn-full ":
+                " btn-full " :
+            size === "square" ?
+                " btn-square " :
                 ""
         );
 

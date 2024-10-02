@@ -3,12 +3,12 @@ build/
 assets/
 package*
 npm-debug.log*
-.env
+.env*
 
 # Next.js
 .next
 next-env.d.ts
 dist
 
-# Martinis
-martinis/
+# Terraform
+terraform/*terraform*

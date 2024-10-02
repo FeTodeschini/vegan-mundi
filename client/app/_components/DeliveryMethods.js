@@ -1,5 +1,6 @@
+'use client';
+
 import { useState } from 'react';
-import Image from 'next/image.js';
 import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image.js';
 import SectionHeader from './SectionHeader.js';
 import Button from "./Button.js";
