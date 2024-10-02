@@ -11,9 +11,7 @@ export default function VideoPlayer() {
     const [isVideoLoaded, setIsVideoLoaded ] = useState(false);
     const videoRef = useRef(null);
     const params = useParams();
-    console.log(`params: ${JSON.stringify(params)}`);
     const videoName = params.videoName;
-    console.log(`videoName: ${JSON.stringify(videoName)}`);
 
     useEffect(()=>{
         // gets the pre-signed URL required by AWS for accessing private S3 objects

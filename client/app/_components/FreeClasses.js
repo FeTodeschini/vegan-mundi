@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image.js';
 import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSuignedUrlToArray.js';

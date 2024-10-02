@@ -1,3 +1,5 @@
+'use client'
+
 import { useContext, useEffect } from "react";
 import { StateContext } from "../StateProvider.js";
 
@@ -32,7 +34,7 @@ export default function LandingPage (){
                 <Categories />
                 <DeliveryMethods />
                 <FreeClasses />
-                <Prices />
+                <Prices/>
                 <Gallery />                    
             </main>
         </>

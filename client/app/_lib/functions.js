@@ -2,10 +2,7 @@ import axios from "axios";
 import config from './config.js';
 
 export async function getPreSignedUrl(bucket, key) {
-    console.log(`preSignedUrl endpoint: ${config.serverEndpoint}s3/${bucket}/${key}`);
     const response = await axios(`${config.serverEndpoint}s3/${bucket}/${key}`);
-    // const data = await response.json();
-    console.log(`response.data: ${response.data}`)
     return response.data;
 }
 
@@ -20,6 +17,16 @@ export function toggleDarkBackground(isToggleMenu){
     if (isToggleMenu){
         toggleMenu();
     }
+}
+
+export async function getPrices() {
+    var data = await fetch(`${config.serverEndpoint}/prices`);
+    data = await data.json();
+
+    if (data.lenght > 0) {
+        return [...data];
+    }
+    return [];
 }
 
 function toggleMenu(){

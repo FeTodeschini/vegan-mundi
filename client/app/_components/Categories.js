@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image.js';
 import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSuignedUrlToArray.js';
@@ -5,7 +7,6 @@ import SectionHeader from './SectionHeader.js';
 import Button from './Button.js';
 import Card from './Card.js';
 
-import '../_styles/main.css';
 import leaf from '../../public/assets/icon-leaf.svg';
 
 export default function Categories() {

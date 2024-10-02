@@ -14,11 +14,6 @@ import Button from "../../_components/Button.js";
 
 import "../../_styles/form.css";
 
-//  How do I use metadat in a client side component?
-const metadata = {
-    title: "Sign In",
-};
-
 export default function Page() {
     const focusElement = useFocus();
     const { responseMessage, setResponseMessage, error, setError } = useContext(StateContext);

@@ -6,19 +6,11 @@
     bottom: 0;
     left: 0;
     z-index: 999;
-    opacity: 0;
-    pointer-events: 0;
     transition: all .3s;
-    visibility: hidden;
+    visibility: visible;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.modal:target {
-    visibility: visible;
-    pointer-events: auto;
-    opacity: 1;
 }
 
 .modal-container {
@@ -35,6 +27,7 @@
     right: 4rem;
     z-index: 999;
     transition: all .3s;
+    cursor: pointer;
 }
 
 .modal-close:hover {

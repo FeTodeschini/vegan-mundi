@@ -13,5 +13,6 @@ export function useGetSectionDataWithS3Image(setSectionData, apiEndpoint) {
     async function getSectionDataWithS3Image(setSectionData, apiEndpoint) {
         let response = await axios.get(`${config.serverEndpoint}${apiEndpoint}`);
         setSectionData([...response.data]);
+        console.log(`[...response.data]: ${[...response.data]}`);
     }
 }

@@ -6,6 +6,7 @@
 .gallery__content {
     align-items: start;
     row-gap: 3.2rem;
+    padding: 0 2rem;
 }
 
 .gallery__img--container {
