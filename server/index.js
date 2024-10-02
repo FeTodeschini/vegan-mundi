@@ -15,6 +15,8 @@ const envFile = process.env.NODE_ENV === 'development'
   ? path.resolve(__dirname, '.env.test')
   : path.resolve(__dirname, '.env.production');
 
+  console.log(`envFile: ${envFile}`);
+
   if (fs.existsSync(envFile)) {
     dotenv.config({ path: envFile });
   } else {
