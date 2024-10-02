@@ -9,7 +9,6 @@ const dotenv = require('dotenv');
 
 // Load environment variables based on the NODE_ENV
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
-
 const envFile = process.env.NODE_ENV === 'development' 
   ? path.resolve(__dirname, '.env.development') 
   : process.env.NODE_ENV === 'test'
@@ -28,8 +27,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-console.log('DB_USER:', process.env.DB_USER);
-console.log('Trimmed DB_USER:', process.env.DB_USER?.trim());
+console.log('DB_ENDPOINT:', process.env.DB_ENDPOINT);
 
 // Midlleware error handling function
 app.use((error, req, res, next) =>{
