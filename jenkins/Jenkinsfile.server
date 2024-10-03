@@ -5,7 +5,7 @@ pipeline {
             steps {
                 script {
                     // Get the current job and build
-                    def job = Jenkins.instance.getItemByFullName(env.JOB_NAME)
+                    def job = currentBuild.getProject()
                     def currentBuild = currentBuild
 
                     // Collect builds to keep: current build and last 4 completed builds
