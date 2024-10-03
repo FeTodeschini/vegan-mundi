@@ -1,24 +1,7 @@
 pipeline {
     agent any
-    options {
-        // Ensure that the pipeline runs on any change to the "server" folder
-        disableConcurrentBuilds() // Optional: prevents overlapping builds
-    }
     stages {
-        stage('Check Changes') {
-            when {
-                changeset "**/server/**"
-            }
-            steps {
-                script {
-                    echo "Changes detected in the server folder. Proceeding with the build."
-                }
-            }
-        }
         stage('Old Builds Cleanup') {
-            when {
-                changeset "**/server/**"
-            }
             steps {
                 script {
                     // Get the current job and build
@@ -43,9 +26,6 @@ pipeline {
             }
         }
         stage('Deploy to TEST') {
-            when {
-                changeset "**/server/**"
-            }
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     withCredentials([file(credentialsId: 'env-test', variable: 'ENV_TEST_FILE')]) {
@@ -70,9 +50,6 @@ pipeline {
             }
         }
         stage('Approve PROD Deployment') {
-            when {
-                changeset "**/server/**"
-            }
             steps {
                 timeout(time: 1, unit: 'HOURS'){
                     input message: 'Are you sure you want to deploy to PROD?', ok: 'Deploy' 
@@ -80,4 +57,3 @@ pipeline {
             }
         }
     }
-}
