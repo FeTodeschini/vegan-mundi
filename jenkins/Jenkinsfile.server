@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    options { // When the when clause is added at the stage level inside "options", it applies for all stages
+        when {
+            changeset "server/**" // Only run the entire pipeline if there are changes in the server folder
+        }
+    }
     stages {
         stage('Old Builds Cleanup') {
             steps {
@@ -51,7 +56,7 @@ pipeline {
         stage('Approve PROD Deployment') {
             steps {
                 timeout(time: 1, unit: 'HOURS'){
-                    input message: 'Are you sure you want to deploy to PROD?', ok: 'Deploy' 
+                    input message: 'Deploy changes to PROD?', ok: 'Deploy' 
                 }
             }
         }
