@@ -4,18 +4,14 @@ pipeline {
         stage('Old Builds Cleanup') {
             steps {
                 script {
-                    // Get the current build number
                     def currentBuildNumber = env.BUILD_NUMBER as int
-                    // Define how many builds to keep
-                    def buildsToKeep = 5 // Current build + last 4
+                    def buildsToKeep = 5
 
-                    // Get the list of all builds for the current job
                     def allBuilds = currentBuild.rawBuild.parent.builds
                     def buildsToDelete = []
 
-                    // Iterate over the builds
+                    // Create an array of builds to be deleted
                     allBuilds.each { build ->
-                        // Check if the build number is less than the number of builds to keep
                         if (build.number < currentBuildNumber - buildsToKeep + 1) {
                             buildsToDelete << build
                         }
@@ -23,7 +19,6 @@ pipeline {
 
                     // Delete the old builds
                     buildsToDelete.each { build ->
-                        echo "Deleting build #${build.number} (${build.result})"
                         build.delete()
                     }
                 }
@@ -38,7 +33,7 @@ pipeline {
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${HOST_TEST}:${NODE_REMOTE_DIR}/
 
                             # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
-                            cat "$ENV_TEST_FILE" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} 'cat > ${NODE_REMOTE_DIR}/.env.test'
+                            cat "$ENV_TEST_FILE" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} "cat > ${NODE_REMOTE_DIR}/.env.test"
                             
                             # Restart the server in a login shell
                             ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} '
