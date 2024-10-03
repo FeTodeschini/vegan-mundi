@@ -21,7 +21,7 @@ pipeline {
                     // Delete old builds
                     job.builds.findAll { !buildsToKeep.contains(it) }.each { it.delete() }
 
-                    echo "Old builds removed. Builds kept: ${buildsToKeep*.number.join(', ')}"
+                    echo "Old builds deleted. Builds kept: ${buildsToKeep*.number.join(', ')}"
                 }
             }
         }
