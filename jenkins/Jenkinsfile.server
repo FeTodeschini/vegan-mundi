@@ -4,24 +4,28 @@ pipeline {
         stage('Old Builds Cleanup') {
             steps {
                 script {
-                    // Get the current job and build
-                    def job = Jenkins.instance.getItem(env.JOB_NAME)
-                    def currentBuild = currentBuild
+                    // Get the current build number
+                    def currentBuildNumber = env.BUILD_NUMBER as int
+                    // Define how many builds to keep
+                    def buildsToKeep = 5 // Current build + last 4
 
-                    // Collect builds to keep: current build and last 4 completed builds
-                    def buildsToKeep = [currentBuild]
-                    def completedBuilds = job.builds.findAll { it.isBuilding() == false }
+                    // Get the list of all builds for the current job
+                    def allBuilds = currentBuild.rawBuild.parent.builds
+                    def buildsToDelete = []
 
-                    if (completedBuilds.size() > 4) {
-                        buildsToKeep.addAll(completedBuilds.takeRight(4))
-                    } else {
-                        buildsToKeep.addAll(completedBuilds)
+                    // Iterate over the builds
+                    allBuilds.each { build ->
+                        // Check if the build number is less than the number of builds to keep
+                        if (build.number < currentBuildNumber - buildsToKeep + 1) {
+                            buildsToDelete << build
+                        }
                     }
 
-                    // Delete old builds
-                    job.builds.findAll { !buildsToKeep.contains(it) }.each { it.delete() }
-
-                    echo "Old builds deleted. Builds kept: ${buildsToKeep*.number.join(', ')}"
+                    // Delete the old builds
+                    buildsToDelete.each { build ->
+                        echo "Deleting build #${build.number} (${build.result})"
+                        build.delete()
+                    }
                 }
             }
         }
