@@ -1,10 +1,59 @@
 pipeline {
     agent any
     stages {
-        stage('Test Stage') {
+        stage('Old Builds Cleanup') {
             steps {
-                echo 'This is a test stage'
+                script {
+                    // Get the current job and build
+                    def job = Jenkins.instance.getItemByFullName(env.JOB_NAME)
+                    def currentBuild = currentBuild
+
+                    // Collect builds to keep: current build and last 4 completed builds
+                    def buildsToKeep = [currentBuild]
+                    def completedBuilds = job.builds.findAll { it.isBuilding() == false }
+
+                    if (completedBuilds.size() > 4) {
+                        buildsToKeep.addAll(completedBuilds.takeRight(4))
+                    } else {
+                        buildsToKeep.addAll(completedBuilds)
+                    }
+
+                    // Delete old builds
+                    job.builds.findAll { !buildsToKeep.contains(it) }.each { it.delete() }
+
+                    echo "Old builds deleted. Builds kept: ${buildsToKeep*.number.join(', ')}"
+                }
+            }
+        }
+        stage('Deploy to TEST') {
+            steps {
+                sshagent (credentials: ['ssh-key-application-server']) {
+                    withCredentials([file(credentialsId: 'env-test', variable: 'ENV_TEST_FILE')]) {
+                        sh '''
+                            # Copy JavaScript files
+                            scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${HOST_TEST}:${NODE_REMOTE_DIR}/
+
+                            # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
+                            cat "$ENV_TEST_FILE" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} 'cat > ${NODE_REMOTE_DIR}/.env.test'
+                            
+                            # Restart the server in a login shell
+                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} '
+                                #!/bin/bash
+                                export NVM_DIR="/home/ubuntu/.nvm"
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                nvm use default || nvm install node
+                                pm2 restart server
+                            '
+                        '''                    
+                    }
+                }
+            }
+        }
+        stage('Approve PROD Deployment') {
+            steps {
+                timeout(time: 1, unit: 'HOURS'){
+                    input message: 'Are you sure you want to deploy to PROD?', ok: 'Deploy' 
+                }
             }
         }
     }
-}
