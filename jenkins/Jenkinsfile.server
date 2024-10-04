@@ -52,22 +52,31 @@ pipeline {
             steps {
                 script {
                     // Start the Express test server in the background
-                    def server = sh(script: 'node server/test.server.js &', returnStdout: true)
+                    sh 'node server/test.server.js > server.log 2>&1 &'
+                    
+                    echo "Server process ID: ${server}"
 
-                    // Wait for a moment to allow the server to start
-                    sleep(5)
+                    // Wait for the server to be ready
+                    def maxRetries = 10
+                    def retries = 0
+                    def isServerReady = false
 
-                    // Run the test by hitting the /run-test endpoint
-                    def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
+                    while (retries < maxRetries && !isServerReady) {
+                        sleep(2)  // Wait for 2 seconds before checking again
+                        def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
+                        if (result == '200') {
+                            isServerReady = true
+                            echo 'Server is ready.'
+                        } else {
+                            retries++
+                            echo "Attempt ${retries}: Server not ready yet."
+                        }
+                    }
 
-                    // Check the result
-                    if (result == '200') {
-                        echo 'Tests passed successfully.'
-                    } else {
-                        error "Tests failed. Received HTTP ${result}."
+                    if (!isServerReady) {
+                        error "Server did not start in time."
                     }
                 }
-            }
         }
         stage('Approve PROD Deployment') {
             steps {
