@@ -3,7 +3,7 @@ version: '3.8'
 services:
   jenkins:
     build:
-      context: .  # Build the image based on the Dockerfile in the current directory
+      context: .  # Build the container image based on the Dockerfile in the current directory
     container_name: jenkins
     privileged: true
     user: root
