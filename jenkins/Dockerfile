@@ -2,15 +2,13 @@
 # docker-compose.yaml build the image based on the definition in this Dockerfile
 FROM jenkins/jenkins:lts
 
-# Switch to root user to install Node.js
 USER root
 
-# Install Node.js and npm
-RUN apt-get update && apt-get install -y curl \
-    && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
-    && apt-get install -y nodejs \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Update package lists and install Node.js and npm
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Switch back to jenkins user
+# Switch back to the jenkins user
 USER jenkins
