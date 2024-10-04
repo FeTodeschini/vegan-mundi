@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Old Builds Cleanup') {
             steps {
+                sh 'pwd'
                 script {
                     def currentBuildNumber = env.BUILD_NUMBER as int
                     def buildsToKeep = 5
@@ -24,7 +25,7 @@ pipeline {
                 }
             }
         }
-        stage('TEST Deployment') {
+        stage('Deploy to TEST') {
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     withCredentials([file(credentialsId: 'env-test', variable: 'ENV_FILE_TEST')]) {
@@ -76,7 +77,7 @@ pipeline {
                 }
             }
         }
-        stage('PROD Deployment') {
+        stage('Deploy to PROD') {
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
                     withCredentials([file(credentialsId: 'env-prod', variable: 'ENV_FILE_PROD')]) {
