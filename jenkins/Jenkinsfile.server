@@ -48,6 +48,28 @@ pipeline {
                 }
             }
         }
+        stage('Unit Test') {
+                steps {
+                    script {
+                        // Start the Express test server in the background
+                        def server = sh(script: 'node ../server/test.server.js &', returnStdout: true)
+
+                        // Wait for a moment to allow the server to start
+                        sleep(5)
+
+                        // Run the test by hitting the /run-test endpoint
+                        def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
+
+                        // Check the result
+                        if (result == '200') {
+                            echo 'Tests passed successfully.'
+                        } else {
+                            error "Tests failed. Received HTTP ${result}."
+                        }
+                    }
+                }
+            }
+        }
         stage('Approve PROD Deployment') {
             steps {
                 timeout(time: 1, unit: 'HOURS'){
