@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage('Old Builds Cleanup') {
             steps {
-                sh 'pwd'
                 script {
                     def currentBuildNumber = env.BUILD_NUMBER as int
                     def buildsToKeep = 5
@@ -53,7 +52,7 @@ pipeline {
             steps {
                 script {
                     // Start the Express test server in the background
-                    def server = sh(script: 'node ../server/test.server.js &', returnStdout: true)
+                    def server = sh(script: 'node server/test.server.js &', returnStdout: true)
 
                     // Wait for a moment to allow the server to start
                     sleep(5)
