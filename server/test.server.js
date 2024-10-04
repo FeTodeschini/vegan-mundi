@@ -9,12 +9,12 @@ const url = 'http://3.136.5.189:4000/prices';
 
 console.log('Starting Express server...');
 
-const server = app.listen(PORT, (err) => {
+const server = app.listen(PORT, '0.0.0.0', (err) => {
     if (err) {
         console.error('Failed to start the server:', err.message);
         process.exit(1);  // Exit the process with failure
     }
-    console.log(`Test server running on http://localhost:${PORT}/test-server`);
+    console.log(`Test server running on http://0.0.0.0:${PORT}/test-server`);
 });
 
 // The call of http://3.136.5.189:4000/prices tests if:
