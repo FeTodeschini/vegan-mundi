@@ -7,8 +7,13 @@ const PORT = 5000;
 // Call the prices API running on [Test EC2 IP]:4000
 const url = 'http://3.136.5.189:4000/prices';
 
-// Start the Express server
-const server = app.listen(PORT, () => {
+console.log('Starting Express server...');
+
+const server = app.listen(PORT, (err) => {
+    if (err) {
+        console.error('Failed to start the server:', err.message);
+        process.exit(1);  // Exit the process with failure
+    }
     console.log(`Test server running on http://localhost:${PORT}/test-server`);
 });
 
