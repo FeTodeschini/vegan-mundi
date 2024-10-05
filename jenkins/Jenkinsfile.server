@@ -25,6 +25,15 @@ pipeline {
             }
         }
 
+        stage('Verify Dependencies') {
+            steps {
+                sh '''
+                    node -v
+                    npm -v
+                    npm list express
+                '''
+            }
+        }
         stage('Deploy to TEST') {
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
