@@ -53,6 +53,9 @@ pipeline {
         stage('Unit Test') {
             steps {
                 script {
+                    // remove after tests
+                    sh 'echo PATH:'
+                    sh 'echo $PATH'
                     // Start the Express Test server in the background
                     // Echo $! prints the PID of the last process in the background
                     def server = sh(script: 'node server/test.server.js > server.log 2>&1 & echo $!', returnStdout: true).trim()
