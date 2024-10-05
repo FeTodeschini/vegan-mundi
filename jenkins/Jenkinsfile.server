@@ -4,6 +4,19 @@ pipeline {
         NVM_DIR = '/home/ubuntu/.nvm'
         PATH = "${NVM_DIR}/versions/node/v22.9.0/bin:${env.PATH}"
     }
+    
+    stage('Install Dependencies') {
+        // Install the dependencies for the test.server.js unit test script (express and axios)
+        steps {
+            script {
+                sh '''
+                    cp server/package.json .  # Copy package.json to Jenkins workspace
+                    npm install               # Install dependencies in the Jenkins environment
+                '''
+            }
+        }
+    }
+
     stages {
         stage('Old Builds Cleanup') {
             steps {
