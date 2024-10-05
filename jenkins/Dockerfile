@@ -21,6 +21,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | b
 COPY package*.json ./
 
 # Install local dependencies (for the test.server.js unit test script)
-RUN . $NVM_DIR/nvm.sh && npm install
+RUN . $NVM_DIR/nvm.sh && npm cache clean --force && npm install
 
 USER jenkins
