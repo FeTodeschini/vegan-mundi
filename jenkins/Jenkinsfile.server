@@ -56,12 +56,28 @@ pipeline {
         }
 
         // Install dependencies for the test.server.js unit test script (express and axios)
-        stage('Install Dependencies') {
+        stage('Install Dependencies') { 
             steps {
                 script {
-                    dir('server') {
-                        sh 'npm install'
-                    }
+                    sh '''
+                        # Load NVM
+                        export NVM_DIR="/home/ubuntu/.nvm"
+                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+                        # Check if NVM was loaded correctly
+                        if [ -z "$NVM_BIN" ]; then
+                            echo "NVM was not loaded properly"
+                            exit 1
+                        fi
+
+                        # Check Node.js and npm availability
+                        echo "Using Node.js: $(which node)"
+                        echo "Using npm: $(which npm)"
+
+                        # Install dependencies in the server directory
+                        cd server
+                        npm install
+                    '''
                 }
             }
         }
