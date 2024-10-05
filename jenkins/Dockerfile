@@ -1,14 +1,23 @@
-# Creates a custom image container with Jenkins, node and npm. 
-# docker-compose.yaml build the image based on the definition in this Dockerfile
 FROM jenkins/jenkins:lts
 
 USER root
 
-# Update package lists and install Node.js and npm
+# Install curl and other dependencies
 RUN apt-get update && \
-    apt-get install -y nodejs npm && \
+    apt-get install -y curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Switch back to the jenkins user
+# Install nvm and Node.js
+ENV NVM_DIR=/root/.nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash && \
+    . $NVM_DIR/nvm.sh && \
+    nvm install node && \
+    nvm use node && \
+    nvm alias default node && \
+    echo "export PATH=\$NVM_DIR/versions/node/$(ls \$NVM_DIR/versions/node)/bin:\$PATH" >> /root/.bashrc
+
+# Install express and axios
+RUN . $NVM_DIR/nvm.sh && npm install -g express axios
+
 USER jenkins
