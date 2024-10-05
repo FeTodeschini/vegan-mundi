@@ -64,6 +64,9 @@ pipeline {
                         export NVM_DIR="$HOME/.nvm"
                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
+                        # Remove previous node_modules just in case it persisted due to a previuous failed build
+                        sh 'rm -rf /var/jenkins_home/workspace/node-server/server/node_modules'
+
                         # Install dependencies in the server directory
                         cd server
                         npm install --omit=optional --no-audit --force
