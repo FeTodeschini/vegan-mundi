@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        NVM_DIR = '/home/ubuntu/.nvm'
+        PATH = "${NVM_DIR}/versions/node/v22.9.0/bin:${env.PATH}"
+    }
     stages {
         stage('Old Builds Cleanup') {
             steps {
@@ -60,8 +64,7 @@ pipeline {
                         npm list express
                     '''
                     // Start the Express Test server in the background
-                    // Echo $! prints the PID of the last process in the background
-                    def server = sh(script: '/root/.nvm/versions/node/v22.9.0/bin/node server/test.server.js > server.log 2>&1 & echo $!', returnStdout: true).trim()
+                    def server = sh(script: 'node server/test.server.js > server.log 2>&1 & echo $!', returnStdout: true).trim()
 
                     echo "Server process ID: ${server}"
 
@@ -88,13 +91,15 @@ pipeline {
                 }
             }
         }
+
         stage('Approve PROD Deployment') {
             steps {
-                timeout(time: 1, unit: 'HOURS'){
+                timeout(time: 1, unit: 'HOURS') {
                     input message: 'Deploy changes to PROD?', ok: 'Deploy' 
                 }
             }
         }
+
         stage('Deploy to PROD') {
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
@@ -103,7 +108,7 @@ pipeline {
                             # Copy JavaScript files
                             scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${HOST_PROD}:${NODE_REMOTE_DIR}/
 
-                            # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
+                            # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
                             cat "$ENV_FILE_PROD" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_PROD} "cat > ${NODE_REMOTE_DIR}/.env.production"
                             
                             # Restart the server in a login shell
