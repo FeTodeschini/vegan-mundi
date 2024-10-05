@@ -58,7 +58,7 @@ pipeline {
                     sh 'echo $PATH'
                     // Start the Express Test server in the background
                     // Echo $! prints the PID of the last process in the background
-                    def server = sh(script: 'node server/test.server.js > server.log 2>&1 & echo $!', returnStdout: true).trim()
+                    def server = sh(script: '/root/.nvm/versions/node/v22.9.0/bin/node server/test.server.js > server.log 2>&1 & echo $!', returnStdout: true).trim()
 
                     echo "Server process ID: ${server}"
 
