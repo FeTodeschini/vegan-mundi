@@ -64,16 +64,6 @@ pipeline {
                         export NVM_DIR="$HOME/.nvm"
                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-                        # Check if NVM was loaded correctly
-                        if [ -z "$NVM_BIN" ]; then
-                            echo "NVM was not loaded properly"
-                            exit 1
-                        fi
-
-                        # Check Node.js and npm availability
-                        echo "Using Node.js: $(which node)"
-                        echo "Using npm: $(which npm)"
-
                         # Install dependencies in the server directory
                         cd server
                         npm install
