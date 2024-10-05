@@ -24,6 +24,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy to TEST') {
             steps {
                 sshagent (credentials: ['ssh-key-application-server']) {
@@ -48,6 +49,7 @@ pipeline {
                 }
             }
         }
+
         stage('Unit Test') {
             steps {
                 script {
@@ -64,7 +66,7 @@ pipeline {
 
                     while (retries < maxRetries && !isServerReady) {
                         sleep(2)  // Wait for 2 seconds before checking again
-                        def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
+                        def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://0.0.0.0:5000/test-server', returnStdout: true).trim()
                         if (result == '200') {
                             isServerReady = true
                             echo 'Server is ready.'
