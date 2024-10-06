@@ -72,24 +72,18 @@ pipeline {
             }
         }
 
-        stage('Unit Test') {
+        stage('Unit Test') { 
             steps {
                 script {
-                    sh '''
+                    // Start the Express Test server in the background
+                    def server = sh(script: '''
                         # Load NVM
                         export NVM_DIR="/home/ubuntu/.nvm"
                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-                        echo $PATH
-                        node -v
-                        npm -v
-                        npm list express
-                    '''
-
-                    // Start the Express Test server in the background
-                    def server = sh(script: 'node server/test.server.js > server.log 2>&1 & echo $!', returnStdout: true).trim()
-
-                    echo "Server process ID: ${server}"
+                        # Start the server and return the process ID
+                        node server/test.server.js > server.log 2>&1 & echo $!
+                    ''', returnStdout: true).trim()
 
                     // Wait for the server to be ready
                     def maxRetries = 10
@@ -97,7 +91,7 @@ pipeline {
                     def isServerReady = false
 
                     while (retries < maxRetries && !isServerReady) {
-                        sleep(2)  // Wait for 2 seconds before checking again
+                        sleep(2)
                         def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
                         if (result == '200') {
                             isServerReady = true

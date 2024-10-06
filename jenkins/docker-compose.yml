@@ -12,7 +12,6 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./workspace/server:/server  # Maps the Jenkins container workspace/server folder to the /server in the Docker Image, where package.json is
       - /home/ubuntu/.ssh/vegan-mundi.pem:/root/.ssh/vegan-mundi.pem # Persists the PEM key in the Jenkins container for access to the Test and PROD EC2s
     ports:
       - "8080:8080"
