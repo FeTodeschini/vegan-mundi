@@ -37,20 +37,20 @@ pipeline {
                 stage('Build Test App') {
                     steps {
                         script {
-                            // Load the .env.test file
-                            withCredentials([file(credentialsId: 'env-test-file', variable: 'ENV_FILE_TEST')]) {
-                                sh '''
-                                    # Load NVM
-                                    export NVM_DIR="$HOME/.nvm"
-                                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-                                    # Install dependencies
-                                    npm install
-
-                                    # Build the application for the test environment
-                                    npm run build:test
-                                '''
+                            // Copy the .env.test file to the pipeline's workspace
+                            withCredentials([file(credentialsId: 'env-test-next', variable: 'ENV_FILE_TEST')]) {
+                                sh 'cp $ENV_FILE_TEST client/.env.test'
                             }
+
+                            sh '''
+                                # Load NVM
+                                export NVM_DIR="$HOME/.nvm"
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+                                cd client
+                                npm install
+                                npm run build:test
+                                '''
                         }
                     }
                 }                
