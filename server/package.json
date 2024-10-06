@@ -19,6 +19,7 @@
     "@smithy/hash-node": "^3.0.2",
     "@smithy/protocol-http": "^4.0.2",
     "@smithy/url-parser": "^3.0.2",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
