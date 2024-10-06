@@ -17,10 +17,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | b
     nvm alias default node && \
     echo "export PATH=\$NVM_DIR/versions/node/$(ls \$NVM_DIR/versions/node)/bin:\$PATH" >> /root/.bashrc
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install local dependencies (for the test.server.js unit test script)
-RUN . $NVM_DIR/nvm.sh && npm cache clean --force && npm install
+# Clear npm cache and Install local dependencies for the test.server.js unit test script
+RUN . $NVM_DIR/nvm.sh && npm cache clean --force && rm -rf ./server/node_modules && npm install --prefix ./server
 
 USER jenkins
