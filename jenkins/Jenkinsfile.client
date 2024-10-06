@@ -48,7 +48,7 @@ pipeline {
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
                                 cd client
-                                npm install
+                                npm install --omit=optional --no-audit --force
                                 npm run build:test
                                 '''
                         }
