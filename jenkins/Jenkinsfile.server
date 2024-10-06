@@ -1,152 +1,152 @@
-// Note: following the DRY principle, a function for loading NVM was created so it could be called in each stage, but it made it harder
-// to isolate and debug issues, so I reverted it back to a simpler approach, by directly loading NVM in each stage that needs it
-// The function is available in the GitHub history
 pipeline {
     agent any
     environment {
         NVM_DIR = '/home/ubuntu/.nvm'
         PATH = "${NVM_DIR}/versions/node/v22.9.0/bin:${env.PATH}"
     }
-    
+
     stages {
-        stage('Old Builds Cleanup') {
-            steps {
-                script {
-                    def currentBuildNumber = env.BUILD_NUMBER as int
-                    def buildsToKeep = 5
+        stage('Conditional Execution') {
+            when {
+                changeset "**/server/**"
+            }
+            stages {
+                stage('Old Builds Cleanup') {
+                    steps {
+                        script {
+                            def currentBuildNumber = env.BUILD_NUMBER as int
+                            def buildsToKeep = 5
 
-                    def allBuilds = currentBuild.rawBuild.parent.builds
-                    def buildsToDelete = []
+                            def allBuilds = currentBuild.rawBuild.parent.builds
+                            def buildsToDelete = []
 
-                    // Create an array of builds to be deleted
-                    allBuilds.each { build ->
-                        if (build.number < currentBuildNumber - buildsToKeep + 1) {
-                            buildsToDelete << build
+                            // Create an array of builds to be deleted
+                            allBuilds.each { build ->
+                                if (build.number < currentBuildNumber - buildsToKeep + 1) {
+                                    buildsToDelete << build
+                                }
+                            }
+
+                            // Delete the old builds
+                            buildsToDelete.each { build ->
+                                build.delete()
+                            }
                         }
                     }
-
-                    // Delete the old builds
-                    buildsToDelete.each { build ->
-                        build.delete()
-                    }
                 }
-            }
-        }
 
-        stage('Deploy to TEST') {
-            steps {
-                sshagent (credentials: ['ssh-key-application-server']) {
-                    withCredentials([file(credentialsId: 'env-test', variable: 'ENV_FILE_TEST')]) {
-                        sh '''
-                            # Copy JavaScript files
-                            scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${HOST_TEST}:${NODE_REMOTE_DIR}/
+                stage('Deploy to TEST') {
+                    steps {
+                        sshagent (credentials: ['ssh-key-application-server']) {
+                            withCredentials([file(credentialsId: 'env-test', variable: 'ENV_FILE_TEST')]) {
+                                sh '''
+                                    # Copy JavaScript files
+                                    scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${HOST_TEST}:${NODE_REMOTE_DIR}/
 
-                            # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
-                            cat "$ENV_FILE_TEST" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} "cat > ${NODE_REMOTE_DIR}/.env.test"
-                            
-                            # Restart the server in a login shell
-                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} '
-                                #!/bin/bash
-                                export NVM_DIR="/home/ubuntu/.nvm"
-                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                                nvm use default || nvm install node
-                                pm2 restart server
-                            '
-                        '''                    
-                    }
-                }
-            }
-        }
-
-        // Install dependencies for the test.server.js unit test script (express and axios)
-        stage('Install Dependencies') { 
-            steps {
-                script {
-                    sh '''
-                        # Load NVM
-                        export NVM_DIR="$HOME/.nvm"
-                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-                        # Install dependencies in the server directory
-                        cd server
-                        npm install --omit=optional --no-audit --force
-                    '''
-                }
-            }
-        }
-
-        stage('Unit Test') { 
-            steps {
-                script {
-                    // Start the Express Test server in the background
-                    def server = sh(script: '''
-                        # Load NVM
-                        export NVM_DIR="$HOME/.nvm"
-                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-                        # Start the server and return the process ID
-                        node server/test.server.js > server.log 2>&1 & echo $!
-                    ''', returnStdout: true).trim()
-
-                    // Wait for the server to be ready
-                    def maxRetries = 10
-                    def retries = 0
-                    def isServerReady = false
-
-                    while (retries < maxRetries && !isServerReady) {
-                        sleep(2)
-                        def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
-                        if (result == '200') {
-                            isServerReady = true
-                            echo 'Server is ready.'
-                        } else {
-                            retries++
-                            echo "Attempt ${retries}: Server not ready yet."
+                                    # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
+                                    cat "$ENV_FILE_TEST" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} "cat > ${NODE_REMOTE_DIR}/.env.test"
+                                    
+                                    # Restart the server in a login shell
+                                    ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_TEST} '
+                                        #!/bin/bash
+                                        export NVM_DIR="/home/ubuntu/.nvm"
+                                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                        nvm use default || nvm install node
+                                        pm2 restart server
+                                    '
+                                '''                    
+                            }
                         }
                     }
-
-                    if (!isServerReady) {
-                        error "Server did not start in time."
-                    }
                 }
-            }
-        }
 
-        stage('Approve PROD Deployment') {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    input message: 'Deploy changes to PROD?', ok: 'Deploy' 
-                }
-            }
-        }
-
-        stage('Deploy to PROD') {
-            steps {
-                sshagent (credentials: ['ssh-key-application-server']) {
-                    withCredentials([file(credentialsId: 'env-prod', variable: 'ENV_FILE_PROD')]) {
-                        sh '''
-                            # Copy JavaScript files
-                            scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${HOST_PROD}:${NODE_REMOTE_DIR}/
-
-                            # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
-                            cat "$ENV_FILE_PROD" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_PROD} "cat > ${NODE_REMOTE_DIR}/.env.production"
-                            
-                            # Restart the server in a login shell
-                            ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_PROD} '
-                                #!/bin/bash
-                                export NVM_DIR="/home/ubuntu/.nvm"
+                // Install dependencies for the test.server.js unit test script (express and axios)
+                stage('Install Dependencies') { 
+                    steps {
+                        script {
+                            sh '''
+                                # Load NVM
+                                export NVM_DIR="$HOME/.nvm"
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                                nvm use default || nvm install node
-                                pm2 restart server
-                            '
-                        '''                    
+
+                                # Install dependencies in the server directory
+                                cd server
+                                npm install --omit=optional --no-audit --force
+                            '''
+                        }
+                    }
+                }
+
+                stage('Unit Test') { 
+                    steps {
+                        script {
+                            // Start the Express Test server in the background
+                            def server = sh(script: '''
+                                # Load NVM
+                                export NVM_DIR="$HOME/.nvm"
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+                                # Start the server and return the process ID
+                                node server/test.server.js > server.log 2>&1 & echo $!
+                            ''', returnStdout: true).trim()
+
+                            // Wait for the server to be ready
+                            def maxRetries = 10
+                            def retries = 0
+                            def isServerReady = false
+
+                            while (retries < maxRetries && !isServerReady) {
+                                sleep(2)
+                                def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
+                                if (result == '200') {
+                                    isServerReady = true
+                                    echo 'Server is ready.'
+                                } else {
+                                    retries++
+                                    echo "Attempt ${retries}: Server not ready yet."
+                                }
+                            }
+
+                            if (!isServerReady) {
+                                error "Server did not start in time."
+                            }
+                        }
+                    }
+                }
+
+                stage('Approve PROD Deployment') {
+                    steps {
+                        timeout(time: 1, unit: 'HOURS') {
+                            input message: 'Deploy changes to PROD?', ok: 'Deploy' 
+                        }
+                    }
+                }
+
+                stage('Deploy to PROD') {
+                    steps {
+                        sshagent (credentials: ['ssh-key-application-server']) {
+                            withCredentials([file(credentialsId: 'env-prod', variable: 'ENV_FILE_PROD')]) {
+                                sh '''
+                                    # Copy JavaScript files
+                                    scp -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${HOST_PROD}:${NODE_REMOTE_DIR}/
+
+                                    # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
+                                    cat "$ENV_FILE_PROD" | ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_PROD} "cat > ${NODE_REMOTE_DIR}/.env.production"
+                                    
+                                    # Restart the server in a login shell
+                                    ssh -i /root/.ssh/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_PROD} '
+                                        #!/bin/bash
+                                        export NVM_DIR="/home/ubuntu/.nvm"
+                                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                        nvm use default || nvm install node
+                                        pm2 restart server
+                                    '
+                                '''                    
+                            }
+                        }
                     }
                 }
             }
         }
-    }
-
-    when {
-        changeset "**/server/**"
     }
 }
