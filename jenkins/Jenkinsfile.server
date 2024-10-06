@@ -145,4 +145,8 @@ pipeline {
             }
         }
     }
+
+    when {
+        changeset "**/server/**"
+    }
 }
