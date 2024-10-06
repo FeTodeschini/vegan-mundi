@@ -4,8 +4,8 @@ const axios = require('axios');
 const app = express();
 const PORT = 5000;
 
-// Call the prices API running on [Test EC2 IP]:4000
-const url = 'http://3.136.5.189:4000/prices';
+// Call the prices API running on [Test EC2 Private IP]:4000
+const url = 'http://172.31.29.148:4000/prices';
 
 console.log('Starting Express server...');
 
