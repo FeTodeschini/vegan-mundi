@@ -86,12 +86,15 @@ pipeline {
                                 export NVM_DIR="$HOME/.nvm"
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-                                # Start the server and return the process ID
-                                node server/test.server.js | tee server.log 2>&1 & echo $!
-                                    ''', returnStdout: true).trim()
+                                # Start the server in the background
+                                nohup node server/test.server.js > server.log 2>&1 & echo $!
+                            ''', returnStdout: true).trim()
 
-                            echo "Server PID : ${server}"
-                            
+                            echo "Server PID: ${server}"
+
+                            // Check the last few lines of the server log
+                            sh 'tail -n 15 server.log'
+
                             // Wait for the server to be ready
                             def maxRetries = 10
                             def retries = 0
