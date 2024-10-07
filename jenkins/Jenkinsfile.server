@@ -90,7 +90,7 @@ pipeline {
                                 node server/test.server.js | tee server.log 2>&1 & echo $!
                                     ''', returnStdout: true).trim()
 
-                            echo "Server PID: ${server}"
+                            echo "Server PID : ${server}"
                             
                             // Wait for the server to be ready
                             def maxRetries = 10
