@@ -48,7 +48,7 @@ pipeline {
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
                                 cd client
-                                timeout 240 npm install --omit optional --no-audit --force --loglevel verbose > npm-install.log 2>&1 || (cat npm-install.log && exit 1)
+                                timeout 240 npm install --omit optional --no-audit --force --loglevel verbose --no-bin-links> npm-install.log 2>&1 || (cat npm-install.log && exit 1)
                                 ./node_modules/cross-env/dist/cross-env.js NODE_ENV=test next build # replaces npm run build:test, which is not working propelry inside the jenkins container shell
                                 '''
                         }
