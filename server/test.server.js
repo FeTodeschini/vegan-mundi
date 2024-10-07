@@ -14,7 +14,7 @@ const server = app.listen(PORT, '0.0.0.0', (err) => {
         console.error('Failed to start the server:', err.message);
         process.exit(1);  // Exit the process with failure
     }
-    console.log(`Test server running on http://0.0.0.0:${PORT}/test-server`);
+    console.log(`Test server is running on http://0.0.0.0:${PORT}/test-server`);
 });
 
 // The call of http://3.136.5.189:4000/prices tests if:
@@ -23,7 +23,9 @@ const server = app.listen(PORT, '0.0.0.0', (err) => {
 // - node server started properly and APIs are reachable in the TEST environment
 app.get('/test-server', async (req, res) => {
     try {
+        console.log("Called /test-server")
         const response = await axios.get(url);
+        console.log("Received URL response")
         
         if (response.data) {
             console.log('Test Passed: Received a valid response from the URL.');
