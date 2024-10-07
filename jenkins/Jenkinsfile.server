@@ -71,7 +71,7 @@ pipeline {
 
                                 # Install dependencies in the server directory
                                 cd server
-                                npm install --omit=optional --no-audit --force
+                                npm install --omit=optional --no-audit --force --no-bin-links
                             '''
                         }
                     }
