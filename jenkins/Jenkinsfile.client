@@ -50,12 +50,12 @@ pipeline {
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
                                 cd client
-                                timeout 240 npm install --omit optional --no-audit --force --loglevel verbose --no-bin-links | tee npm-install.log 2>&1 || (cat npm-install.log && exit 1)
-                                npm run build:test
-                                '''
+                                timeout 240 yarn install --frozen-lockfile --no-bin-links | tee yarn-install.log | cat || (cat yarn-install.log && exit 1)
+                                yarn build:test
+                            '''
                         }
                     }
-                }                
+                }                 
 
                 // stage('Deploy to TEST') {
                 //     steps {
