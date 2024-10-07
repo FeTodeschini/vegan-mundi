@@ -48,7 +48,7 @@ pipeline {
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
                                 cd client
-                                npm install --omit=optional --no-audit --force --verbose > npm-install.log 2>&1 || (cat npm-install.log && exit 1)
+                                timeout 240 npm install --omit optional --no-audit --force --loglevel verbose --no-bin-links > npm-install.log 2>&1 || (cat npm-install.log && exit 1)
                                 npm run build:test
                                 '''
                         }
