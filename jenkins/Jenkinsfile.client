@@ -50,7 +50,7 @@ pipeline {
                                 cd client
                                 npm cache clean --force # clean npm cache
                                 timeout 240 npm install --omit optional --no-audit --force --loglevel verbose --no-bin-links > npm-install.log 2>&1 || (cat npm-install.log && exit 1)
-                                npm install --save-dev @next/swc@latest
+                                # npm install --save-dev @next/swc@latest
                                 npm run build:test
                                 '''
                         }
