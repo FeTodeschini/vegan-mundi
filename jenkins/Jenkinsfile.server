@@ -25,6 +25,8 @@ pipeline {
                                     # Restart the server in a login shell
                                     ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} '
                                         #!/bin/bash
+                                        export NVM_DIR="/usr/local/nvm"
+                                        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
                                         pm2 restart server
                                     '
                                 '''                    
