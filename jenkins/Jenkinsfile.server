@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:20' // Use the official Node.js image
+            //args '-u root:root' // Run as root (optional)
+        }
+    }
     environment {
         NVM_DIR = '/home/ubuntu/.nvm'
         PATH = "${NVM_DIR}/versions/node/v22.9.0/bin:${env.PATH}"
@@ -62,24 +67,8 @@ pipeline {
                 stage('Install Dependencies') { 
                     steps {
                         script {
+                            // Navigate to the server directory
                             sh '''
-                                #!/bin/bash
-                                # Load NVM
-                                export NVM_DIR="/home/ubuntu/.nvm"
-                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # Load NVM
-
-                                # Check if NVM is loaded
-                                if command -v nvm &> /dev/null; then
-                                    echo "NVM loaded"
-                                else
-                                    echo "NVM not found"
-                                    exit 1
-                                fi
-
-                                # Use the desired Node.js version
-                                nvm use 20.0.0
-
-                                # Install dependencies in the server directory
                                 cd server
                                 npm install --omit=optional --no-audit --force --no-bin-links
                             '''
