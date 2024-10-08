@@ -70,7 +70,7 @@ pipeline {
                             // Navigate to the server directory
                             sh '''
                                 cd server
-                                npm install --omit=optional --no-audit --force --no-bin-links
+                                npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /var/jenkins_home/npm_install.log 2>&1
                             '''
                         }
                     }
