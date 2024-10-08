@@ -8,7 +8,10 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh '''
+                    cd client
+                    npm install
+                    '''
             }
         }
         stage('Build Test App') {
