@@ -57,6 +57,24 @@ pipeline {
                         //}
                     }
                 }
+
+                // Install dependencies for the test.server.js unit test script (express and axios)
+                stage('Install Dependencies') { 
+                    steps {
+                        script {
+                            sh '''
+                                # Load NVM
+                                # export NVM_DIR="$HOME/.nvm"
+                                # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+                                # Install dependencies in the server directory
+                                cd server
+                                npm install --omit=optional --no-audit --force --no-bin-links
+                            '''
+                        }
+                    }
+                }
+
             }    
         }
     }
