@@ -5,10 +5,10 @@ pipeline {
     //         args '-u root:root' // Run as root (optional)
     //     }
     // }
+    agent any
     environment {
         NVM_DIR = '/home/ubuntu/.nvm'
         PATH = "${NVM_DIR}/versions/node/v22.9.0/bin:${env.PATH}"
-    }
 
     stages {
         stage('Conditional Execution') {
