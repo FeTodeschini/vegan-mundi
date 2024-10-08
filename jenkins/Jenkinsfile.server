@@ -64,9 +64,18 @@ pipeline {
                         script {
                             sh '''
                                 # Load NVM
-                                #!/bin/bash
                                 export NVM_DIR="/home/ubuntu/.nvm"
-                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # Load NVM
+
+                                # Check if NVM is loaded
+                                if command -v nvm &> /dev/null; then
+                                    echo "NVM loaded"
+                                else
+                                    echo "NVM not found"
+                                    exit 1
+                                fi
+
+                                # Use the desired Node.js version
                                 nvm use 20.0.0
 
                                 # Install dependencies in the server directory
