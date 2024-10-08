@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh '''
                     cd client
-                    npm install
+                    npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /home/ubuntu/docker-jenkins/npm_install_next.log 2>&1
                     '''
             }
         }
