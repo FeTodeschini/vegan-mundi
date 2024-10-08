@@ -1,35 +1,24 @@
-version: '3.8'
+version: '3.7'
 
 services:
   jenkins:
-    build:
-      context: .  # Build the container image based on the Dockerfile in the current directory
+    image: vegan-mundi
     container_name: jenkins
-    privileged: true
-    user: root
-    environment:
-      - DOCKER_HOST=tcp://dind:2375
+    user: "1000:1000"
+    restart: on-failure
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - jenkins-home:/var/jenkins_home
+      - /home/ubuntu/docker-jenkins:/home/ubuntu/docker-jenkins
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/ubuntu/.ssh/vegan-mundi.pem:/root/.ssh/vegan-mundi.pem # Persists the PEM key in the Jenkins container for access to the Test and PROD EC2s
     ports:
       - "8080:8080"
       - "50000:50000"
-    depends_on:
-      - dind
+    networks:
+      - jenkins
 
-  dind:
-    image: docker:20.10-dind
-    container_name: dind
-    privileged: true
-    environment:
-      - DOCKER_TLS_CERTDIR=/certs
-    volumes:
-      - dind_storage:/var/lib/docker
-    ports:
-      - "2375:2375"
+networks:
+  jenkins:
+    driver: bridge
 
 volumes:
-  jenkins_home:
-  dind_storage:
+  jenkins-home:
