@@ -1,10 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:20' // Use the official Node.js image
-            args '-u root:root' // Run as root (optional)
-        }
-    }
+    // agent {
+    //     docker {
+    //         image 'node:20' // Use the official Node.js image
+    //         args '-u root:root' // Run as root (optional)
+    //     }
+    // }
     environment {
         NVM_DIR = '/home/ubuntu/.nvm'
         PATH = "${NVM_DIR}/versions/node/v22.9.0/bin:${env.PATH}"
