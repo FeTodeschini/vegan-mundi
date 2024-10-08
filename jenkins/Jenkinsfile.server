@@ -11,6 +11,29 @@ pipeline {
             //     changeset "**/server/**"
             // }
             stages {
+                stage('Old Builds Cleanup') {
+                    steps {
+                        script {
+                            def currentBuildNumber = env.BUILD_NUMBER as int
+                            def buildsToKeep = 5
+
+                            def allBuilds = currentBuild.rawBuild.parent.builds
+                            def buildsToDelete = []
+
+                            // Create an array of builds to be deleted
+                            allBuilds.each { build ->
+                                if (build.number < currentBuildNumber - buildsToKeep + 1) {
+                                    buildsToDelete << build
+                                }
+                            }
+
+                            // Delete the old builds
+                            buildsToDelete.each { build ->
+                                build.delete()
+                            }
+                        }
+                    }
+                }
                 stage('Deploy to TEST') {
                     steps {
                         //sshagent (credentials: ['ssh-key-ec2']) {
