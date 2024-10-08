@@ -63,18 +63,34 @@ pipeline {
                     }
                 }
 
-                // Install dependencies for the test.server.js unit test script (express and axios)
                 stage('Install Dependencies') { 
                     steps {
                         script {
-                            // Navigate to the server directory
                             sh '''
+                                # Load NVM
+                                export NVM_DIR="$HOME/.nvm"
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+                                # Install dependencies in the server directory
                                 cd server
                                 npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /var/jenkins_home/npm_install.log 2>&1
                             '''
                         }
                     }
                 }
+
+                // Install dependencies for the test.server.js unit test script (express and axios)
+                // stage('Install Dependencies') { 
+                //     steps {
+                //         script {
+                //             // Navigate to the server directory
+                //             sh '''
+                //                 cd server
+                //                 npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /var/jenkins_home/npm_install.log 2>&1
+                //             '''
+                //         }
+                //     }
+                // }
 
             }    
         }
