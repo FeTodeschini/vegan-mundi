@@ -64,10 +64,11 @@ pipeline {
                         script {
                             sh '''
                                 # Load NVM
-                                export NVM_DIR="$HOME/.nvm"
+                                #!/bin/bash
+                                export NVM_DIR="/home/ubuntu/.nvm"
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                                 nvm use 20.0.0
-                                
+
                                 # Install dependencies in the server directory
                                 cd server
                                 npm install --omit=optional --no-audit --force --no-bin-links
