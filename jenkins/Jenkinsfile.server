@@ -7,9 +7,9 @@ pipeline {
 
     stages {
         stage('Conditional Execution') {
-            // when {
-            //     changeset "**/server/**"
-            // }
+            when {
+                changeset "**/server/**"
+            }
             stages {
                 stage('Old Builds Cleanup') {
                     steps {
@@ -69,7 +69,7 @@ pipeline {
                     }
                 }
 
-                stage('Unit Tests') { 
+                stage('Unit Test') { 
                     steps {
                         script {
                             // Start the Express Test server in the background
