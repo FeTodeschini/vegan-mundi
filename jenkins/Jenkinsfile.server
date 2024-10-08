@@ -1,16 +1,10 @@
 pipeline {
-    // agent {
-    //     docker {
-    //         image 'node:20' // Use the official Node.js image
-    //         args '-u root:root' // Run as root (optional)
-    //     }
-    // }
     agent any
     environment {
         NVM_DIR = '/home/ubuntu/.nvm'
         PATH = "${NVM_DIR}/versions/node/v22.9.0/bin:${env.PATH}"
     }
-    
+
     stages {
         stage('Conditional Execution') {
             // when {
@@ -21,7 +15,7 @@ pipeline {
                     steps {
                         script {
                             def currentBuildNumber = env.BUILD_NUMBER as int
-                            def buildsToKeep = 3
+                            def buildsToKeep = 2
 
                             def allBuilds = currentBuild.rawBuild.parent.builds
                             def buildsToDelete = []
@@ -68,30 +62,87 @@ pipeline {
                     steps {
                         script {
                             sh '''
-                                # Load NVM
-                                export NVM_DIR="$HOME/.nvm"
-                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-                                # Install dependencies in the server directory
                                 cd server
-                                npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /var/jenkins_home/npm_install.log 2>&1
+                                npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /home/ubuntu/docker-jenkins/npm_install.log 2>&1
                             '''
                         }
                     }
                 }
 
-                // Install dependencies for the test.server.js unit test script (express and axios)
-                // stage('Install Dependencies') { 
-                //     steps {
-                //         script {
-                //             // Navigate to the server directory
-                //             sh '''
-                //                 cd server
-                //                 npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /var/jenkins_home/npm_install.log 2>&1
-                //             '''
-                //         }
-                //     }
-                // }
+                stage('Unit Test') { 
+                    steps {
+                        script {
+                            // Start the Express Test server in the background
+                            def server = sh(script: '''
+                                # Load NVM
+                                export NVM_DIR="$HOME/.nvm"
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+                                # Start the server in the background
+                                nohup node server/test.server.js > server.log 2>&1 & echo $!
+                            ''', returnStdout: true).trim()
+
+                            echo "Server PID: ${server}"
+
+                            def r = sh(script: 'curl -I http://localhost:5000/test-server || echo "Error"', returnStdout: true).trim()
+                            echo "Curl response: ${r}"
+
+                            // Check the last few lines of the server log
+                            sh 'tail -n 15 server.log'
+
+                            // Wait for the server to be ready
+                            def maxRetries = 10
+                            def retries = 0
+                            def isServerReady = false
+
+                            while (retries < maxRetries && !isServerReady) {
+                                sleep(10)
+                                def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
+                                if (result == '200') {
+                                    isServerReady = true
+                                    echo 'Server is ready.'
+                                } else {
+                                    retries++
+                                    echo "Attempt ${retries}: Server not ready yet."
+                                }
+                            }
+
+                            if (!isServerReady) {
+                                error "Server did not start in time."
+                            }
+                        }
+                    }
+                }
+
+                stage('Approve PROD Deployment') {
+                    steps {
+                        timeout(time: 1, unit: 'HOURS') {
+                            input message: 'Deploy changes to PROD?', ok: 'Deploy' 
+                        }
+                    }
+                }
+
+                stage('Deploy to PROD') {
+                    steps {
+                        withCredentials([file(credentialsId: 'env-node-production', variable: 'ENV_FILE_PROD')]) {
+                            sh '''
+                                # Copy JavaScript files
+                                scp -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/
+
+                                # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
+                                cat "$ENV_FILE_PROD" | ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "cat > ${REMOTE_DIR_NODE}/.env.production"
+                                
+                                # Restart the server in a login shell
+                                ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} '
+                                    #!/bin/bash
+                                    export NVM_DIR="/home/ubuntu/.nvm"
+                                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                    pm2 restart server
+                                '
+                            '''                    
+                        }
+                    }
+                }
 
             }    
         }
