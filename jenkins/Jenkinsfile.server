@@ -63,7 +63,7 @@ pipeline {
                         script {
                             sh '''
                                 cd server
-                                npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose > /home/ubuntu/docker-jenkins/npm_install.log 2>&1
+                                npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose | tee -a /home/ubuntu/docker-jenkins/npm_install.log
                             '''
                         }
                     }
