@@ -7,7 +7,7 @@ services:
     user: "1000:1000"
     restart: on-failure
     volumes:
-      - jenkins-home:/var/jenkins_home
+      - /home/ubuntu/docker-jenkins/jenkins-home:/var/jenkins_home
       - /home/ubuntu/docker-jenkins:/home/ubuntu/docker-jenkins
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -15,6 +15,12 @@ services:
       - "50000:50000"
     networks:
       - jenkins
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 1g
 
 networks:
   jenkins:
