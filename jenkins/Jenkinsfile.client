@@ -10,8 +10,8 @@ pipeline {
             steps {
                 sh '''
                     cd client
-                    chmod 644 package.json
-                    chmod -R 755 . 
+                    chmod 777 package.json
+                    chmod -R 777 . 
                     npm cache clean --force
                     npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose 2>&1 | tee /home/ubuntu/docker-jenkins/npm_install_next.log
                     '''
