@@ -1,9 +1,9 @@
 node_modules/
 build/
 assets/
-package*
 npm-debug.log*
 .env*
+**/package-lock.json
 
 # Next.js
 .next
