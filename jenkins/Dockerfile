@@ -25,8 +25,8 @@ RUN mkdir -p $NVM_DIR && \
     ln -s $NVM_DIR/versions/node/v$NODE_VERSION/bin/node /usr/bin/node && \
     ln -s $NVM_DIR/versions/node/v$NODE_VERSION/bin/npm /usr/bin/npm"
 
-# Install PM2 globally
-RUN npm install -g pm2 node-pre-gyp cross-env
+# Install PM2, yarn and otther dependencies globally
+RUN npm install -g pm2 node-pre-gyp cross-env yarn
 
 # Add NPM global binaries to PATH
 ENV PATH=$PATH:$NVM_DIR/versions/node/v$NODE_VERSION/bin
