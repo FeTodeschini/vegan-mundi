@@ -26,9 +26,11 @@ pipeline {
                         sh '''
                             cp "$ENV_NEXT_TEST" client/.env.test
                             cd client
-                            NODE_ENV=test npm run build:test
+                            node -v
+                            npm -v
+                            printenv
+                            NODE_ENV=test npm run build:test --verbose | tee build.log
                         '''
-                        
                     }
                 }
             }
