@@ -23,8 +23,12 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
-                        sh 'cp "$ENV_NEXT_TEST" client/.env.test'
-                        sh 'NODE_ENV=test npm run build:test'
+                        sh '''
+                            cp "$ENV_NEXT_TEST" client/.env.test
+                            cd client
+                            NODE_ENV=test npm run build:test
+                        '''
+                        
                     }
                 }
             }
