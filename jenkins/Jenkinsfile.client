@@ -13,8 +13,6 @@ pipeline {
                     chmod 777 package.json
                     chmod -R 777 . 
                     yarn install
-                    #npm cache clean --force
-                    #npm install --omit=optional --no-audit --force --no-bin-links --loglevel verbose 2>&1 | tee /home/ubuntu/docker-jenkins/npm_install_next.log
                     '''
             }
         }
@@ -25,7 +23,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
-                        sh 'cp $ENV_FILE_TEST client/.env.test'
+                        sh 'cp "$ENV_FILE_TEST" client/.env.test'
                         sh 'NODE_ENV=test npm run build:test'
                     }
                 }
