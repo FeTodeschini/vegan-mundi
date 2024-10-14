@@ -26,7 +26,7 @@ pipeline {
                         sh '''
                             cp "$ENV_NEXT_TEST" client/.env.test
                             cd client
-                            NODE_ENV=test yarn run build:test --verbose --debug --trace-warnings | tee build.log
+                            NODE_ENV=test yarn run build:test --debug --trace-warnings | tee build.log
                         '''
                     }
                 }
