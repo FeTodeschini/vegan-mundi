@@ -7,7 +7,7 @@ services:
     user: "1000:1000"
     restart: on-failure
     volumes:
-      - //home/ubuntu/docker-jenkins/jenkins-home:/var/jenkins_home
+      - /home/ubuntu/docker-jenkins/jenkins-home:/var/jenkins_home
       - /home/ubuntu/docker-jenkins:/home/ubuntu/docker-jenkins
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
