@@ -70,7 +70,7 @@ pipeline {
                         sh '''
                             cp "$ENV_NEXT_PROD" client/.env.production
                             cd client
-                            rm .next .next.zip
+                            rm -rf .next .next.zip
                             NODE_ENV=production DEBUG=* npm run build:production --debug | tee build.log
                         '''
                     }
