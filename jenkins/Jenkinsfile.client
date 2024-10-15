@@ -45,7 +45,12 @@ pipeline {
                             cd client
                             zip -r .next.zip .next package.json public .env.test
                             scp -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no .next.zip ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NEXT}/ && \
-                            ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && rm ${REMOTE_DIR_NEXT}/.next.zip"
+                            ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "
+                                unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && 
+                                rm ${REMOTE_DIR_NEXT}/.next.zip &&
+                                cd ${REMOTE_DIR_NEXT} && 
+                                yarn install --production
+                            "
                         '''
                     }
                 }
