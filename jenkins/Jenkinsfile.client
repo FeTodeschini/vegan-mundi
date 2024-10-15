@@ -50,7 +50,7 @@ pipeline {
                                 rm ${REMOTE_DIR_NEXT}/.next.zip &&
                                 cd ${REMOTE_DIR_NEXT} && 
                                 . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
-                                npm install --production
+                                npm install --omit=dev
                             "
                         '''
                     }
