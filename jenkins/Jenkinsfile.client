@@ -40,9 +40,13 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
+                        //  Zip necessary folders, move to TEST EC2, unzip file and restart the application
                         sh '''
                             cd client
-                            zip -r next.zip .next
+                            zip -r .next.zip .next package.json public .env.test
+                            scp -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no client/next.zip ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NEXT}/
+                            unzip -o .next.zip
+                            rm .next.zip
                         '''
                     }
                 }
