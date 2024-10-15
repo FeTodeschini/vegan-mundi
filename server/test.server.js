@@ -23,7 +23,7 @@ const server = app.listen(PORT, '0.0.0.0', (err) => {
 // - node server started properly and APIs are reachable in the TEST environment
 app.get('/test-server', async (req, res) => {
     try {
-        console.log("Called /test-server")
+        console.log(`Calling ${url}`)
         const response = await axios.get(url);
         console.log("Received URL response")
         
