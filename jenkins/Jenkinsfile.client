@@ -49,7 +49,7 @@ pipeline {
                                 unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && 
                                 rm ${REMOTE_DIR_NEXT}/.next.zip &&
                                 cd ${REMOTE_DIR_NEXT} && 
-                                npm install --production
+                                /home/ubuntu/.nvm/versions/node/v21.7.2/bin/npm install --production
                             "
                         '''
                     }
