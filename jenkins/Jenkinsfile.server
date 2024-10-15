@@ -38,7 +38,7 @@ pipeline {
                     steps {
                         //sshagent (credentials: ['ssh-key-ec2']) {
                             withCredentials([file(credentialsId: 'env-node-test', variable: 'ENV_NODE_TEST')]) {
-                                shagent(['ssh-key-ec2']) {
+                                sshagent(['ssh-key-ec2']) {
                                     sh '''
                                         # Copy JavaScript files
                                         scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
@@ -48,9 +48,7 @@ pipeline {
                                         
                                         # Restart the server in a login shell
                                         ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} '
-                                            #!/bin/bash
-                                            export NVM_DIR="/home/ubuntu/.nvm"
-                                            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                            . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
                                             pm2 restart server
                                         '
                                     '''
@@ -77,8 +75,7 @@ pipeline {
                             // Start the Express Test server in the background
                             def server = sh(script: '''
                                 # Load NVM
-                                export NVM_DIR="$HOME/.nvm"
-                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                . /home/ubuntu/.nvm/nvm.sh
 
                                 # Start the server in the background
                                 nohup node server/test.server.js > server.log 2>&1 & echo $!
@@ -127,7 +124,7 @@ pipeline {
                 stage('Deploy to PROD') {
                     steps {
                         withCredentials([file(credentialsId: 'env-node-production', variable: 'ENV_FILE_PROD')]) {
-                            shagent(['ssh-key-ec2']) {
+                            sshagent(['ssh-key-ec2']) {
                                 sh '''
                                     # Copy JavaScript files
                                     scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/
@@ -137,9 +134,7 @@ pipeline {
                                     
                                     # Restart the server in a login shell
                                     ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} '
-                                        #!/bin/bash
-                                        export NVM_DIR="/home/ubuntu/.nvm"
-                                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                        . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
                                         pm2 restart server
                                     '
                                 '''
