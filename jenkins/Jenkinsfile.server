@@ -70,14 +70,14 @@ pipeline {
                 stage('Unit Test') { 
                     steps {
                         script {
-                            // Start the Express Test server in the background
+                            // Start the Xpress Test server in the background
                             def server = sh(script: '''
                                 # Load NVM
                                 export NVM_DIR="$HOME/.nvm"
                                 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-                                # Start the server
-                                node server/test.server.js > server.log 2>&1 & echo $!
+                                # Start the server in the background
+                                nohup node server/test.server.js > server.log 2>&1 & echo $!
                             ''', returnStdout: true).trim()
 
                             echo "Server PID: ${server}"
