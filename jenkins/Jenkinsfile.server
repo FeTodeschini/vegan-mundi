@@ -38,21 +38,21 @@ pipeline {
                     steps {
                         //sshagent (credentials: ['ssh-key-ec2']) {
                             withCredentials([file(credentialsId: 'env-node-test', variable: 'ENV_NODE_TEST')]) {
-                                sh '''
-                                    # Copy JavaScript files
-                                    scp -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
+                                sshagent(['ssh-key-ec2']) {
+                                    sh '''
+                                        # Copy JavaScript files
+                                        scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
 
-                                    # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
-                                    cat "$ENV_NODE_TEST" | ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "cat > ${REMOTE_DIR_NODE}/.env.test"
-                                    
-                                    # Restart the server in a login shell
-                                    ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} '
-                                        #!/bin/bash
-                                        export NVM_DIR="/home/ubuntu/.nvm"
-                                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                                        pm2 restart server
-                                    '
-                                '''                    
+                                        # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
+                                        cat "$ENV_NODE_TEST" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "cat > ${REMOTE_DIR_NODE}/.env.test"
+                                        
+                                        # Restart the server
+                                        ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} '
+                                            . /home/ubuntu/.nvm/nvm.sh &&
+                                            pm2 restart server
+                                        '
+                                    '''
+                                }
                             }
                         //}
                     }
@@ -125,21 +125,21 @@ pipeline {
                 stage('Deploy to PROD') {
                     steps {
                         withCredentials([file(credentialsId: 'env-node-production', variable: 'ENV_FILE_PROD')]) {
-                            sh '''
-                                # Copy JavaScript files
-                                scp -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/
+                            sshagent(['ssh-key-ec2']) {
+                                sh '''
+                                    # Copy JavaScript files
+                                    scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/
 
-                                # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
-                                cat "$ENV_FILE_PROD" | ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "cat > ${REMOTE_DIR_NODE}/.env.production"
-                                
-                                # Restart the server in a login shell
-                                ssh -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} '
-                                    #!/bin/bash
-                                    export NVM_DIR="/home/ubuntu/.nvm"
-                                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                                    pm2 restart server
-                                '
-                            '''                    
+                                    # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
+                                    cat "$ENV_FILE_PROD" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "cat > ${REMOTE_DIR_NODE}/.env.production"
+                                    
+                                    # Restart the server
+                                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} '
+                                        . /home/ubuntu/.nvm/nvm.sh &&
+                                        pm2 restart server
+                                    '
+                                '''
+                            }
                         }
                     }
                 }
