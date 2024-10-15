@@ -1,109 +1,139 @@
 pipeline {
     agent any
     stages {
-        stage('Install Dependencies') {
-            steps {
-                sh '''
-                    cd client
-                    chmod 777 package.json
-                    chmod -R 777 . 
-                    npm install --omit=dev
-                    '''
+        stage('Conditional Execution') {
+            when {
+                changeset "**/client/**"
             }
-        }
+            stages {
 
-        stage('Build TEST App') {
-            environment {
-                NODE_ENV = 'test'
-            }
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
-                        sh '''
-                            cp "$ENV_NEXT_TEST" client/.env.test
-                            cd client
-                            NODE_ENV=test DEBUG=* npm run build:test --debug | tee build.log
-                        '''
+            stage('Delete Old Builds') {
+                steps {
+                    script {
+                        def currentBuildNumber = env.BUILD_NUMBER as int
+                        def buildsToKeep = 2
+
+                        def allBuilds = currentBuild.rawBuild.parent.builds
+                        def buildsToDelete = []
+
+                        // Create an array of builds to be deleted
+                        allBuilds.each { build ->
+                            if (build.number < currentBuildNumber - buildsToKeep + 1) {
+                                buildsToDelete << build
+                            }
+                        }
+
+                        // Delete the old builds
+                        buildsToDelete.each { build ->
+                            build.delete()
+                        }
                     }
                 }
             }
-        }
 
-        stage('Deploy to TEST') {
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
-                        sshagent(['ssh-key-ec2']) {
-                            //  Zip necessary folders, move to TEST EC2, unzip file and restart the application
+            stage('Install Dependencies') {
+                steps {
+                    sh '''
+                        cd client
+                        chmod 777 package.json
+                        chmod -R 777 . 
+                        npm install --omit=dev
+                        '''
+                }
+            }
+
+            stage('Build TEST App') {
+                environment {
+                    NODE_ENV = 'test'
+                }
+                steps {
+                    script {
+                        withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
                             sh '''
+                                cp "$ENV_NEXT_TEST" client/.env.test
                                 cd client
-                                zip -r .next.zip .next package.json public .env.test
-                                scp -o StrictHostKeyChecking=no .next.zip ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NEXT}/ && \
-                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "
-                                    unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && 
-                                    rm ${REMOTE_DIR_NEXT}/.next.zip &&
-                                    cd ${REMOTE_DIR_NEXT} && 
-                                    . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
-                                    npm install --omit=dev
-                                    pm2 restart server
-                                "
+                                NODE_ENV=test DEBUG=* npm run build:test --debug | tee build.log
                             '''
                         }
                     }
                 }
             }
-        }
 
-        stage('Approve PROD Deployment') {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    input message: 'Deploy changes to PROD?', ok: 'Deploy' 
-                }
-            }
-        }
-
-        stage('Build PROD App') {
-            environment {
-                NODE_ENV = 'production'
-            }
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'env-next-production', variable: 'ENV_NEXT_PROD')]) {
-                        sh '''
-                            cp "$ENV_NEXT_PROD" client/.env.production
-                            cd client
-                            rm -rf .next .next.zip
-                            NODE_ENV=production DEBUG=* npm run build:production --debug | tee build.log
-                        '''
+            stage('Deploy to TEST') {
+                steps {
+                    script {
+                        withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
+                            sshagent(['ssh-key-ec2']) {
+                                //  Zip necessary folders, move to TEST EC2, unzip file and restart the application
+                                sh '''
+                                    cd client
+                                    zip -r .next.zip .next package.json public .env.test
+                                    scp -o StrictHostKeyChecking=no .next.zip ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NEXT}/ && \
+                                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "
+                                        unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && 
+                                        rm ${REMOTE_DIR_NEXT}/.next.zip &&
+                                        cd ${REMOTE_DIR_NEXT} && 
+                                        . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
+                                        npm install --omit=dev
+                                        pm2 restart server
+                                    "
+                                '''
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        stage('Deploy to PROD') {
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'env-next-production', variable: 'ENV_NEXT_PROD')]) {
-                        sshagent(['ssh-key-ec2']) {
-                            //  Zip necessary folders, move to TEST EC2, unzip file and restart the application
+            stage('Approve PROD Deployment') {
+                steps {
+                    timeout(time: 1, unit: 'HOURS') {
+                        input message: 'Deploy changes to PROD?', ok: 'Deploy' 
+                    }
+                }
+            }
+
+            stage('Build PROD App') {
+                environment {
+                    NODE_ENV = 'production'
+                }
+                steps {
+                    script {
+                        withCredentials([file(credentialsId: 'env-next-production', variable: 'ENV_NEXT_PROD')]) {
                             sh '''
+                                cp "$ENV_NEXT_PROD" client/.env.production
                                 cd client
-                                zip -r .next.zip .next package.json public .env.production
-                                scp -o StrictHostKeyChecking=no .next.zip ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NEXT}/ && \
-                                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "
-                                    unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && 
-                                    rm ${REMOTE_DIR_NEXT}/.next.zip &&
-                                    cd ${REMOTE_DIR_NEXT} && 
-                                    . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
-                                    npm install --omit=dev
-                                    pm2 restart client
-                                "
+                                rm -rf .next .next.zip
+                                NODE_ENV=production DEBUG=* npm run build:production --debug | tee build.log
                             '''
                         }
                     }
                 }
             }
-        }        
 
+            stage('Deploy to PROD') {
+                steps {
+                    script {
+                        withCredentials([file(credentialsId: 'env-next-production', variable: 'ENV_NEXT_PROD')]) {
+                            sshagent(['ssh-key-ec2']) {
+                                //  Zip necessary folders, move to TEST EC2, unzip file and restart the application
+                                sh '''
+                                    cd client
+                                    zip -r .next.zip .next package.json public .env.production
+                                    scp -o StrictHostKeyChecking=no .next.zip ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NEXT}/ && \
+                                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "
+                                        unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && 
+                                        rm ${REMOTE_DIR_NEXT}/.next.zip &&
+                                        cd ${REMOTE_DIR_NEXT} && 
+                                        . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
+                                        npm install --omit=dev
+                                        pm2 restart client
+                                    "
+                                '''
+                            }
+                        }
+                    }
+                }
+            }        
+        }
     }
 }
