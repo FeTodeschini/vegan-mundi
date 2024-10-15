@@ -49,7 +49,7 @@ pipeline {
                                 unzip -o ${REMOTE_DIR_NEXT}/.next.zip -d ${REMOTE_DIR_NEXT}/ && 
                                 rm ${REMOTE_DIR_NEXT}/.next.zip &&
                                 cd ${REMOTE_DIR_NEXT} && 
-                                yarn install --production
+                                npm install --production
                             "
                         '''
                     }
