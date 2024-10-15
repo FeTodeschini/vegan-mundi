@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Conditional Execution') {
             when {
-                changeset "**/server/**"
+                changeset "**/client/**"
             }
             stages {
                 stage('Delete Old Builds') {
