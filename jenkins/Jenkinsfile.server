@@ -36,25 +36,23 @@ pipeline {
                 }
                 stage('Deploy to TEST') {
                     steps {
-                        //sshagent (credentials: ['ssh-key-ec2']) {
-                            withCredentials([file(credentialsId: 'env-node-test', variable: 'ENV_NODE_TEST')]) {
-                                sshagent(['ssh-key-ec2']) {
-                                    sh '''
-                                        # Copy JavaScript files
-                                        scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
+                        withCredentials([file(credentialsId: 'env-node-test', variable: 'ENV_NODE_TEST')]) {
+                            sshagent(['ssh-key-ec2']) {
+                                sh '''
+                                    # Copy JavaScript files
+                                    scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
 
-                                        # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
-                                        cat "$ENV_NODE_TEST" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "cat > ${REMOTE_DIR_NODE}/.env.test"
-                                        
-                                        # Restart the server
-                                        ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} '
-                                            . /home/ubuntu/.nvm/nvm.sh &&
-                                            pm2 restart server
-                                        '
-                                    '''
-                                }
+                                    # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
+                                    cat "$ENV_NODE_TEST" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "cat > ${REMOTE_DIR_NODE}/.env.test"
+                                    
+                                    # Restart the server
+                                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} '
+                                        . /home/ubuntu/.nvm/nvm.sh &&
+                                        pm2 restart server
+                                    '
+                                '''
                             }
-                        //}
+                        }
                     }
                 }
 
@@ -75,8 +73,7 @@ pipeline {
                             // Start the Express Test server in the background
                             def server = sh(script: '''
                                 # Load NVM
-                                export NVM_DIR="$HOME/.nvm"
-                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                                . /home/ubuntu/.nvm/nvm.sh
 
                                 # Start the server in the background
                                 nohup node server/test.server.js > server.log 2>&1 & echo $!
@@ -143,7 +140,6 @@ pipeline {
                         }
                     }
                 }
-
             }    
         }
     }
