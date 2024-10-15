@@ -70,7 +70,7 @@ pipeline {
                 stage('Unit Test') { 
                     steps {
                         script {
-                            // Start the Xpress Test server in the background
+                            // Start the Express Test server in the background
                             def server = sh(script: '''
                                 # Load NVM
                                 export NVM_DIR="$HOME/.nvm"
