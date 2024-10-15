@@ -14,7 +14,6 @@ pipeline {
                     cd client
                     chmod 777 package.json
                     chmod -R 777 . 
-                    . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
                     npm install --omit=dev
                     '''
             }
