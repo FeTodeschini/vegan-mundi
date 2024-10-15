@@ -48,7 +48,9 @@ pipeline {
                                         
                                         # Restart the server in a login shell
                                         ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} '
-                                            . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
+                                            #!/bin/bash
+                                            export NVM_DIR="/home/ubuntu/.nvm"
+                                            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                                             pm2 restart server
                                         '
                                     '''
@@ -75,7 +77,8 @@ pipeline {
                             // Start the Express Test server in the background
                             def server = sh(script: '''
                                 # Load NVM
-                                . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
+                                export NVM_DIR="$HOME/.nvm"
+                                [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
                                 # Start the server in the background
                                 nohup node server/test.server.js > server.log 2>&1 & echo $!
@@ -134,7 +137,9 @@ pipeline {
                                     
                                     # Restart the server in a login shell
                                     ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} '
-                                        . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
+                                        #!/bin/bash
+                                        export NVM_DIR="/home/ubuntu/.nvm"
+                                        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                                         pm2 restart server
                                     '
                                 '''
