@@ -44,7 +44,7 @@ pipeline {
                         sh '''
                             cd client
                             zip -r .next.zip .next package.json public .env.test
-                            scp -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no client/next.zip ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NEXT}/
+                            scp -i /home/ubuntu/docker-jenkins/vegan-mundi.pem -o StrictHostKeyChecking=no client/.next.zip ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NEXT}/
                             unzip -o .next.zip
                             rm -rf .next.zip
                         '''
