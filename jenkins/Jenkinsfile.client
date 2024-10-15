@@ -1,12 +1,5 @@
 pipeline {
     agent any
-
-    // agent {
-    //     docker {
-    //         image 'node:18.17.1-alpine'
-    //         args '-v /home/ubuntu/.npm:/root/.npm' // Cache npm dependencies
-    //     }
-    // }
     stages {
         stage('Install Dependencies') {
             steps {
@@ -51,6 +44,7 @@ pipeline {
                                 cd ${REMOTE_DIR_NEXT} && 
                                 . /home/ubuntu/.nvm/nvm.sh &&  # Source nvm to make node and npm available
                                 npm install --omit=dev
+                                pm2 restart server
                             "
                         '''
                     }
