@@ -16,6 +16,7 @@ pipeline {
                     '''
             }
         }
+
         stage('Build Test App') {
             environment {
                 NODE_ENV = 'test'
@@ -27,6 +28,19 @@ pipeline {
                             cp "$ENV_NEXT_TEST" client/.env.test
                             cd client
                             NODE_ENV=test yarn run build:test --debug | tee build.log
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to TEST') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'env-next-test', variable: 'ENV_NEXT_TEST')]) {
+                        sh '''
+                            cd client
+                            zip -r next.zip .next
                         '''
                     }
                 }
