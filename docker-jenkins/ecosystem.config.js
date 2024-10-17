@@ -17,18 +17,18 @@ module.exports = {
 
       {
         name: "client",
-        script: "npm",
+        script: "npm run ",
         cwd: "/var/www/vegan-mundi/client",
         instances: 1,
         autorestart: true,
         watch: false,
-        args: process.env.NODE_ENV === "production" ? "run prod" : "run test",
-        env_test: {
-          NODE_ENV: "test",
-        },
         env_prod: {
           NODE_ENV: "production",
         },
+        env_test: {
+          NODE_ENV: "test",
+        },
+        // args: process.env.NODE_ENV === "production" ? "run prod" : "run test",
       },
 
     ],

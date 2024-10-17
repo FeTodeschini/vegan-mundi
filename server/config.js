@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 module.exports = {
     dbHost: process.env.DB_ENDPOINT?.trim(),
     dbName: process.env.DB_NAME?.trim(),
