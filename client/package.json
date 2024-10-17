@@ -12,12 +12,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "test": "cross-env NODE_ENV=test next dev",
-    "prod": "cross-env NODE_ENV=production npm run build:production && next start",
+    "start:test": "cross-env NODE_ENV=test next start",
     "build:test": "cross-env NODE_ENV=test next build",
-    "build:production": "cross-env NODE_ENV=production next build",
-    "export:test": "npm run build:test",
-    "export:production": "npm run build:production"
+    "prod": "cross-env NODE_ENV=production next start",
+    "build:production": "cross-env NODE_ENV=production next build"
   },
   "eslintConfig": {
     "extends": [

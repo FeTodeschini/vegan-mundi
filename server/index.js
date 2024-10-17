@@ -15,13 +15,7 @@ const envFile = process.env.NODE_ENV === 'development'
   ? path.resolve(__dirname, '.env.test')
   : path.resolve(__dirname, '.env.production');
 
-  console.log(`envFile: ${envFile}`);
-
-  if (fs.existsSync(envFile)) {
-    dotenv.config({ path: envFile });
-  } else {
-    console.error(`Warning: ${envFile} does not exist. Using default environment variables or process.env.`);
-  }
+dotenv.config({ path: envFile });
 
 const config = require('./config');
 
@@ -280,7 +274,6 @@ app.get('/assets/videos/:videoName', (req, res) => {
 // GET A LIST OF PRICES
 
 app.get('/prices', async (req, res) => {
-
   const dbConnection = await connectToDb();
 
   try {
