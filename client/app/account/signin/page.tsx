@@ -43,8 +43,12 @@ export default function Page() {
             }
             catch (err: any) {
                 setResponseMessage("");
-                setError(err.message);
-                console.log(`Error received: ${err}`);
+
+                if (err.response && err.response.data && err.response.data.message) {
+                    setError(err.response.data.message);
+                } else {
+                    setError("An unexpected error occurred."); // Fallback message in case no custom message is received
+                }
             }
         }
 

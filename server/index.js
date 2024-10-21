@@ -1,7 +1,7 @@
 const express = require ('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { createConnection, authPlugins } = require('mysql2');
+const { createConnection } = require('mysql2');
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -23,23 +23,17 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Midlleware error handling function
-app.use((error, req, res, next) =>{
-  console.log(`Middleware error: ${error}`);
-  res.status(err.status).json({message: err.message});
-})
-
 // class for throwing errors, with customized messages
 class CustomError extends Error {
   constructor(message, statusCode) {
     super(message);
     this.statusCode = statusCode;
-    this.status = statusCode <= 400 && statusCode < 500 ? 'fail' : 'error';
+    this.status = statusCode >= 400 && statusCode < 500 ? 'Invalid user request' : 'Internal error';
   }
 }
 
 app.listen(4000, ()=> {
-    console.log('Listening on port 4000...');
+    console.log('Server listening on port 4000...');
 })
 
 
@@ -73,7 +67,7 @@ async function connectToDb(){
 
 app.get('/thumbnails/:thumbnail', async (req, res) => {
 
-  const { GetObjectCommand, S3Client, ListObjectsCommand } = require("@aws-sdk/client-s3");
+  const { GetObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 
   const client = new S3Client({
       region: "us-east-2",
@@ -380,42 +374,58 @@ app.post('/account/create', async (req, res, next) => {
 
 
 // SIGNIN
-
 app.post('/signin', async (req, res, next) => {
-  const dbConnection = await connectToDb();
-  const {email, password} = req.body;
+  try {
+    const dbConnection = await connectToDb();
+    const {email, password} = req.body;
 
-  dbConnection.query(
-      `SELECT * FROM ACCOUNT WHERE EMAIL = '${email}'`,
-    (err, result) => {
-      if (err) {
-        next(new CustomError(`There was an error while signin in`, 500));
-        return;
-      }
-      else if (result.length === 0) {
-          next(new CustomError(`There e-mail ${email} is not registered in this site`, 400));
-          return;
-      }
-      else {
+    dbConnection.query(
+        `SELECT * FROM ACCOUNT WHERE EMAIL = '${email}'`,
+      (err, result) => {
+        if (err) {
+          return next(new CustomError(`There was an error while signin in`, 500));
+        }
+        else if (result.length === 0) {
+          return next(new CustomError(`The e-mail ${email} is not registered in this site`, 400));
+        }
+        else {
 
-        bcrypt.compare(password, result[0].PASSWORD, (err, result) => {
-          if (err) {
-            next(new CustomError(`There was an error while signin in`, 500));
-            return;
-          }
-          else {
-            if (result) {
-              res.status(200).send("Signin successfull");
+          bcrypt.compare(password, result[0].PASSWORD, (err, result) => {
+            if (err) {
+              return next(new CustomError(`There was an error while signin in`, 500));
             }
             else {
-              console.log("Invalid credentials")
-              next(new CustomError(`Invalid credentials`, 400));
+              if (result) {
+                res.status(200).send("Signin successfull");
+              }
+              else {
+                console.log("Invalid credentials")
+                return next(new CustomError(`Invalid credentials`, 400));
+              }
             }
-          }
-        });
+          });
+        }
+
+        dbConnection.end();          
       }
+    );
+  } catch (err)
+  {
+    next(new CustomError("It seems like our servers are napping after a vegan meal and might be unavailable. Please try again later or inform our tech team sending an email to veganmundi@support.com", 500));
+  }  
+});
 
-      dbConnection.end();          
 
+
+app.get('/test-error', (req, res, next) => {
+  return next(new CustomError('Test error', 500));
+});
+
+// Midlleware error handling function
+app.use((err, req, res, next) =>{
+  res.status(err.statusCode || 500).json({
+    statusCode: err.statusCode,
+    status: err.status,
+    message: err.message
   });
 })
