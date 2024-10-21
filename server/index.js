@@ -57,6 +57,7 @@ async function generatePreSignedUrl({ bucket, key }) {
 }
 
 async function connectToDb(){
+
   const dbConnection = createConnection({
       host: config.dbHost,
       user: config.dbUserName,
