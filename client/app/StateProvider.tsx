@@ -1,5 +1,7 @@
+'use client'
+
 import { createContext, useState } from "react";
-import { ChildrenProps, StateContextType } from './_types/global';
+import { ChildrenProps, StateContextType, UserInfo } from './_types/global';
 import { SelectedCookingClass, SelectedCookingClassWithPrices } from './_types/cooking-class';
 
 export const StateContext = createContext<StateContextType>(
@@ -19,7 +21,11 @@ export const StateContext = createContext<StateContextType>(
         isModalOpen: false,
         setIsModalOpen: () => {},
         selectedClass: null,
-        setSelectedClass: () => {}
+        setSelectedClass: () => {},
+        userInfo: {firstName: "", lastName: "", email: ""},
+        setUserInfo: () => {},
+        token: "",
+        setToken: () => {}
     }
 );
 
@@ -32,6 +38,13 @@ export default function StateProvider ({ children }: ChildrenProps) {
     const [responseMessage, setResponseMessage] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [selectedClass, setSelectedClass] = useState<SelectedCookingClass | null>(null);
+    const [token, setToken] = useState<string>("");
+
+    // In case the user signed in, stores userInfo returned from authentication so firstName won;t be reset to "Sig in" if page is refreshed
+    const [userInfo, setUserInfo] = useState<UserInfo>(() => {
+        const storedUserInfo = localStorage.getItem("userInfo");
+        return storedUserInfo ? JSON.parse(storedUserInfo) : { firstName: "Sign in", lastName: "", email: "" };
+    });
 
     return (
         <StateContext.Provider value={{
@@ -50,7 +63,11 @@ export default function StateProvider ({ children }: ChildrenProps) {
             isModalOpen,
             setIsModalOpen,
             selectedClass,
-            setSelectedClass}}>
+            setSelectedClass,
+            userInfo,
+            setUserInfo,
+            token,
+            setToken}}>
             {children}
         </StateContext.Provider>
     );
