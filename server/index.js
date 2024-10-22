@@ -5,6 +5,7 @@ const { createConnection } = require('mysql2');
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 // Load environment variables based on the NODE_ENV, which can be sent either by pm2 when a  Jenkins pipeline is triggered
@@ -390,13 +391,30 @@ app.post('/signin', async (req, res, next) => {
         }
         else {
 
-          bcrypt.compare(password, result[0].PASSWORD, (err, result) => {
+          bcrypt.compare(password, result[0].PASSWORD, (err, isValidPassword) => {
             if (err) {
               return next(new CustomError(`There was an error while signin in`, 500));
             }
             else {
-              if (result) {
-                res.status(200).send("Signin successfull");
+              if (isValidPassword) {
+                const userInfo = {
+                  firstName: result[0].FIRST_NAME,
+                  lastName: result[0].LAST_NAME,
+                  email: result[0].EMAIL
+                };
+                
+                const token = jwt.sign(
+                  userInfo,
+                  config.jwtSecretKey,
+                  { expiresIn: '1h' }
+                );
+
+                res.status(200).json({
+                  message: "Signin successfull",
+                  token: token,
+                  userInfo: userInfo
+                });
+
               }
               else {
                 console.log("Invalid credentials")

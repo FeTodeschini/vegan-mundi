@@ -5,11 +5,12 @@ import { useState, useEffect } from "react";
 import { useParams } from 'next/navigation'
 import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSuignedUrlToArray";
 import FilteredClasses from "../../_components/FilteredClasses";
-
+import useSetToken from "@/hooks/useSetToken";
+import DarkBackground from '@/_components/DarkBackground';
 import { CookingClass } from "@/_types/cooking-class"
-
 import config from "../../_lib/config";
 import '../../_styles/main.css';
+
 
 export default function CategoryClasses(){
     const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,8 @@ export default function CategoryClasses(){
     const category = params.category;
     const [categoryTitle, setCategoryTitle] = useState("");
 
+    useSetToken()
+    
     useEffect( ()=> {
         // Retrieves from the DB all classes matching the category
         async function getResults() {

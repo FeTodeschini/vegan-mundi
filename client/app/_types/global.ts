@@ -24,6 +24,12 @@ export interface GalleryPictures {
     LABEL: string
 }
 
+export interface UserInfo {
+    firstName: string,
+    lastName: string,
+    email: string
+}
+
 // Type for components to receive a single prop of any primitive type (string, number, boolean)
 export type PrimitiveTypeProp<T> = {
     [key: string]: T;
@@ -46,4 +52,8 @@ export interface StateContextType {
     setIsModalOpen: (isModalOpen: boolean) => void;
     selectedClass: SelectedCookingClass | null;
     setSelectedClass: (selectedClass: any) => void;
+    userInfo: UserInfo | undefined,
+    setUserInfo: (userInfo: UserInfo) => void;
+    token: string;
+    setToken: (token: string) => void;
 }

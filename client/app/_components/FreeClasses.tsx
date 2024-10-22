@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image';
 import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSuignedUrlToArray';
 import SectionHeader from './SectionHeader';
 import Card from './Card';
-import { CookingClass, CookingClassRecipe } from '@/_types/cooking-class.js';
+import { CookingClassRecipe } from '@/_types/cooking-class.js';
 import '../_styles/free-classes.css';
 
 export default function FreeClasses() {
