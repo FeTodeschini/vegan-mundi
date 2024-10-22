@@ -10,6 +10,7 @@ import config from "../_lib/config";
 import '../_styles/main.css';
 
 import { CookingClass } from '@/_types/cooking-class'
+import DarkBackground from "@/_components/DarkBackground";
 
 
 function SearchResultSuspense(){
@@ -59,8 +60,11 @@ function SearchResultSuspense(){
     }
     else {
         return (
-            <FilteredClasses images={images} resultsFound={results} title={`${results} result${results !== 1 ? "s" : "" } found for your search`} subTitle={`Keyword: ${keyword}`}/>            
-            )        
+            <>
+                <DarkBackground />
+                <FilteredClasses images={images} resultsFound={results} title={`${results} result${results !== 1 ? "s" : "" } found for your search`} subTitle={`Keyword: ${keyword}`}/>            
+            </>
+        )        
     }
 
 }
