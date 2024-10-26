@@ -35,6 +35,8 @@ export type PrimitiveTypeProp<T> = {
     [key: string]: T;
 };
 
+export type Setter<T> = (value: T | ((prevState: T) => T)) => void;
+
 export interface StateContextType {
     keyword: string;
     setKeyword: (keyword: string) => void;
@@ -54,6 +56,8 @@ export interface StateContextType {
     setSelectedClass: (selectedClass: any) => void;
     userInfo: UserInfo | undefined,
     setUserInfo: (userInfo: UserInfo) => void;
+    orderNumber: string;
+    setOrderNumber: (orderNumber: string) => void;
     token: string;
     setToken: (token: string) => void;
 }

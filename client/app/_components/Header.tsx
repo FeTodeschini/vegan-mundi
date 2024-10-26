@@ -15,11 +15,15 @@ import "../_styles/menu.css";
 
 export default function Header() {
 
-    const { setCartQuantity, setCartItems } = useContext(StateContext);
+    const { setCartQuantity, setCartItems, setCartAmount } = useContext(StateContext);
 
     useEffect (()=> {
         setCartQuantity(() => {
             return Number(localStorage.getItem('cartQuantity'));
+        });
+
+        setCartAmount(() => {
+            return Number(localStorage.getItem('cartAmount'));
         });
 
         // // convert the string that is in the localStorage into an array (as localStorage only stores strings, adn Typescript enforces strict typing)

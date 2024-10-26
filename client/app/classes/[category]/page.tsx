@@ -6,7 +6,6 @@ import { useParams } from 'next/navigation'
 import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSuignedUrlToArray";
 import FilteredClasses from "../../_components/FilteredClasses";
 import useSetToken from "@/hooks/useSetToken";
-import DarkBackground from '@/_components/DarkBackground';
 import { CookingClass } from "@/_types/cooking-class"
 import config from "../../_lib/config";
 import '../../_styles/main.css';
@@ -27,7 +26,8 @@ export default function CategoryClasses(){
         // Retrieves from the DB all classes matching the category
         async function getResults() {
             let response = await axios.get(`${config.serverEndpoint}classes/category/${category}`);
-            setCategoryTitle(response.data.categoryTitle);
+            console.log("Classes X categories:", JSON.stringify(response.data));
+            setCategoryTitle(response.data.CATEGORY_title);
             setFilterResult([...response.data.classes]); 
         }
 

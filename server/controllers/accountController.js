@@ -23,7 +23,7 @@ async function createAccount (req, res, next) {
           '${hashedPassword}')`;
         // result needs to be destructured as mysql2/promise returns 2 items: the rows themselves plus metadata about the result
         await connection.query(query);
-        res.status(200).send("Account created successfully");
+        res.status(201).send("Account created successfully");
     } catch (err) {
         if(err.code === 'ER_DUP_ENTRY') {
             return next(new CustomError(`There is already an account registered with the e-mail '${email}'`, 400));
