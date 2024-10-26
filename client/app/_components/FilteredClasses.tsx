@@ -12,7 +12,7 @@ import { CookingClass } from '@/_types/cooking-class';
 
 
 export default function FilteredClasses ({images, resultsFound, title, subTitle}: FilteredClassesProps){
-    const { setCartQuantity, cartQuantity, cartItems, setCartItems, selectedClass, setSelectedClass, cartAmount, setCartAmount } = useContext(StateContext);
+    const { cartItems, selectedClass, setSelectedClass } = useContext(StateContext);
     const { openModal } = useModal();
     const { isModalOpen } = useContext(StateContext);
 
@@ -27,12 +27,12 @@ export default function FilteredClasses ({images, resultsFound, title, subTitle}
             <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
             <SectionHeader title={title} subTitle={subTitle}/>
 
-            {(resultsFound ?? 0) > 0 ? <SectionHeader title={""} subTitle={"Add a class to your cart to select if it will be in person or online"}/> : ""}
+            {(resultsFound ?? 0) > 0 || subTitle!.includes("Category:") ? <SectionHeader subTitle={"Add a class to your cart to select if it will be in person or online"}/> : ""}
 
-            <div className="grid-auto-fit">
+            <div className="grid-auto-fit top-margin--medium">
                 {images.map((item, index)=>( 
                     <>
-                        <Card 
+                        <Card
                             imgSource={item.PRE_SIGNED_URL}
                             imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`}
                             title={item.TITLE} 
