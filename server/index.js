@@ -20,22 +20,24 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const pricesRouter = require('./routes/pricesRouter');
+const priceRouter = require('./routes/priceRouter');
 const galleryRouter = require('./routes/galleryRouter');
 const s3Router = require('./routes/s3Router');
-const classesRouter = require('./routes/classesRouter');
+const classesRouter = require('./routes/classRouter');
 const deliveryMethodsRouter = require('./routes/deliveryMethodsRouter');
 const accountRouter = require('./routes/accountRouter');
+const orderRouter = require('./routes/orderRouter');
 
 app.listen(4000, ()=> {
   console.log('Server listening on port 4000...');
 })
 
-app.use('/prices', pricesRouter);
+app.use('/prices', priceRouter);
 app.use('/gallery', galleryRouter);
 app.use('/s3', s3Router);
 app.use('/classes', classesRouter);
 app.use('/delivery-methods', deliveryMethodsRouter);
 app.use('/account', accountRouter);
+app.use('/order', orderRouter);
 
 app.use(errorHandler);

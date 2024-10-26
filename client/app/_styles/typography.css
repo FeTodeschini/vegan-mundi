@@ -115,6 +115,12 @@ p {
     font-weight: 700;
 }
 
+.link {
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--color-primary-dark)
+}
+
 .top-margin--small {
     margin-top: 2.4rem;
 }

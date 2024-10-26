@@ -5,8 +5,8 @@ async function getS3Objects (req, res, next) {
 
     try {
       const clientUrl = await generatePreSignedUrl({
-      bucket: `${req.params.bucket}`,
-      key: `${req.params.key}`,
+        bucket: `${req.params.bucket}`,
+        key: `${req.params.key}`,
     });
       res.send(clientUrl);
     } catch (err) {

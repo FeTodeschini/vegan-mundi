@@ -30,7 +30,7 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
             STUDENTS: studentCounts[price.PRICE_ID] || 1,
             MULTIPLE_STUDENTS: price.MULTIPLE_STUDENTS === 1 ? true : false,
             MIN_STUDENTS_FOR_DISCOUNT: price.MIN_STUDENTS_FOR_DISCOUNT,
-            DISCOUNT: price.DISCOUNT,            
+            DISCOUNT_PERCENTAGE: price.DISCOUNT_PERCENTAGE,
         });
     };
 
@@ -51,8 +51,12 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
 
     function calculateDiscount(price: Price, students: number) {
         // Discount is only eligible if minimun amount of students per class is reached
+        console.log(`price: ${price.PRICE}`);
+        console.log(`students: ${students}`);
+        console.log(`DISCOUNT_PERCENTAG: ${price.DISCOUNT_PERCENTAGE}`);
+
         return students >= price.MIN_STUDENTS_FOR_DISCOUNT 
-            ? (price.PRICE * students * price.DISCOUNT/100) 
+            ? (price.PRICE * students * price.DISCOUNT_PERCENTAGE/100) 
             : 0;
     }
 

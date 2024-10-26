@@ -1,4 +1,5 @@
 import { SelectedCookingClass } from "./cooking-class";
+import { Setter } from "./global";
 
 export interface ItemCounterProps {
     minItems: number;

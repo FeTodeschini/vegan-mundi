@@ -36,7 +36,7 @@ export default function LandingPage (){
                 <DeliveryMethods />
                 <FreeClasses />
                 <Prices/>
-                <Gallery />                    
+                <Gallery />
             </main>
         </>
     )

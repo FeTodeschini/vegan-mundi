@@ -127,43 +127,4 @@ async function getClassesPerKeyword (req, res, next) {
     }
 };
 
-
-// Save purchased classes into the database
-async function persistClasses (req, res, next) {
-    const classes = req.body;
-  
-    if (!Array.isArray(classes) || classes.length === 0) {
-      return res.status(400).json({ error: 'Invalid input for /classes/persist: expecting a non-empty array.' });
-    }
-  
-    let connection;
-  
-    try {
-      connection = await connectToDb();
-      const values = classes.map(c => [
-        c.EMAIL,
-        c.CLASS_ID,
-        c.DELIVERY_METHOD_ID,
-        c.NUM_STUDENTS,
-        c.PRICE,
-        c.DISCOUNT_PERCENTAGE,
-        c.CLASS_DATE
-      ]);
-  
-      const query = `INSERT INTO CLASS_ACCOUNT (EMAIL, CLASS_ID, DELIVERY_METHOD_ID, NUM_STUDENTS, PRICE, DISCOUNT_PERCENTAGE, 
-          PURCHASE_DATE, CLASS_DATE) VALUES ?`;
-  
-      // Adds the current date to the 8th field of the CLASS_ACCOUNT table, which is PURCHASE_DATE
-      const valuesWithPurchaseDate = values.map(value => [...value.slice(0, 6), new Date(), value[6]]);
-      await connection.query(query, [valuesWithPurchaseDate]);
-      res.status(200).send("Purchase completed successfully'");
-    } catch (err) {
-      next(new CustomError(`We apologize. There was an error completing your order. ${err.message}`, 500));
-    }
-    finally {
-      if (connection) connection.release();
-    }
-  
-  }
-
-module.exports = { getCategories, getClassesPerCategory, getFreeClasses, getClassesPerKeyword, persistClasses };
+module.exports = { getCategories, getClassesPerCategory, getFreeClasses, getClassesPerKeyword };
