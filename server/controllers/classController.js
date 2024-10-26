@@ -32,8 +32,18 @@ async function getClassesPerCategory (req, res, next) {
     let connection;
 
     try {
+        const email = req.query.email || null
+        const category = req.params.category
+
+        let params;
+        
+        if (email)
+            params = [ email, category ]
+        else
+            params = [category]
+
         connection = await connectToDb();
-        const query = `SELECT DISTINCT CAT.TITLE AS CATEGORY_TITLE, CLS.CLASS_ID, CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO , ` +
+        let query = `SELECT DISTINCT CAT.TITLE AS CATEGORY_TITLE, CLS.CLASS_ID, CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO , ` +
                         ` ( SELECT GROUP_CONCAT(TITLE SEPARATOR '|') 
                             FROM 
                               RECIPE R 
@@ -45,15 +55,21 @@ async function getClassesPerCategory (req, res, next) {
                       ` FROM ` +
                         ` CLASS_CATEGORY CAT ` + 
                         ` INNER JOIN CLASS CLS ON ` +
-                        `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` + 
-                        `   AND UPPER(CAT.CATEGORY_ID) = ${req.params.category} ` + 
+                        `   CAT.CATEGORY_ID = CLS.CATEGORY_ID `
+
+            if (email !== null) {
+                query +=   `AND CLS.CLASS_ID NOT IN (
+                                SELECT CLASS_ID FROM ORDER_CLASS OCL WHERE EMAIL = ?)`
+            }
+                    
+            query += `   AND UPPER(CAT.CATEGORY_ID) = ? ` +
                         ` INNER JOIN CLASS_RECIPE CLR ON ` +
                         `   CLS.CLASS_ID = CLR.CLASS_ID ` +
                         ` INNER JOIN RECIPE RCP ON ` +
                         `   CLR.RECIPE_ID = RCP.RECIPE_ID `;
-        
+
         // result needs to be destructured as mysql2/promise returns 2 items: the rows themselves plus metadata about the result
-        const [result] = await connection.query(query);
+        const [result] = await connection.query(query, params);
 
         // In the old version of this API using mysql.createConnection (single connection), the whole data returned by the db was stored in result 
         // Now that mysql2/promises wth createPool is being used, it is necessary to add the "top level" of the db return to resul (categoryTitle and classes)
@@ -95,11 +111,20 @@ async function getCategories (req, res, next) {
 
 async function getClassesPerKeyword (req, res, next) {
 
+    const email = req.query.email || null
+    const keyword = `%${req.params.keyword}%`
+
     let connection;
+    let params; 
+    
+    if (email)
+        params = [ email, keyword ]
+    else
+        params = [keyword]
 
     try {
         connection = await connectToDb();
-        const query = `SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO, ` +
+        let query = `SELECT DISTINCT CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO, ` +
           ` ( SELECT GROUP_CONCAT(TITLE SEPARATOR '|') 
               FROM 
               RECIPE R 
@@ -109,15 +134,22 @@ async function getClassesPerKeyword (req, res, next) {
                   AND (SELECT COUNT(TITLE) FROM RECIPE R INNER JOIN CLASS_RECIPE C ON R.RECIPE_ID = C.RECIPE_ID AND C.CLASS_ID = CLS.CLASS_ID ) > 1
               ) CLASSES_LIST ` + 
            ` FROM ` +
-           ` CLASS CLS ` +
-           ` INNER JOIN CLASS_RECIPE CLR ON ` +
-           `   CLS.CLASS_ID = CLR.CLASS_ID ` +
-           ` INNER JOIN RECIPE RCP ON ` +
-           `   CLR.RECIPE_ID = RCP.RECIPE_ID ` +
-           `   AND RCP.KEYWORD LIKE '%${req.params.keyword}%'`;
+           ` CLASS CLS `
+
+        if (email !== null) {
+            query +=   `AND CLS.CLASS_ID NOT IN (
+                            SELECT CLASS_ID FROM ORDER_CLASS OCL WHERE EMAIL = ?)`
+        }
+
+        query += ` INNER JOIN CLASS_RECIPE CLR ON ` +
+            `   CLS.CLASS_ID = CLR.CLASS_ID ` +
+            ` INNER JOIN RECIPE RCP ON ` +
+            `   CLR.RECIPE_ID = RCP.RECIPE_ID ` +
+            `   AND RCP.KEYWORD LIKE ?`;
         
+            console.log(query)
         // result needs to be destructured as mysql2/promise returns 2 items: the rows themselves plus metadata about the result
-        const [result] = await connection.query(query);
+        const [result] = await connection.query(query, params);
         res.send(result);
     } catch (err) {
         next(new CustomError(`Error while fetching classes based on keyword search: ${err.message}`, 500));

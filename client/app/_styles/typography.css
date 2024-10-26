@@ -125,6 +125,10 @@ p {
     margin-top: 2.4rem;
 }
 
+.top-margin--medium {
+    margin-top: 3.6rem;
+}
+
 .top-margin--large {
     margin-top: 4.2rem;
 }

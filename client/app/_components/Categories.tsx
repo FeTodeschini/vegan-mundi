@@ -14,7 +14,7 @@ export default function Categories() {
     const [images, setImages] = useState<CookingClassCategory[]>([]);
     const [sectionData, setSectionData] = useState<CookingClassCategory[]>([]);
 
-    // Retrieves all classes categories from the database
+    // Retrieves all classes categories from the database    
     useGetSectionDataWithS3Image(setSectionData, 'classes/categories');
     
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
