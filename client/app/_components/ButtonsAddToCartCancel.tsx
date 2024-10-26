@@ -19,6 +19,7 @@ export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPricePr
             PRICE_TYPE_ID: selectedPrice.PRICE_ID,
             PRICE_TYPE_DESCRIPTION: selectedPrice.DESCRIPTION,
             PRICE: selectedPrice.PRICE,
+            DISCOUNT_PERCENTAGE: selectedPrice.DISCOUNT_PERCENTAGE,
             STUDENTS: selectedPrice.STUDENTS,
         }
 
@@ -26,17 +27,18 @@ export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPricePr
         // Before thypescript, the line below had JSON.stringfy([...cartItems, selectedClassWithPrice])
         // After Typescript, the nullish coalescing operator ?? is now being used to avoid warnings in case cartItems is empty
         localStorage.setItem('cartItems', JSON.stringify([...cartItems ?? [], selectedClassWithPrice]));
-        if (cartQuantity) 
-            localStorage.setItem('cartQuantity', (cartQuantity + 1).toString());
-        if (cartAmount)
-            localStorage.setItem('cartAmount', (cartAmount + selectedClassWithPrice.PRICE).toString() );
+        localStorage.setItem('cartAmount', (cartAmount + selectedClassWithPrice.PRICE).toString() );
+        localStorage.setItem('cartQuantity', (cartQuantity + 1).toString());
+        
         if (setCartItems)
              setCartItems([...cartItems ?? [], selectedClassWithPrice]);
+
         if (setCartQuantity)
             setCartQuantity(items=>items + 1);
+
         if (setCartAmount)
             setCartAmount(amount=>amount + Number(selectedClassWithPrice.PRICE));
-        
+
         closeModal();
     }
 

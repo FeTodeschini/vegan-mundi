@@ -60,10 +60,7 @@ function SearchResultSuspense(){
     }
     else {
         return (
-            <>
-                <DarkBackground />
                 <FilteredClasses images={images} resultsFound={results} title={`${results} result${results !== 1 ? "s" : "" } found for your search`} subTitle={`Keyword: ${keyword}`}/>            
-            </>
         )        
     }
 

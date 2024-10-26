@@ -36,7 +36,7 @@ export default function SignIn() {
         async function signIn() {
             
             try {
-                const response = await axios.post(`${config.serverEndpoint}signin`, signinData);
+                const response = await axios.post(`${config.serverEndpoint}account/signin`, signinData);
                 setResponseMessage("Signin successfull");
                 setError("");
                 
@@ -97,16 +97,18 @@ export default function SignIn() {
             </form>
 
             <div className="form-btn">
-                <div className="form-title">
                     <SectionHeader subTitle="New to Vegan Mundi?" />
-                </div>
 
-                <Link href="/account/create">
-                    <Button type="button" size="full">
-                        Create Account
-                    </Button>
-                </Link>
+                    <div className="form-btn">
+                        <Link className="" href="/account/create">
+                            <Button type="button" size="full">
+                                Create Account
+                            </Button>
+                        </Link>
+                    </div>
             </div>
+
+
 
         </>
     )

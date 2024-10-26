@@ -28,7 +28,7 @@ export default function DeliveryMethods() {
                                 // Line that hadd to be added after Typescript implementation to check if item is SectionDataDeliveryMethods and assert its type
                                 item && "ICON" in item ? (
                                     <Card
-                                        title = { <><img src={`../../public/assets/${item.ICON}`} alt="In Person Classes" className="icon-medium" /> {item.TITLE}</>  }
+                                        title = { <><img src={`assets/${item.ICON}`} alt="In Person Classes" className="icon-medium" /> {item.TITLE}</>  }
                                         description = {item.DESCRIPTION}
                                         key= {item.TITLE}
                                     >

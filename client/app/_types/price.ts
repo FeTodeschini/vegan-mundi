@@ -9,7 +9,7 @@ export interface Price {
     ADDITIONAL_INFO: string,
     MULTIPLE_STUDENTS: number | boolean,
     MIN_STUDENTS_FOR_DISCOUNT: number,
-    DISCOUNT: number,
+    DISCOUNT_PERCENTAGE: number,
     ADDITIONAL_INFO_CART: string,
 }
 
