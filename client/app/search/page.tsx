@@ -10,15 +10,13 @@ import config from "../_lib/config";
 import '../_styles/main.css';
 
 import { CookingClass } from '@/_types/cooking-class'
-import DarkBackground from "@/_components/DarkBackground";
-
 
 function SearchResultSuspense(){
     const [isLoading, setIsLoading] = useState(true);
     const [images, setImages] = useState<CookingClass[]>([]);
     const [filterResult, setFilterResult] = useState<CookingClass[]>([]);
 
-    const { setKeyword } = useContext(StateContext);
+    const { setKeyword, userInfo } = useContext(StateContext);
 
     // Get the query string from the URL
     const searchParams = useSearchParams();
@@ -32,21 +30,29 @@ function SearchResultSuspense(){
     useEffect( ()=> {
         //Fetches from the DB all records matching the keyword searched
         async function getResults() {
+
+            // Checks if User is logged in or not to define whether or not a param needs to be sent to the API
+            const params = userInfo!.email !== "" ? {email: userInfo!.email} : null
+            let response;
+            const apiUrl = `${config.serverEndpoint}classes/filter/${keyword}`
+
+            console.log(`params: ${params}`)
+
             try {
-                let response = await axios.get(`${config.serverEndpoint}classes/filter/${keyword}`);
-                setFilterResult([...response.data]); 
+                if (params)
+                    response = await axios.get(apiUrl, { params });
+                else
+                    response = await axios.get(apiUrl); 
             } catch (error) {
                 console.log("Error getting the results of the search")
             } finally {
                 setIsLoading(false);
+                if (response)
+                    setFilterResult([...response!.data]);
             }
         }
 
-        if (keyword) {
-            getResults();
-        } else {
-            setIsLoading(false);
-        }
+        getResults()
 
     },[keyword])
 
