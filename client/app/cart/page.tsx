@@ -2,28 +2,24 @@
 
 import { useContext, useEffect } from "react";
 import { StateContext } from "../StateProvider";
-
 import SeactionHeader from '../_components/SectionHeader';
 import Button from "../_components/Button";
 import ButtonRemoveFromCart from "../_components/ButtonRemoveFromCart";
 import Card from "../_components/Card"
-
+import { useRouter } from 'next/navigation';
+import { emptyCart } from "@/_lib/CartHelper";
 import "../_styles/card.css";
 
 export default function ShoppingCart () {
-    const { setKeyword, cartQuantity, setCartQuantity, cartItems, setCartItems, cartAmount, setCartAmount } = useContext(StateContext)
+    const { setKeyword, cartQuantity, cartItems, cartAmount, setCartItems, setCartQuantity, setCartAmount} = useContext(StateContext)
+    const router = useRouter(); 
 
     useEffect (()=> {
         setKeyword("");
     }, [])
 
-    function emptyCart(){
-        setCartItems([]);
-        setCartQuantity(0);
-        setCartAmount(0);
-
-        localStorage.setItem('cartItems', JSON.stringify([]));
-        localStorage.setItem('cartQuantity', (0).toString());
+    function callCheckout() {
+        router.push("/checkout");
     }
 
     return (
@@ -41,8 +37,8 @@ export default function ShoppingCart () {
                 {/* Displays the "Empty Cart" and "Checkout' buttons in case the cart is not empty */}
                 {cartQuantity > 0 &&
                     <div className="cart-buttons--btn">
-                        <Button type={"button"} onClick={()=>emptyCart()}>Empty Cart</Button>
-                        <Button type={"button"} bgColor={"yellow"}>Check Out</Button>
+                        <Button type={"button"} onClick={()=>emptyCart(setCartItems, setCartQuantity, setCartAmount)}>Empty Cart</Button>
+                        <Button type={"button"} bgColor={"yellow"} onClick={callCheckout}>Check Out</Button>
                     </div>
                 }
             </div>

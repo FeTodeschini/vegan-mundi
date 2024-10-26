@@ -1,5 +1,6 @@
 export interface CookingClass {
     CATEGORY_ID: number,
+    CLASS_ID: number,
     TITLE: string,
     DESCRIPTION: string,
     PHOTO: string,
@@ -15,7 +16,7 @@ export interface SelectedCookingClass extends CookingClass{
     MULTIPLE_STUDENTS: boolean,
     STUDENTS: number,
     MIN_STUDENTS_DISCOUNT: number,
-    DISCOUNT: number,
+    DISCOUNT_PERCENTAGE: number,
 }
 
 export interface SelectedCookingClassWithPrices extends SelectedCookingClass{

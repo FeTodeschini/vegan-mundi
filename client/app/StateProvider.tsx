@@ -24,6 +24,8 @@ export const StateContext = createContext<StateContextType>(
         setSelectedClass: () => {},
         userInfo: {firstName: "", lastName: "", email: ""},
         setUserInfo: () => {},
+        orderNumber: "",
+        setOrderNumber: () => {},
         token: "",
         setToken: () => {}
     }
@@ -38,6 +40,7 @@ export default function StateProvider ({ children }: ChildrenProps) {
     const [responseMessage, setResponseMessage] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [selectedClass, setSelectedClass] = useState<SelectedCookingClass | null>(null);
+    const [orderNumber, setOrderNumber] = useState<string>("");
     const [token, setToken] = useState<string>("");
 
     // In case the user signed in, stores userInfo returned from authentication so firstName won;t be reset to "Sig in" if page is refreshed
@@ -66,6 +69,8 @@ export default function StateProvider ({ children }: ChildrenProps) {
             setSelectedClass,
             userInfo,
             setUserInfo,
+            orderNumber,
+            setOrderNumber,            
             token,
             setToken}}>
             {children}

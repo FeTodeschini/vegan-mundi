@@ -215,10 +215,16 @@ section {
 
 .free-classes-container,
 .classes-delivery,
-.classes-categories-container { 
+.classes-categories-container,
+.checkout { 
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 3rem;
+}
+
+.checkout { 
+    margin-top: 4rem;
+    margin-bottom: 6rem;
 }
 
 .icon-small {
