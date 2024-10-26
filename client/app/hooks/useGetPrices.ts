@@ -7,7 +7,6 @@ export function useGetPrices( prices: Price[], setPrices: (arg: Price[])=> void,
     useEffect( ()=> {
 
         async function getPrices() {
-            console.log(`getPrices: ${config.serverEndpoint}prices`);
             const response = await fetch(`${config.serverEndpoint}prices`);
             const data: Price[] = await response.json();
 
