@@ -1,0 +1,3 @@
+`INSERT INTO \`ORDER\` 
+            (ORDER_NUMBER, EMAIL, PAYMENT_METHOD_ID, ORDER_DATE) 
+            VALUES (?, ?, \'CRC\', NOW())`
