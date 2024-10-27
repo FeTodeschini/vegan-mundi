@@ -41,7 +41,7 @@ export default function Page () {
                 DISCOUNT_PERCENTAGE: data.DISCOUNT_PERCENTAGE,
                 CLASS_DATE: ''
             }));
-    
+
             const orderData = {
                 orderNumber,
                 email: userInfo!.email,
