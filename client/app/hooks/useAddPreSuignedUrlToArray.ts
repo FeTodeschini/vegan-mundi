@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import config from '../_lib/config';
 import { SectionData } from "@/_types/section-data"
-import { CookingClass } from "@/_types/cooking-class";
+
 
 export function useAddPreSignedUrlToArray<T extends SectionData>(
         dependencyArray : T[],

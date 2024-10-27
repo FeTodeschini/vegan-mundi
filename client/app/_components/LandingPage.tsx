@@ -1,7 +1,4 @@
-'use client'
-
-import { useContext, useEffect } from "react";
-import { StateContext } from "../StateProvider";
+import LandingPageClientFeatures from "./LandingPageClientFeatures";
 import Hero from "./Hero";
 import Disclaimer from "./Disclaimer";
 import DeliveryMethods from "./DeliveryMethods";
@@ -9,33 +6,36 @@ import Categories from "./Categories";
 import FreeClasses from "./FreeClasses";
 import Prices from "./Prices";
 import Gallery from "./Gallery";
+import { getPrices } from "@/_lib/functions";
+import config from '../_lib/config';
+import axios from "axios";
 
-export default function LandingPage (){
+export default async function LandingPage (){
 
-    const { setKeyword } = useContext(StateContext);
+    // Fetch data for SSG (Static Site Generation) components
+    let response;
+
+    const prices = await getPrices()
+
+    response = await axios.get(`${config.serverEndpoint}delivery-methods`);
+    const deliveryMethods = response.data;
+
+    response = await axios.get(`${config.serverEndpoint}classes/categories`);
+    const categories = response.data;
     
-    useEffect( ()=> {
-        if (setKeyword) {
-            setKeyword("");
-        }
-
-        //  Creates the localStorage for the Shopping Cart the first time the user loads the page
-        if (localStorage.getItem('cartQuantity')===null) {
-            localStorage.setItem('cartItems', JSON.stringify([]));
-            localStorage.setItem('cartQuantity', String(0));
-        }
-
-    } , []);
-
     return (
         <>
+            {/* Get the "keyword" state variable and initializes the localStorage items cartQuantity and cartItems 
+            used by client side components */}
+            <LandingPageClientFeatures/>
+
             <main> 
                 <Hero />
                 <Disclaimer />
-                <Categories />
-                <DeliveryMethods />
+                <Categories categories={categories}/>
+                <DeliveryMethods deliveryMethods={deliveryMethods}/>
                 <FreeClasses />
-                <Prices/>
+                <Prices prices={prices}/>
                 <Gallery />
             </main>
         </>
