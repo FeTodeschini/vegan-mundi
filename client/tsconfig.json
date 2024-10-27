@@ -115,7 +115,7 @@
     "app/**/*", // Ensure all files in the app directory are included
     "app/_types/**/*",
     ".next/types/**/*.ts"
-  ],
+, "page.tsx"  ],
   "exclude": [
     "node_modules"
   ]
