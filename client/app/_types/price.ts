@@ -37,7 +37,7 @@ export const initialPrice: Price = {
     ADDITIONAL_INFO: '',
     MULTIPLE_STUDENTS: 0,
     MIN_STUDENTS_FOR_DISCOUNT: 0,
-    DISCOUNT: 0,
+    DISCOUNT_PERCENTAGE: 0,
     ADDITIONAL_INFO_CART: '',
 }
 
