@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import config from '../_lib/config';
 import { SectionData } from "@/_types/section-data"
 

@@ -1,6 +1,18 @@
 import { ReactNode } from 'react';
 import {  CookingClass, SelectedCookingClass, SelectedCookingClassWithPrices } from './cooking-class'
 
+// Type for components to receive a single prop of any primitive type (string, number, boolean)
+export type PrimitiveTypeProp<T> = {
+    [key: string]: T;
+};
+
+// Type for components to receive a single array prop 
+export type ArrayProps<T> = {
+    [key: string]: T[];
+};
+
+export type Setter<T> = (value: T | ((prevState: T) => T)) => void;
+
 export interface ChildrenProps {
     children?: ReactNode;
 }
@@ -29,13 +41,6 @@ export interface UserInfo {
     lastName: string,
     email: string
 }
-
-// Type for components to receive a single prop of any primitive type (string, number, boolean)
-export type PrimitiveTypeProp<T> = {
-    [key: string]: T;
-};
-
-export type Setter<T> = (value: T | ((prevState: T) => T)) => void;
 
 export interface StateContextType {
     keyword: string;

@@ -51,10 +51,6 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
 
     function calculateDiscount(price: Price, students: number) {
         // Discount is only eligible if minimun amount of students per class is reached
-        console.log(`price: ${price.PRICE}`);
-        console.log(`students: ${students}`);
-        console.log(`DISCOUNT_PERCENTAG: ${price.DISCOUNT_PERCENTAGE}`);
-
         return students >= price.MIN_STUDENTS_FOR_DISCOUNT 
             ? (price.PRICE * students * price.DISCOUNT_PERCENTAGE/100) 
             : 0;
