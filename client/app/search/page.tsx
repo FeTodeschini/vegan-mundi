@@ -36,8 +36,6 @@ function SearchResultSuspense(){
             let response;
             const apiUrl = `${config.serverEndpoint}classes/filter/${keyword}`
 
-            console.log(`params: ${params}`)
-
             try {
                 if (params)
                     response = await axios.get(apiUrl, { params });
