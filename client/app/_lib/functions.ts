@@ -20,7 +20,8 @@ export function toggleDarkBackground(isToggleMenu: boolean){
 }
 
 export async function getPrices() {
-    var data = await fetch(`${config.serverEndpoint}/prices`);
+
+    var data = await fetch(`${config.serverEndpoint}prices`);
     data = await data.json();
 
     // Because of Typescript, it is necessary to check if data is an array

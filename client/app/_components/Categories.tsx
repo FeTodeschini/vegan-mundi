@@ -36,7 +36,7 @@ export default function Categories() {
                         {images.map( item => 
                             <Card 
                                 title={item.TITLE} 
-                                imgSource={item.PRE_SIGNED_URL}
+                                imgSource={`/assets/${item.PHOTO}`}
                                 imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} 
                                 callOutTag={item.LEVEL}
                                 description={item.DESCRIPTION}
