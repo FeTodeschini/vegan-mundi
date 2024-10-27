@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ChildrenProps, StateContextType, UserInfo } from './_types/global';
 import { SelectedCookingClass, SelectedCookingClassWithPrices } from './_types/cooking-class';
 
@@ -44,11 +44,15 @@ export default function StateProvider ({ children }: ChildrenProps) {
     const [token, setToken] = useState<string>("");
 
     // In case the user signed in, stores userInfo returned from authentication so firstName won;t be reset to "Sig in" if page is refreshed
-    const [userInfo, setUserInfo] = useState<UserInfo>(() => {
-        const storedUserInfo = localStorage.getItem("userInfo");
-        return storedUserInfo ? JSON.parse(storedUserInfo) : { firstName: "Sign in", lastName: "", email: "" };
-    });
+    const [userInfo, setUserInfo] = useState<UserInfo>({ firstName: "Sign in", lastName: "", email: "" });
 
+    useEffect(() => {
+        const storedUserInfo = localStorage.getItem("userInfo");
+        if (storedUserInfo) {
+            setUserInfo(JSON.parse(storedUserInfo));
+        }
+    }, []);
+    
     return (
         <StateContext.Provider value={{
             keyword, 
