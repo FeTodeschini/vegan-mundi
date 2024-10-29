@@ -1,3 +1,4 @@
+'use client' 
 import { StateContext } from "../StateProvider";
 import { useContext } from "react";
 import { ModalProps } from "@/_types/global";

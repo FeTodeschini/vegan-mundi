@@ -1,5 +1,5 @@
 import { SelectedCookingClassWithPrices } from "@/_types/cooking-class";
-import { SetCartAmount, SetCartItems, SetCartQuantity } from "@/_types/state-provider";
+import { SetCartAmount, SetCartItems, SetCartQuantity } from "@/_types/context-provider";
 
 // Removes an item from the shopping cart (remove the item from the array and decrease the quantity of items in the cart)
 export function removeFromCart( cartItems: SelectedCookingClassWithPrices[],

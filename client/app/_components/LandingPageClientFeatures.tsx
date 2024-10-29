@@ -2,10 +2,14 @@
 
 import { useContext, useEffect } from "react";
 import { StateContext } from "../StateProvider";
+import useSetToken from "@/hooks/useSetToken";
 
 export default function LandingPageClientFeatures(){
     const { setKeyword } = useContext(StateContext);
     
+    // Load JWT Token for items that are only available for logged Users
+    useSetToken()
+
     useEffect( ()=> {
         if (setKeyword) {
             setKeyword("");

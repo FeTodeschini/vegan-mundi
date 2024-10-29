@@ -18,8 +18,6 @@ async function addOrderClasses (connection, classes) {
       new Date()
     ]);
 
-    console.log(`clases: ${JSON.stringify(classes)}`);
-    
     await connection.query(query, [classesWithPurchaseDate]);
     return;
   } catch (err) {

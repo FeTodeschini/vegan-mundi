@@ -25,10 +25,9 @@ export default async function LandingPage (){
     
     return (
         <>
-            {/* Get the "keyword" state variable and initializes the localStorage items cartQuantity and cartItems 
-            used by client side components */}
+            {/* Get the "keyword" state variable, initializes the localStorage items (cartQuantity and cartItems) and
+            the JWT Token in case User is logged in used by client side components */}
             <LandingPageClientFeatures/>
-
             <main> 
                 <Hero />
                 <Disclaimer />

@@ -8,29 +8,12 @@ import SearchInput from './SearchInput';
 import SigninIcon from "./SigninIcon";
 import Menu from './Menu';
 import CartIcon from './CartIcon';
-
-import { SelectedCookingClassWithPrices } from "@/_types/cooking-class";
-
+import { useGeCartItemsFromLocalStorage } from "@/hooks/useGetCartItemsFromLocalStorage";
 import "../_styles/menu.css";
 
 export default function Header() {
 
-    const { setCartQuantity, setCartItems, setCartAmount } = useContext(StateContext);
-
-    useEffect (()=> {
-        setCartQuantity(() => {
-            return Number(localStorage.getItem('cartQuantity'));
-        });
-
-        setCartAmount(() => {
-            return Number(localStorage.getItem('cartAmount'));
-        });
-
-        // // convert the string that is in the localStorage into an array (as localStorage only stores strings, adn Typescript enforces strict typing)
-        const cartItems = localStorage.getItem('cartItems');
-        setCartItems(cartItems ? JSON.parse(cartItems) as SelectedCookingClassWithPrices[] : []);
-
-    }, []);
+    useGeCartItemsFromLocalStorage()
 
     return (
         <>
