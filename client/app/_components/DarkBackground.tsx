@@ -1,5 +1,3 @@
-'use client';
-
 import { toggleDarkBackground } from "../_lib/functions"
 
 export default function DarkBackground() {

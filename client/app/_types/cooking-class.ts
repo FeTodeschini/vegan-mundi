@@ -34,15 +34,10 @@ export interface CookingClassDeliveryMethods {
     PRE_SIGNED_URL?: string
 }
 
-export interface CookingClassCategory {
-    CATEGORY_ID: number,
-    TITLE: string,
-    PHOTO: string,
-    DESCRIPTION: string,
+export interface CookingClassCategory extends CookingClass {
     DISPLAY_ORDER: number,
     LEVEL: string,
     DESCRIPTION_ITEMS_LIST: string,
-    PRE_SIGNED_URL?: string
 }
 
 export interface CookingClassRecipe {
