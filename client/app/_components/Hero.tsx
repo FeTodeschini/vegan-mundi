@@ -1,6 +1,4 @@
 import Button from './Button';
-
-import { ButtonProps } from '../_types/button';
 import '../_styles/hero.css';
 
 export default function Hero() {
