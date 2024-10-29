@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import {  CookingClass, SelectedCookingClass, SelectedCookingClassWithPrices } from './cooking-class'
+import {  CookingClass, CookingClassDeliveryMethods, SelectedCookingClass, SelectedCookingClassWithPrices } from './cooking-class'
+import { SectionData } from './section-data';
 
 // Type for components to receive a single prop of any primitive type (string, number, boolean)
 export type PrimitiveTypeProp<T> = {
