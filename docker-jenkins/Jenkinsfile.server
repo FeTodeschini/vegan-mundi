@@ -7,9 +7,9 @@ pipeline {
 
     stages {
         stage('Conditional Execution') {
-            when {
-                changeset "**/server/**"
-            }
+            // when {
+            //     changeset "**/server/**"
+            // }
             stages {
                 stage('Old Builds Cleanup') {
                     steps {
@@ -102,7 +102,7 @@ pipeline {
                                 sleep(15)
                                 def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
                                 echo "result: ${result}"
-                                
+
                                 if (result == '200') {
                                     isServerReady = true
                                     echo 'Server is ready.'
