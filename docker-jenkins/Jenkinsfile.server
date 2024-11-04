@@ -100,14 +100,17 @@ pipeline {
                             
                             // Check and kill any running Node.js processes
                             def killNodeProcesses = sh(script: '''
-                                if pgrep -f node > /dev/null; then
-                                    echo "Killing existing Node.js processes..."
-                                    pkill -f node || echo "No Node.js processes to kill"
+                                echo "Checking for running Node.js processes..."
+                                PIDS=$(ps aux | grep '[n]ode' | awk '{print $2}')
+                                if [ -n "$PIDS" ]; then
+                                    echo "Killing existing Node.js processes: $PIDS"
+                                    for pid in $PIDS; do
+                                        kill -9 $pid || echo "Failed to kill process $pid"
+                                    done
                                 else
                                     echo "No Node.js processes found."
                                 fi
                             ''', returnStdout: true).trim()
-                            echo "${killNodeProcesses}"
 
                             while (retries < maxRetries && !isServerReady) {
                                 sleep(20)
