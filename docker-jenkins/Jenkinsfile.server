@@ -98,6 +98,9 @@ pipeline {
                             def retries = 0
                             def isServerReady = false
                             
+                            // make sure there is no other server running
+                            sh 'pkill -f node || true'
+
                             while (retries < maxRetries && !isServerReady) {
                                 sleep(20)
                                 def result = sh(script: 'curl -o /dev/null -w "%{http_code}" http://0.0.0.0:5000/test-server', returnStdout: true).trim()
