@@ -34,7 +34,7 @@ pipeline {
                         }
                     }
                 }
-                stage('Deploy to TEST') {
+                stage('Deploy to TEST-New Structure') {
                     steps {
                         withCredentials([file(credentialsId: 'env-node-test', variable: 'ENV_NODE_TEST')]) {
                             sshagent(['ssh-key-ec2']) {
