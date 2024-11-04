@@ -27,7 +27,7 @@ export default function SearchInput({ placeholder }: PrimitiveTypeProp<string>){
                     onKeyUp={(e)=>handleKeyUp(e, keyword, router)}
                 />
                 <button type="button" className="search__button">
-                    <img className="search__icon"  src="/assets/magnifying-glass.svg" alt="Magnifying Glass icon" />
+                    <img className="search__icon"  src="/assets/magnifying-glass.svg" alt="Magnifying Glass" />
                 </button>
             </div>
         </>
