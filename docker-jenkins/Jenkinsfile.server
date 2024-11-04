@@ -98,20 +98,6 @@ pipeline {
                             def retries = 0
                             def isServerReady = false
                             
-                            // Check and kill any running Node.js processes
-                            def killNodeProcesses = sh(script: '''
-                                echo "Checking for running Node.js processes..."
-                                PIDS=$(ps aux | grep '[n]ode' | awk '{print $2}')
-                                if [ -n "$PIDS" ]; then
-                                    echo "Killing existing Node.js processes: $PIDS"
-                                    for pid in $PIDS; do
-                                        kill -9 $pid || echo "Failed to kill process $pid"
-                                    done
-                                else
-                                    echo "No Node.js processes found."
-                                fi
-                            ''', returnStdout: true).trim()
-
                             while (retries < maxRetries && !isServerReady) {
                                 sleep(20)
                                 def result = sh(script: 'curl -o /dev/null -w "%{http_code}" http://0.0.0.0:5000/test-server', returnStdout: true).trim()
