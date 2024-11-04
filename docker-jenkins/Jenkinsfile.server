@@ -40,7 +40,7 @@ pipeline {
                             sshagent(['ssh-key-ec2']) {
                                 sh '''
                                     # Copy JavaScript files
-                                    find server/ -name "*.js" -exec scp -o StrictHostKeyChecking=no {} ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/{} \;
+                                    find server/ -name "*.js" -exec scp -o StrictHostKeyChecking=no {} ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/{} \
 
                                     # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
                                     cat "$ENV_NODE_TEST" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "cat > ${REMOTE_DIR_NODE}/.env.test"
@@ -126,7 +126,7 @@ pipeline {
                             sshagent(['ssh-key-ec2']) {
                                 sh '''
                                     # Copy JavaScript files
-                                    find server/ -name "*.js" -exec scp -o StrictHostKeyChecking=no {} ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/{} \;
+                                    find server/ -name "*.js" -exec scp -o StrictHostKeyChecking=no {} ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/{} \
 
                                     # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
                                     cat "$ENV_FILE_PROD" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "cat > ${REMOTE_DIR_NODE}/.env.production"
