@@ -131,12 +131,12 @@ pipeline {
                             sshagent(['ssh-key-ec2']) {
                                 sh '''
                                     # Copy JavaScript files
-                                    scp -o StrictHostKeyChecking=no -r server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/
-                                    scp -o StrictHostKeyChecking=no -r server/config/*.js ${EC2_USER}@${EC2_PROD:${REMOTE_DIR_NODE}/config/
-                                    scp -o StrictHostKeyChecking=no -r server/controllers/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/controllers/
-                                    scp -o StrictHostKeyChecking=no -r server/middlewares/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/middlewares/
-                                    scp -o StrictHostKeyChecking=no -r server/routes/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/routes/
-                                    scp -o StrictHostKeyChecking=no -r server/utils/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/utils/
+                                    scp -o StrictHostKeyChecking=no -r server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}
+                                    scp -o StrictHostKeyChecking=no -r server/config/*.js ${EC2_USER}@${EC2_PROD:${REMOTE_DIR_NODE}/config
+                                    scp -o StrictHostKeyChecking=no -r server/controllers/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/controllers
+                                    scp -o StrictHostKeyChecking=no -r server/middlewares/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/middlewares
+                                    scp -o StrictHostKeyChecking=no -r server/routes/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/routes
+                                    scp -o StrictHostKeyChecking=no -r server/utils/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/utils
 
                                     # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
                                     cat "$ENV_FILE_PROD" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "cat > ${REMOTE_DIR_NODE}/.env.production"
