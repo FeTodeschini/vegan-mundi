@@ -98,8 +98,16 @@ pipeline {
                             def retries = 0
                             def isServerReady = false
                             
-                            // make sure there is no other server running
-                            sh 'pkill -f node || true'
+                            // Check and kill any running Node.js processes
+                            def killNodeProcesses = sh(script: '''
+                                if pgrep -f node > /dev/null; then
+                                    echo "Killing existing Node.js processes..."
+                                    pkill -f node || echo "No Node.js processes to kill"
+                                else
+                                    echo "No Node.js processes found."
+                                fi
+                            ''', returnStdout: true).trim()
+                            echo "${killNodeProcesses}"
 
                             while (retries < maxRetries && !isServerReady) {
                                 sleep(20)
