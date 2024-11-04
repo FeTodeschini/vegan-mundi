@@ -87,7 +87,7 @@ pipeline {
 
                             echo "Server PID: ${server}"
 
-                            def r = sh(script: 'curl -I http://localhost:5000/test-server || echo "Error"', returnStdout: true).trim()
+                            def r = sh(script: 'curl -I http://0.0.0.0:5000/test-server || echo "Error"', returnStdout: true).trim()
                             echo "Curl response: ${r}"
 
                             // Check the last few lines of the server log
