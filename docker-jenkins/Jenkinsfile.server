@@ -97,9 +97,11 @@ pipeline {
                             def maxRetries = 10
                             def retries = 0
                             def isServerReady = false
-
+                            sleep(30)
+                            
                             while (retries < maxRetries && !isServerReady) {
                                 sleep(15)
+                                // def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://0.0.0.0:5000/test-server', returnStdout: true).trim()
                                 def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://0.0.0.0:5000/test-server', returnStdout: true).trim()
                                 echo "result: ${result}"
 
