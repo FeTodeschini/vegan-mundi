@@ -39,8 +39,15 @@ pipeline {
                         withCredentials([file(credentialsId: 'env-node-test', variable: 'ENV_NODE_TEST')]) {
                             sshagent(['ssh-key-ec2']) {
                                 sh '''
-                                    # Copy JavaScript files
-                                    scp -o StrictHostKeyChecking=no -r server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
+
+                                    # Copy JavaScript files - scp does not support recursive copy
+                                    scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
+                                    scp -o StrictHostKeyChecking=no server/config/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/config/
+                                    scp -o StrictHostKeyChecking=no server/controllers/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/controllers/
+                                    scp -o StrictHostKeyChecking=no server/middlewares/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/middlewares/
+                                    scp -o StrictHostKeyChecking=no server/routes/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/routes/
+                                    scp -o StrictHostKeyChecking=no server/utils/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/utils/
+
 
                                     # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
                                     cat "$ENV_NODE_TEST" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "cat > ${REMOTE_DIR_NODE}/.env.test"
@@ -82,7 +89,7 @@ pipeline {
 
                             echo "Server PID: ${server}"
 
-                            def r = sh(script: 'curl -I http://localhost:5000/test-server || echo "Error"', returnStdout: true).trim()
+                            def r = sh(script: 'curl -I http://0.0.0.0:5000/test-server || echo "Error"', returnStdout: true).trim()
                             echo "Curl response: ${r}"
 
                             // Check the last few lines of the server log
@@ -92,10 +99,12 @@ pipeline {
                             def maxRetries = 10
                             def retries = 0
                             def isServerReady = false
-
+                            
                             while (retries < maxRetries && !isServerReady) {
-                                sleep(10)
-                                def result = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/test-server', returnStdout: true).trim()
+                                sleep(20)
+                                def result = sh(script: 'curl -o /dev/null -w "%{http_code}" http://0.0.0.0:5000/test-server', returnStdout: true).trim()
+                                echo "result: ${result}"
+
                                 if (result == '200') {
                                     isServerReady = true
                                     echo 'Server is ready.'
@@ -126,7 +135,12 @@ pipeline {
                             sshagent(['ssh-key-ec2']) {
                                 sh '''
                                     # Copy JavaScript files
-                                    scp -o StrictHostKeyChecking=no -r server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/
+                                    scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/
+                                    scp -o StrictHostKeyChecking=no server/config/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/config/
+                                    scp -o StrictHostKeyChecking=no server/controllers/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/controllers/
+                                    scp -o StrictHostKeyChecking=no server/middlewares/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/middlewares/
+                                    scp -o StrictHostKeyChecking=no server/routes/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/routes/
+                                    scp -o StrictHostKeyChecking=no server/utils/*.js ${EC2_USER}@${EC2_PROD}:${REMOTE_DIR_NODE}/utils/
 
                                     # Deploy the .env.production file that is stored in the Jenkins Credentials plugin
                                     cat "$ENV_FILE_PROD" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_PROD} "cat > ${REMOTE_DIR_NODE}/.env.production"
