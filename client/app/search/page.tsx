@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState, useEffect, useContext } from "react";
 import { StateContext } from "../StateProvider";
-import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSuignedUrlToArray";
+import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSignedUrlToArray";
 import FilteredClasses from "../_components/FilteredClasses";
 import config from "../_lib/config";
 import '../_styles/main.css';

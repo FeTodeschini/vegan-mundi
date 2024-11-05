@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from 'next/navigation'
-import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSuignedUrlToArray";
+import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSignedUrlToArray";
 import FilteredClasses from "../../_components/FilteredClasses";
 import useSetToken from "@/hooks/useSetToken";
 import { CookingClass } from "@/_types/cooking-class"

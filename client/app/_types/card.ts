@@ -2,25 +2,25 @@
 import { ChildrenProps } from "./global"
 
 export interface CardProps extends ChildrenProps {
-    imgSource?: string,
-    imgLink?: string,
-    isVideo?: boolean,
-    title?: React.ReactNode,
-    description?: string,
-    descriptionList?: React.ReactNode,
+    key: number,
     bgColor?: string,
-    callOutTag?: string,
-}
-
-export interface CardContentProps { 
-    callOutTag?: string,
-    title?: React.ReactNode,
-    description?: string,
-    descriptionList?: React.ReactNode,
+    additionalClass?: string
 }
 
 export interface CardTopImageProps {
     imgSource?: string,
     imgLink?: string,
     isVideo?: boolean,
+}
+
+export  interface CardContentProps {
+    callOutTag: string,
+    title: string,
+    description: string,
+    descriptionList: string
+}
+
+export interface CardTitleProps {
+    callOutTag?: string;
+    children: React.ReactNode;
 }

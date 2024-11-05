@@ -4,7 +4,7 @@ export interface CookingClass {
     TITLE: string,
     DESCRIPTION: string,
     PHOTO: string,
-    CLASSES_LIST: string,
+    CLASSES_LIST: any,
     PRE_SIGNED_URL?: string
 }
 
@@ -22,6 +22,7 @@ export interface SelectedCookingClass extends CookingClass{
 export interface SelectedCookingClassWithPrices extends SelectedCookingClass{
     PRICE_TYPE_ID: number,
     PRICE_TYPE_DESCRIPTION: string,
+    CLASS_DATE: Date | undefined,
 }
 
 export interface CookingClassDeliveryMethods {
@@ -49,4 +50,19 @@ export interface CookingClassRecipe {
     PUBLISH_DATE: string,
     DISPLAY_ORDER: number
     PRE_SIGNED_URL? : string
+}
+
+export interface MyCookingClass extends CookingClass{
+    CATEGORY_TITLE: string,
+    DELIVERY_METHOD_ID: number;
+    VIDEO: string;
+    CLASS_DATE?: Date;
+}
+
+export interface Recipe{
+    RECIPE_ID: number;
+    TITLE: string,
+    PHOTO: string,
+    DELIVERY_METHOD_ID: number;
+    VIDEO: string
 }
