@@ -13,3 +13,9 @@ export async function addPreSignedUrlToArray<T extends CookingClass>(array: T[],
 
     return s3Objects;
 }   
+
+export async function addPreSignedUrlToString(bucket: string, object: string){
+    const response = await fetch(`${config.serverEndpoint}s3/${bucket}/${object}`);
+    const preSignedUrl = await response.json();
+    return preSignedUrl
+}

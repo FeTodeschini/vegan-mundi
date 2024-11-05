@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image';
-import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSuignedUrlToArray';
+import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSignedUrlToArray';
 import SectionHeader from './SectionHeader';
-import Card from './Card';
 import { CookingClassRecipe } from '@/_types/cooking-class.js';
 import '../_styles/free-classes.css';
+import Card from './Card';
 
 export default function FreeClasses() {
 
@@ -34,15 +34,16 @@ export default function FreeClasses() {
                     subTitle="Free Classes"/>
                 
                 <div className="free-classes__list grid-auto-fit">
-                    {images.map(item=>(
-                        <Card 
-                            imgSource={item.PRE_SIGNED_URL}
-                            imgLink={`/videoplayer/${item.VIDEO}`} 
-                            isVideo={true}
-                            title={item.TITLE} 
-                            description={item.DESCRIPTION} 
-                            key={item.PRE_SIGNED_URL}
-                        />
+                    {images.map((item, index)=>(
+                        <Card key={index}>
+                            <Card.TopImage 
+                                imgSource={item.PRE_SIGNED_URL}
+                                imgLink={`/videoplayer/${item.VIDEO}`}
+                                isVideo={true}
+                            />
+                            <Card.Title>{item.TITLE}</Card.Title>
+                            <Card.Description>{item.DESCRIPTION}</Card.Description>
+                        </Card>
                     ))}
                 </div>
 

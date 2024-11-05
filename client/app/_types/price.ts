@@ -11,6 +11,7 @@ export interface Price {
     MIN_STUDENTS_FOR_DISCOUNT: number,
     DISCOUNT_PERCENTAGE: number,
     ADDITIONAL_INFO_CART: string,
+    CLASS_DATE?: Date,
 }
 
 export interface SelectedPrice extends Price{

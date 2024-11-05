@@ -1,4 +1,4 @@
-import { SectionHeaderProps } from '@/_types/global';
+import { SectionHeaderProps } from '@/_types/ui-components';
 
 export default function SectionHeader({title, subTitle}: SectionHeaderProps){
     return (

@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-import {  CookingClass, CookingClassDeliveryMethods, SelectedCookingClass, SelectedCookingClassWithPrices } from './cooking-class'
-import { SectionData } from './section-data';
+import {  CookingClass, SelectedCookingClass, SelectedCookingClassWithPrices } from './cooking-class'
 
 // Type for components to receive a single prop of any primitive type (string, number, boolean)
 export type PrimitiveTypeProp<T> = {
@@ -12,29 +11,25 @@ export type ArrayProps<T> = {
     [key: string]: T[];
 };
 
+export type ObjectProperty = {
+    [key: string]: string;
+};
+
 export type Setter<T> = (value: T | ((prevState: T) => T)) => void;
+
+export interface HTMLElementsProps {
+    [key: string]: string[];
+}
 
 export interface ChildrenProps {
     children?: ReactNode;
 }
 
-export interface ModalProps extends ChildrenProps {
-    padding: string,
-}
-
-export interface SectionHeaderProps {
-    title?: string,
-    subTitle?: string
-}
-
-export interface FilteredClassesProps extends SectionHeaderProps {
-    images: CookingClass[],
-    resultsFound?: number,
-}
-
-export interface GalleryPictures {
-    PRE_SIGNED_URL: string,
-    LABEL: string
+export interface FilteredClassesProps {
+    images: CookingClass[];
+    resultsFound?: number;
+    title: string;
+    subTitle: string
 }
 
 export interface UserInfo {
@@ -42,6 +37,13 @@ export interface UserInfo {
     lastName: string,
     email: string
 }
+
+export interface CustomDatePickerProps {
+    label: string;
+    selectedDate: Date | null;
+    onDateChange: (date: Date | null, event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void;
+}
+
 
 export interface StateContextType {
     keyword: string;

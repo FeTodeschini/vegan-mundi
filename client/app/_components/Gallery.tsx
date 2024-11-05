@@ -5,7 +5,7 @@ import { StateContext } from "@/StateProvider";
 import { useContext } from "react";
 import { useGetSectionDataWithS3Image } from "@/hooks/useGetSectionDataWithS3Image";
 import SectionHeader from "./SectionHeader";
-import { useAddPreSignedUrlToArray } from "@/hooks/useAddPreSuignedUrlToArray";
+import { useAddPreSignedUrlToArray } from "@/hooks/useAddPreSignedUrlToArray";
 import { Modal, useModal } from "./Modal";
 import { SectionDataGallery } from "@/_types/section-data";
 import '../_styles/gallery.css';

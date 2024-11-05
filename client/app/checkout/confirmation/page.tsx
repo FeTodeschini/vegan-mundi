@@ -32,7 +32,7 @@ export default function Page () {
                             <br></br>
                             <p>You will be receiving a confirmation soon in the e-mail <strong>{userInfo!.email}</strong></p>
                             <br></br>
-                            <p>Please access your classes at the <Link className="link" href="/myclasses">My Classes</Link> page</p>
+                            <p>Please access your classes at the <Link className="link" href="/classes/myclasses">My Classes</Link> page</p>
                         </>
                     : 
                         <>
