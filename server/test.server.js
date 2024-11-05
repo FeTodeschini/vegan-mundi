@@ -34,8 +34,8 @@ app.get('/test-server', async (req, res) => {
             // Shutdown the server gracefully after success
             server.close(() => {
                 console.log('Server closed after passing test.');
-                process.exit(0);
             });
+            process.exit(0);
         } else {
             console.error('Test Failed: No data returned.');
             res.status(500).send('Test Failed: No data');
