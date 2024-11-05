@@ -1,8 +1,3 @@
-'use client'
-
-import { useContext, useEffect } from "react";
-import { StateContext } from "../StateProvider";
-
 import LogoHeader from "./LogoHeader";
 import SearchInput from './SearchInput';
 import SigninIcon from "./SigninIcon";

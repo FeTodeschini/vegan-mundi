@@ -5,9 +5,10 @@ import { StateContext } from "../StateProvider";
 import SeactionHeader from '../_components/SectionHeader';
 import Button from "../_components/Button";
 import ButtonRemoveFromCart from "../_components/ButtonRemoveFromCart";
-import Card from "../_components/Card"
+import Card from "@/_components/Card"
 import { useRouter } from 'next/navigation';
 import { emptyCart } from "@/_lib/CartHelper";
+import { format, parseISO } from 'date-fns';
 import "../_styles/card.css";
 
 export default function ShoppingCart () {
@@ -45,18 +46,18 @@ export default function ShoppingCart () {
 
             {/* Display all classes selected by the User */}
             <div className="grid-auto-fit">
-                {cartItems.map(item=> (
-                    <Card 
-                        imgSource={item.PRE_SIGNED_URL}
-                        imgLink={"/classes"}
-                        title={item.TITLE} 
-                        key={item.PRE_SIGNED_URL}
-                    >
-                        <div className="cart--class-detail card__description">
-                                <p>Class Type: <span className="bold">{item.CATEGORY_TITLE}</span></p>
-                                <p>Price: <span className="bold">${item.PRICE}</span></p>
-                                {item.MULTIPLE_STUDENTS && <p>Students: <span className="bold">{item.STUDENTS}</span></p>}
-                        </div>
+                {cartItems.map((item, index)=> (
+                    <Card key={index}>
+                        <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={"/classes"} />
+                        <Card.Title>{item.TITLE}</Card.Title>
+                        <Card.Content>
+                            <div className="cart--class-detail card__description">
+                                    <p>Delivery: <span className="bold">{item.PRICE_TYPE_DESCRIPTION}</span></p>
+                                    {item.CLASS_DATE && <p>Date: <span className="bold">{format((item.CLASS_DATE), 'MM/dd/yyyy')}</span></p>}
+                                    <p>Price: <span className="bold">${item.PRICE}</span></p>
+                                    {item.MULTIPLE_STUDENTS && <p>Students: <span className="bold">{item.STUDENTS}</span></p>}
+                            </div>
+                        </Card.Content>
                         <div className="flex-col">
                             <ButtonRemoveFromCart itemTitle={item.TITLE} />
                         </div>

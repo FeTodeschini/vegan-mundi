@@ -39,6 +39,7 @@ pipeline {
                         withCredentials([file(credentialsId: 'env-node-test', variable: 'ENV_NODE_TEST')]) {
                             sshagent(['ssh-key-ec2']) {
                                 sh '''
+
                                     # Copy JavaScript files - scp does not support recursive copy
                                     scp -o StrictHostKeyChecking=no server/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/
                                     scp -o StrictHostKeyChecking=no server/config/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/config/
@@ -46,6 +47,7 @@ pipeline {
                                     scp -o StrictHostKeyChecking=no server/middlewares/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/middlewares/
                                     scp -o StrictHostKeyChecking=no server/routes/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/routes/
                                     scp -o StrictHostKeyChecking=no server/utils/*.js ${EC2_USER}@${EC2_TEST}:${REMOTE_DIR_NODE}/utils/
+
 
                                     # Deploy the .env.test file that is stored in the Jenkins Credentials plugin
                                     cat "$ENV_NODE_TEST" | ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_TEST} "cat > ${REMOTE_DIR_NODE}/.env.test"

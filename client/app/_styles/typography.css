@@ -133,6 +133,10 @@ p {
     margin-top: 4.2rem;
 }
 
+.bottom-margin--micro {
+    margin-top: .8rem;
+}
+
 .bottom-margin--small {
     margin-bottom: 2.4rem;
 }
@@ -144,6 +148,35 @@ p {
 .success {
     color: var(--color-primary-dark);
     font-size: 1.4rem;
+}
+
+.align-items--c {
+    align-items: center;
+}
+
+.align-self--c {
+    align-self: center;
+}
+
+.align-items-flex--c {
+    display: flex;
+    align-items: center;
+}
+
+.justify-items--c {
+    justify-items: center;
+}
+
+.justify-self--c {
+    justify-self: center;
+}
+
+.text-align--c {
+    text-align: center;
+}
+
+.text-justify--c {
+    text-justify: center;
 }
 
 .error {

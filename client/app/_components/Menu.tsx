@@ -1,10 +1,7 @@
-import { useContext } from "react";
-import { StateContext } from "../StateProvider";
 import { toggleDarkBackground } from "../_lib/functions";
-
+import useSetToken from "@/hooks/useSetToken";
 export default function Menu(){
-    const { token } = useContext(StateContext);
-    const isAuthenticated = Boolean(token)
+    const token = useSetToken();
 
     return (
         <div className="menu">
@@ -14,7 +11,7 @@ export default function Menu(){
                 <span></span>
                 <span className="menu-icon-bottom"></span>
                 <ul className="menu-items">
-                    { isAuthenticated && <a href="/myclasses"><li>My Classes</li></a> }
+                    { token && <a href="/classes/myclasses"><li>My Classes</li></a> }
                     <a href="#"><li>Delivery Methods</li></a>
                     <a href="#"><li>Classes Catalog</li></a>
                     <a href="#free-classes"><li>Free Classes</li></a>
@@ -25,3 +22,4 @@ export default function Menu(){
         </div>
     )
 }
+

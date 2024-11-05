@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "./Modal";
 import { useGetPrices } from "../hooks/useGetPrices";
 import SectionHeader from "./SectionHeader";
@@ -11,6 +11,8 @@ import { ModalAddToCartProps } from "@/_types/cart";
 import { Price, SelectedPrice, initialSelectedPrice } from "@/_types/price";
 
 import "../_styles/cart.css"
+import { enumDeliveryMethods } from "@/_lib/enums";
+import CustomDatePicker from "./CustomDatePicker";
 
 export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: ModalAddToCartProps) {
 
@@ -18,14 +20,22 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
     const [prices, setPrices] = useState<Price[]>([]);
     const [selectedPrice, setSelectedPrice] = useState<SelectedPrice>(initialSelectedPrice);
     const [displayItemCounter, setDisplayItemCounter] = useState<number|boolean>(0);
-
+    const [displayDatePicker, setDisplayDatePicker] = useState<number | null>(null)
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [studentCounts, setStudentCounts] = useState<number[]>([]);
     
     // Defines the price to be charged for the selected based on the class delivery method and number of students that will attend it
     const handleSetSelectedPrice = (price: Price) => {
-        // setStudentCounts("1");
         // For the in person class, the price is charged based on the quantity of students
         setDisplayItemCounter(price.MULTIPLE_STUDENTS);
+        
+        // displayDatePicker defines for which price types (AKA "Class delivery method") the DatePicker should be displayed
+        setDisplayDatePicker(
+            price.PRICE_ID === enumDeliveryMethods.IN_PERSON || price.PRICE_ID === enumDeliveryMethods.ONLINE_WITH_INSTRUCTOR 
+                ? price.PRICE_ID 
+                : null
+        );
+
         setSelectedPrice({
             ...price,
             PRICE: (studentCounts[price.PRICE_ID] || 1) * price.PRICE,
@@ -35,6 +45,20 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
             DISCOUNT_PERCENTAGE: price.DISCOUNT_PERCENTAGE,
         });
     };
+
+    const handleSelectDate = (date: any) => {
+        console.log(`Typeof date: ${typeof date}`);
+        console.log(`date: ${JSON.stringify(date)}`);
+
+        setSelectedDate(date);
+
+        // Add the selected class date to the price array
+        setSelectedPrice((prev) => ({
+            ...prev,
+            CLASS_DATE: date.toISOString().slice(0, 10),
+        }));
+    }
+
 
     // Handles the decrease or increase of students for a class when User clicks the "-" or "+" button
     const handleStudentCountChange = (count: number, price: Price) => {
@@ -73,7 +97,8 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
                     {prices.map(price=> {
                         
                         //  Creates an object to enrich the selectedClass with price details based on the type of class selected
-                        const studentCount = studentCounts[price.PRICE_ID] || 1;
+                        const index = price.PRICE_ID;
+                        const studentCount = studentCounts[index] || 1;
                         const discount = calculateDiscount(price, studentCount);
                         const adjustedPrice = price.MULTIPLE_STUDENTS ? price.PRICE * studentCount - discount : price.PRICE;
                         return (
@@ -101,12 +126,22 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
                                         </div>
                                     </div> :
                                         ""}
+                                {
+                                    (price.PRICE_ID === enumDeliveryMethods.IN_PERSON || price.PRICE_ID === enumDeliveryMethods.ONLINE_WITH_INSTRUCTOR) ?
+                                        <div className="grid-col-2 regular-text-small bold top-margin--small" style={{display: displayDatePicker === price.PRICE_ID ? "block" : "none"}}>
+                                            <CustomDatePicker 
+                                                label={"Class date: "}
+                                                selectedDate={selectedDate}
+                                                onDateChange={date => handleSelectDate(date)}
+                                                key={price.PRICE_ID}
+                                            />
+                                        </div> 
+                                        : ""
+
+                                }
                             </div>
                         )
                     })}
-                    <div className="modal-act--schedule regular-text-small">
-                        <p>Schedule classes with an Instructor after purchasing them by visiting the &quot;My Classes&quot; page</p>
-                    </div>
                 </div>
             </div>                
             <ButtonsAddToCartCancel selectedPrice={selectedPrice}

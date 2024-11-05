@@ -1,7 +1,6 @@
 .card {
     display: flex;
     flex-direction: column;
-    cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: all .3s ease-in-out;
@@ -23,8 +22,8 @@
 }
 
 .card__title {
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
     color: var(--color-primary-dark);
     font-size: 1.8rem;
     font-weight: 600;
@@ -46,7 +45,7 @@
     border-radius: 100px;
 }
 
-.card__content {
+.card__section {
     flex: 1;
     display: flex;
     flex-direction: column;
