@@ -28,28 +28,26 @@ export default function FilteredClasses ({images, resultsFound, title, subTitle}
             <SectionHeader title={title} subTitle={subTitle}/>
 
             {(resultsFound ?? 0) > 0 || subTitle!.includes("Category:") ? <SectionHeader subTitle={"Add a class to your cart to select if it will be in person or online"}/> : ""}
-
             <div className="grid-auto-fit top-margin--medium">
                 {images.map((item, index)=>( 
                     <>
-                        <Card
-                            imgSource={item.PRE_SIGNED_URL}
-                            imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`}
-                            title={item.TITLE} 
-                            description={item.DESCRIPTION} 
-                            key={item.PRE_SIGNED_URL}
-                            descriptionList={item.CLASSES_LIST === null ? '' :
-                                item.CLASSES_LIST.split("|").map(item => {
-                                    return (
-                                        <div className='card__items-list' key={item}>
-                                            <img className='icon-list' src="/assets/icon-leaf.svg" alt="Leaf icon" />
-                                            <p>{item}</p>
-                                        </div>
+                        <Card key={index}>
+                            <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} />
+                            <Card.Title>{item.TITLE}</Card.Title>
+                            <Card.Description>{item.DESCRIPTION}</Card.Description>                                                        
+                            <Card.Content>
+                                {item.CLASSES_LIST === null ? '' :
+                                    item.CLASSES_LIST.split("|").map((item: string) => {
+                                        return (
+                                            <div className='card__items-list' key={item}>
+                                                <img className='icon-list' src="/assets/icon-leaf.svg" alt="Leaf icon" />
+                                                <p>{item}</p>
+                                            </div>
+                                        )
+                                        }
                                     )
-                                    }
-                                )
-                            }
-                        >
+                                }
+                            </Card.Content>
                             {/* Render the Add or Remove button */}
                             <div className="flex-col">
                                 {/* If item is not in the shopping cart yet, renders the "Add to Cart" button. Otherwise, renders the "Remove" button */}
@@ -60,7 +58,6 @@ export default function FilteredClasses ({images, resultsFound, title, subTitle}
                                 }
                                 <Button size={"medium"}>Learn More &rarr;</Button>
                             </div>
-
                         </ Card>
 
                         { isModalOpen &&

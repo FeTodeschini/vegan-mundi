@@ -1,0 +1,24 @@
+.tabs {
+    display: flex;
+    gap: 2rem;
+    border-bottom: 2px solid var(--color-gray-light);
+    margin-bottom: 1rem;
+}
+
+.tab-button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-button.active {
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+    font-weight: bold;
+}
+
+.tab-content {
+    padding: 1rem 0;
+}

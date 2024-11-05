@@ -6,7 +6,7 @@ import SectionHeader from "./SectionHeader";
 import { PrimitiveTypeProp } from "@/_types/global";
 import Link from "next/link";
 
-export default function CheckoutConfirmation ({ orderNumber, isPaymentConfirmed }: PrimitiveTypeProp<string>) {
+export default function CheckoutConfirmation ({ orderNumber }: PrimitiveTypeProp<string>) {
     const { error, userInfo,  } = useContext(StateContext)
 
     const title = error === "" ? "ORDER PROCESSED SUCCESSFULLY" : "Order not processed"

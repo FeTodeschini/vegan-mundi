@@ -39,7 +39,7 @@ export default function Page () {
                 NUM_STUDENTS: data.STUDENTS,
                 PRICE: data.PRICE,
                 DISCOUNT_PERCENTAGE: data.DISCOUNT_PERCENTAGE,
-                CLASS_DATE: ''
+                CLASS_DATE: data.CLASS_DATE,
             }));
 
             const orderData = {

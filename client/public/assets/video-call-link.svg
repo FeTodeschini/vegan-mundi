@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 32 32" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#fff;stroke:#087f5b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M26,22H6c-2.2,0-4-1.8-4-4V8c0-2.2,1.8-4,4-4h20c2.2,0,4,1.8,4,4v10C30,20.2,28.2,22,26,22z"/>
+<line class="st0" x1="3" y1="27" x2="7" y2="27"/>
+<line class="st0" x1="11" y1="27" x2="29" y2="27"/>
+<circle class="st0" cx="9" cy="27" r="2"/>
+<path class="st0" d="M13,10V16c0,0.7,0.9,1.2,1.5,0.8l5-3c0.6-0.4,0.6-1.2,0-1.6l-5-3C13.9,8.7,13,9.2,13,10z"/>
+</svg>

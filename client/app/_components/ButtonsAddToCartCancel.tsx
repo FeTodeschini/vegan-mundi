@@ -21,6 +21,7 @@ export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPricePr
             PRICE: selectedPrice.PRICE,
             DISCOUNT_PERCENTAGE: selectedPrice.DISCOUNT_PERCENTAGE,
             STUDENTS: selectedPrice.STUDENTS,
+            CLASS_DATE: selectedPrice.CLASS_DATE
         }
 
         // Converts the cartItems to a string, as local storage only stores strings

@@ -50,7 +50,6 @@ async function signIn (req, res, next) {
         }
     } catch (err) {
         if (err) {
-            console.log(err.message);
             return next(new CustomError(`There was while retrieving User info`, 500));
         }
     }

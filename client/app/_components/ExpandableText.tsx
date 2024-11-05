@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ChildrenProps } from "@/_types/global";
+import { ExpandableTextProps } from "@/_types/ui-components";
 
-export default function ExpandableText({ children }: ChildrenProps) {
+export default function ExpandableText({ labelShowMore, labelShowLess, children }: ExpandableTextProps) {
 
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const expandableText = isExpanded ? <>&minus; Show less...</> : <>&#43;Show more...</>
+    const expandableText = isExpanded ? <>&minus; {labelShowLess}</> : <>&#43; {labelShowMore}</>
 
     return (
         <div className="card__expandable-text--container">
