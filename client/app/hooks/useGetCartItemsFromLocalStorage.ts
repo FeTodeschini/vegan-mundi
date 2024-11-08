@@ -1,23 +1,12 @@
-import { useContext, useEffect } from 'react';
-import { StateContext } from '@/StateProvider';
-import { SelectedCookingClassWithPrices } from '@/_types/cooking-class';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateCartFromLocalStorage } from '@/redux/slices/cartSlice';
 
-export function useGeCartItemsFromLocalStorage() {
-    const { setCartQuantity, setCartItems, setCartAmount } = useContext(StateContext);
-
+export function useGetCartItemsFromLocalStorage() {
+    const dispatch = useDispatch();
+    
     useEffect (()=> {
-        setCartQuantity(() => {
-            return Number(localStorage.getItem('cartQuantity'));
-        });
-    
-        setCartAmount(() => {
-            return Number(localStorage.getItem('cartAmount'));
-        });
-    
-        // // convert the string that is in the localStorage into an array (as localStorage only stores strings, adn Typescript enforces strict typing)
-        const cartItems = localStorage.getItem('cartItems');
-        setCartItems(cartItems ? JSON.parse(cartItems) as SelectedCookingClassWithPrices[] : []);
-    
+        dispatch(updateCartFromLocalStorage())
     }, []);
 }
 

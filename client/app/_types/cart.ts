@@ -1,5 +1,4 @@
-import { SelectedCookingClass } from "./cooking-class";
-import { Setter } from "./global";
+import { SelectedCookingClassWithPrices } from "./cooking-class";
 
 export interface ItemCounterProps {
     minItems: number;
@@ -14,3 +13,9 @@ export interface ModalAddToCartProps {
     modalSubTitle: string,
     padding: string
 }
+
+export interface CartState {
+    cartQuantity: number;
+    cartAmount: number;
+    cartItems: SelectedCookingClassWithPrices[];
+  }

@@ -3,18 +3,21 @@ import { StateContext } from "../StateProvider";
 import Card from "./Card"
 import Button from "./Button";
 import ButtonRemoveFromCart from "./ButtonRemoveFromCart";
+import { addItem, removeItem } from "@/redux/slices/cartSlice"
 import SectionHeader from './SectionHeader';
 import { useModal } from "./Modal";
 import ModalAddToCart from "./ModalAddToCart";
 import '../_styles/gallery.css';
 import { FilteredClassesProps } from '@/_types/global';
 import { CookingClass } from '@/_types/cooking-class';
+import { useSelector } from "react-redux";
+import { ReduxRootState } from "@/_types/redux";
 
 
 export default function FilteredClasses ({images, resultsFound, title, subTitle}: FilteredClassesProps){
-    const { cartItems, selectedClass, setSelectedClass } = useContext(StateContext);
+    const { cartItems } = useSelector((state: ReduxRootState)=> state.cart)
+    const { isModalOpen, selectedClass, setSelectedClass } = useContext(StateContext);
     const { openModal } = useModal();
-    const { isModalOpen } = useContext(StateContext);
 
     function onSelectClassType(item: CookingClass) {
         if (setSelectedClass)
@@ -51,8 +54,8 @@ export default function FilteredClasses ({images, resultsFound, title, subTitle}
                             {/* Render the Add or Remove button */}
                             <div className="flex-col">
                                 {/* If item is not in the shopping cart yet, renders the "Add to Cart" button. Otherwise, renders the "Remove" button */}
-                                {cartItems!.filter(currentItem=>currentItem.TITLE === item.TITLE).length > 0 ?
-                                    <ButtonRemoveFromCart itemTitle={item.TITLE} />
+                                {cartItems!.filter((currentItem: CookingClass)=>currentItem.TITLE === item.TITLE).length > 0 ?
+                                    <ButtonRemoveFromCart item={item} />
                                 :
                                     <Button bgColor={"green"} type={"button"} size={"medium"} onClick={()=>onSelectClassType(item)}>Add to cart</Button>
                                 }

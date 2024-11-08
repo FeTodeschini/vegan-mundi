@@ -1,9 +1,10 @@
 'use client';
 
 import StateProvider from './StateProvider';
+import { Provider } from "react-redux";
+import store from './redux/store';
 import Header from "@/_components/Header";
 import { usePathname  } from 'next/navigation';
-
 import  { ChildrenProps } from './_types/global'
 import './_styles/main.css';
 import './_styles/header.css';
@@ -26,11 +27,15 @@ export default function Layout({ children }: ChildrenProps){
         </head>
         <body>
           <StateProvider>
-            {/* Conditional rendering of the Header needed to be implemented as the App Router hirerachical structure with different layouts
-             doesn't work properly with client side components */}
-            {!excludeHeaderRoutes.includes(route) && <Header/>}
-            <DarkBackground />
-            {children}
+              {/* Conditional rendering of the Header needed to be implemented as the App Router hirerachical structure with different layouts
+              doesn't work properly with client side components */}
+              {!excludeHeaderRoutes.includes(route) && 
+                  <Provider store={store}>
+                    <Header/>
+                  </Provider>
+              }
+              <DarkBackground />
+              {children}
           </StateProvider>
         </body>
       </html>

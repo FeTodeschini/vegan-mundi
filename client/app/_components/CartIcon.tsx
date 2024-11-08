@@ -1,12 +1,10 @@
-import { useContext } from 'react';
 import Link from 'next/link';
-import { StateContext } from "../StateProvider";
-
+import { useSelector } from 'react-redux';
 import "../_styles/cart.css";
+import { ReduxRootState } from '@/_types/redux';
 
 export default function CartIcon () {
-    const { cartQuantity, cartAmount } = useContext(StateContext);
-
+    const { cartAmount, cartQuantity } = useSelector((state: ReduxRootState)=> state.cart)
     return (
         <div className="shopping-cart-icon">
             <figure className="header-icon-container">
