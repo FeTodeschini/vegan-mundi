@@ -47,9 +47,6 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
     };
 
     const handleSelectDate = (date: any) => {
-        console.log(`Typeof date: ${typeof date}`);
-        console.log(`date: ${JSON.stringify(date)}`);
-
         setSelectedDate(date);
 
         // Add the selected class date to the price array

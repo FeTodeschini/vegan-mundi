@@ -29,9 +29,6 @@ export function useGetSectionDataWithParams<T extends SectionData>(
         if (!params || !params.email) return;
 
         try {
-            console.log(`Getting classes for user: ${config.serverEndpoint}${apiEndpoint}`)
-            console.log(`params: ${JSON.stringify(params)}`)
-
             response = await axios.get(`${config.serverEndpoint}${apiEndpoint}`, { params });
         } catch (error) {
             console.error("Error fetching data:", error);

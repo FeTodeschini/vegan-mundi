@@ -8,6 +8,10 @@ export interface CookingClass {
     PRE_SIGNED_URL?: string
 }
 
+export interface CookingClassProps {
+    [key: string]: CookingClass;
+}
+
 export interface SelectedCookingClass extends CookingClass{
     CATEGORY_TITLE: string,
     PRICE_ID: number,
