@@ -7,10 +7,11 @@ import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSignedUrlToArray
 import FilteredClasses from "../../_components/FilteredClasses";
 import useSetToken from "@/hooks/useSetToken";
 import { CookingClass } from "@/_types/cooking-class"
+import store from '@/redux/store'
+import { Provider } from "react-redux";
 import config from "../../_lib/config";
 import '../../_styles/main.css';
 import { StateContext } from "@/StateProvider";
-
 
 export default function CategoryClasses(){
     const { userInfo} = useContext(StateContext)
@@ -51,6 +52,8 @@ export default function CategoryClasses(){
     const classes = filterResult.length;
     
     return (
-        <FilteredClasses images={images} title={`${classes} class${classes !== 1 ? "es" : "" } in this category`} subTitle={`Category: ${categoryTitle}`}/>            
+        <Provider store={store}>
+            <FilteredClasses images={images} title={`${classes} class${classes !== 1 ? "es" : "" } in this category`} subTitle={`Category: ${categoryTitle}`}/>            
+        </Provider>
     )
 }

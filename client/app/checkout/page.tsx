@@ -4,19 +4,27 @@ import Button from "../_components/Button";
 import { FormEvent, useContext } from "react";
 import CheckoutItems from "@/_components/CheckOutItems";
 import SectionHeader from "@/_components/SectionHeader";
-import { emptyCart } from "@/_lib/CartHelper";
 import { useRouter } from "next/navigation";
 import { StateContext } from "../StateProvider";
+import { emptyCart } from "@/redux/slices/cartSlice";
 import axios from "axios";
+import { SelectedCookingClassWithPrices } from "@/_types/cooking-class";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxRootState } from "@/_types/redux";
 import { generateOrderNumber } from "@/_lib/functions";
 import config from "../_lib/config";
 import "../_styles/card.css";
 import "../_styles/typography.css";
 
+
+
 export default function Page () {
 
-    const { cartItems, userInfo, setError, orderNumber, error, setOrderNumber, setCartItems, setCartQuantity, setCartAmount } = useContext(StateContext)
+    const { userInfo, setError, orderNumber, setOrderNumber } = useContext(StateContext)
+    const { cartItems } : { cartItems: SelectedCookingClassWithPrices[] } = useSelector((state: ReduxRootState)=> state.cart);
 
+    const dispatch = useDispatch()
+    
     const router = useRouter();
 
     function backToCart(){
@@ -52,7 +60,7 @@ export default function Page () {
                 // Persist the order to the database
                 await axios.post(`${config.serverEndpoint}order/add`, orderData);
                 setError("")
-                emptyCart(setCartItems, setCartQuantity, setCartAmount)
+                dispatch(emptyCart());
             }
             catch (err: any){
                 if (err.response) {

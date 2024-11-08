@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import SectionHeader from './SectionHeader';
-import { StateContext } from '@/StateProvider';
+import { SelectedCookingClassWithPrices } from '@/_types/cooking-class';
+import { useSelector } from 'react-redux';
+import { ReduxRootState } from '@/_types/redux';
 
 export default function CheckoutItems() {
 
-    const { cartItems, cartAmount, userInfo, setError, setResponseMessage } = useContext(StateContext)
+    const { cartAmount, cartItems } : { cartAmount: number, cartItems: SelectedCookingClassWithPrices[] } = useSelector((state: ReduxRootState)=> state.cart);
 
     return (
         <>
