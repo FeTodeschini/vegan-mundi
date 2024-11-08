@@ -3,12 +3,15 @@ import { StateContext } from "../StateProvider";
 import { useModal } from "./Modal";
 import Button from "./Button";
 import { SelectedPriceProps } from "@/_types/price";
+import { useDispatch } from "react-redux";
+import { addItem } from "@/redux/slices/cartSlice"
 
 export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPriceProps){
 
-    const { setCartQuantity, cartQuantity, cartItems, setCartItems, selectedClass, cartAmount, setCartAmount } = useContext(StateContext);
+    const { selectedClass } = useContext(StateContext);
     const { closeModal } = useModal();
-
+    const dispatch = useDispatch();
+    
     function onAddToCart() {
 
         if (!selectedClass || !selectedPrice) return;
@@ -24,22 +27,7 @@ export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPricePr
             CLASS_DATE: selectedPrice.CLASS_DATE
         }
 
-        // Converts the cartItems to a string, as local storage only stores strings
-        // Before thypescript, the line below had JSON.stringfy([...cartItems, selectedClassWithPrice])
-        // After Typescript, the nullish coalescing operator ?? is now being used to avoid warnings in case cartItems is empty
-        localStorage.setItem('cartItems', JSON.stringify([...cartItems ?? [], selectedClassWithPrice]));
-        localStorage.setItem('cartAmount', (cartAmount + selectedClassWithPrice.PRICE).toString() );
-        localStorage.setItem('cartQuantity', (cartQuantity + 1).toString());
-        
-        if (setCartItems)
-             setCartItems([...cartItems ?? [], selectedClassWithPrice]);
-
-        if (setCartQuantity)
-            setCartQuantity(items=>items + 1);
-
-        if (setCartAmount)
-            setCartAmount(amount=>amount + Number(selectedClassWithPrice.PRICE));
-
+        dispatch(addItem(selectedClassWithPrice))
         closeModal();
     }
 

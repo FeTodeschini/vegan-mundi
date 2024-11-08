@@ -3,12 +3,12 @@ import SearchInput from './SearchInput';
 import SigninIcon from "./SigninIcon";
 import Menu from './Menu';
 import CartIcon from './CartIcon';
-import { useGeCartItemsFromLocalStorage } from "@/hooks/useGetCartItemsFromLocalStorage";
+import { useGetCartItemsFromLocalStorage } from "@/hooks/useGetCartItemsFromLocalStorage";
 import "../_styles/menu.css";
 
 export default function Header() {
 
-    useGeCartItemsFromLocalStorage()
+    useGetCartItemsFromLocalStorage()
 
     return (
         <>

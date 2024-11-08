@@ -1,25 +1,17 @@
 import Button from "./Button";
-import { useContext } from "react";
-import { StateContext } from "../StateProvider";
-import { removeFromCart } from "../_lib/CartHelper";
-import { PrimitiveTypeProp } from "../_types/global"
+import { useDispatch } from "react-redux";
+import { CookingClassProps } from "@/_types/cooking-class";
+import { removeItem } from "@/redux/slices/cartSlice";
 
-export default function ButtonRemoveFromCart({itemTitle}: PrimitiveTypeProp<string>) {
-    const { cartItems, cartQuantity, setCartItems, setCartQuantity, cartAmount, setCartAmount } = useContext(StateContext);
-
+export default function ButtonRemoveFromCart({item}: CookingClassProps) {
+    const dispatch = useDispatch();
+    
     return (
         <Button 
             bgColor={"green"} 
             type={"button"} 
             size={"medium"} 
-            onClick={()=>removeFromCart(
-                cartItems, 
-                cartQuantity, 
-                setCartItems, 
-                setCartQuantity, 
-                cartAmount, 
-                setCartAmount,
-                itemTitle)}
+            onClick={()=>dispatch(removeItem(item))}
         >
                 Remove Item
         </Button>

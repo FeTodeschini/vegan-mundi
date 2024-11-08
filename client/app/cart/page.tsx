@@ -7,14 +7,20 @@ import Button from "../_components/Button";
 import ButtonRemoveFromCart from "../_components/ButtonRemoveFromCart";
 import Card from "@/_components/Card"
 import { useRouter } from 'next/navigation';
-import { emptyCart } from "@/_lib/CartHelper";
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
+import { useDispatch, useSelector } from "react-redux";
 import "../_styles/card.css";
+import { ReduxRootState } from "@/_types/redux";
+import { emptyCart } from "@/redux/slices/cartSlice"
+import { SelectedCookingClassWithPrices } from "@/_types/cooking-class";
 
 export default function ShoppingCart () {
-    const { setKeyword, cartQuantity, cartItems, cartAmount, setCartItems, setCartQuantity, setCartAmount} = useContext(StateContext)
+    const { setKeyword } = useContext(StateContext)
+    const { cartQuantity, cartAmount, cartItems } : { cartQuantity: number, cartAmount: number, cartItems: SelectedCookingClassWithPrices[] } = useSelector((state: ReduxRootState)=> state.cart);
+    
     const router = useRouter(); 
-
+    const dispatch = useDispatch();
+ 
     useEffect (()=> {
         setKeyword("");
     }, [])
@@ -38,7 +44,8 @@ export default function ShoppingCart () {
                 {/* Displays the "Empty Cart" and "Checkout' buttons in case the cart is not empty */}
                 {cartQuantity > 0 &&
                     <div className="cart-buttons--btn">
-                        <Button type={"button"} onClick={()=>emptyCart(setCartItems, setCartQuantity, setCartAmount)}>Empty Cart</Button>
+                        {/* <Button type={"button"} onClick={()=>emptyCart(setCartItems, setCartQuantity, setCartAmount)}>Empty Cart</Button> */}
+                        <Button type={"button"} onClick={()=>dispatch(emptyCart())}>Empty Cart</Button>
                         <Button type={"button"} bgColor={"yellow"} onClick={callCheckout}>Check Out</Button>
                     </div>
                 }
@@ -59,7 +66,7 @@ export default function ShoppingCart () {
                             </div>
                         </Card.Content>
                         <div className="flex-col">
-                            <ButtonRemoveFromCart itemTitle={item.TITLE} />
+                            <ButtonRemoveFromCart item={item} />
                         </div>
                     </Card>
                 ))}
