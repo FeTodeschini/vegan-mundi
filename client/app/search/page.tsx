@@ -5,8 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useState, useEffect, useContext } from "react";
 import { StateContext } from "../StateProvider";
 import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSignedUrlToArray";
-import { Provider } from "react-redux";
-import store from "@/redux/store";
 import FilteredClasses from "../_components/FilteredClasses";
 import config from "../_lib/config";
 import { CookingClass } from '@/_types/cooking-class'
@@ -65,9 +63,7 @@ function SearchResultSuspense(){
     }
     else {
         return (
-            <Provider store={store}>
-                <FilteredClasses images={images} resultsFound={results} title={`${results} result${results !== 1 ? "s" : "" } found for your search`} subTitle={`Keyword: ${keyword}`}/>            
-            </Provider>
+            <FilteredClasses images={images} resultsFound={results} title={`${results} result${results !== 1 ? "s" : "" } found for your search`} subTitle={`Keyword: ${keyword}`}/>            
         )        
     }
 
