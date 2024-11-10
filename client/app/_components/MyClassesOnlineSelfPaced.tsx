@@ -41,8 +41,8 @@ export default function MyClassesOnlineSelfPaced({classes}:ArrayProps<MyCookingC
     else 
         return (
             <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-                {classesPreSignedUrl.map((item, index)=>( 
-                    <Card key={index} additionalClass={"gray-border"}>
+                {classesPreSignedUrl.map((item)=>( 
+                    <Card key={item.TITLE} additionalClass={"gray-border"}>
                         <Card.Title>
                             <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                         </Card.Title>

@@ -54,8 +54,8 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
             <>
                 <ClassRescheduleDisclaimer />
                 <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-                    {classesPreSignedUrl!.map((item, index)=>( 
-                        <Card key={index} additionalClass={"gray-border"}>
+                    {classesPreSignedUrl!.map((item)=>( 
+                        <Card key={item.TITLE} additionalClass={"gray-border"}>
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                             </Card.Title>
@@ -65,9 +65,9 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
 
                             <div className="myclasses__classes-list">
                                 {
-                                    item.CLASSES_LIST.map((recipe: Recipe, index: number) => {
+                                    item.CLASSES_LIST.map((recipe: Recipe) => {
                                         return (
-                                            <React.Fragment key={index}>
+                                            <React.Fragment key={recipe.TITLE}>
                                                 <img className='icon-list' src="/assets/icon-leaf.svg" alt="Leaf icon" />
                                                 <p className="align-self-c">{recipe.TITLE}</p>
                                             </React.Fragment>

@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { CardContentProps, CardProps, CardTitleProps } from "../_types/card"
+import { ChildrenProps } from '@/_types/global';
+import React from 'react';
+import { CardProps, CardTitleProps } from "../_types/card"
 import { CardTopImageProps } from '../_types/card'
 import '../_styles/card.css';
-import { ChildrenProps } from '@/_types/global';
 
-export default function Card({ bgColor, key, additionalClass="", children}: CardProps){
+function CardComponent({ bgColor, key, additionalClass="", children}: CardProps){
     // Creates an object for applying a background color style in case a bgColor was received by the Card 
     const style = bgColor !== undefined ? {backgroundColor: bgColor} : {};
 
@@ -16,7 +17,6 @@ export default function Card({ bgColor, key, additionalClass="", children}: Card
         </div>
     )
 }
-
 
 function TopImage({isVideo, imgLink, imgSource}: CardTopImageProps){
     return (
@@ -80,7 +80,20 @@ function Content({children }: ChildrenProps) {
         </div>
 )}
 
+type CardType = React.MemoExoticComponent<typeof CardComponent> & {
+    TopImage: typeof TopImage;
+    Title: typeof Title;
+    Description: typeof Description;
+    Content: typeof Content;
+};
+
+// Memoize the component and assign static properties
+const Card = React.memo(CardComponent) as CardType;
+
 Card.TopImage = TopImage;
 Card.Title = Title;
 Card.Description = Description;
 Card.Content = Content;
+
+//const Card = React.memo(CardComponent) as CardType;
+export default Card;
