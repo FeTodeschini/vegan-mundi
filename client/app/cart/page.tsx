@@ -53,8 +53,8 @@ export default function ShoppingCart () {
 
             {/* Display all classes selected by the User */}
             <div className="grid-auto-fit">
-                {cartItems.map((item, index)=> (
-                    <Card key={index}>
+                {cartItems.map((item)=> (
+                    <Card key={item.TITLE}>
                         <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={"/classes"} />
                         <Card.Title>{item.TITLE}</Card.Title>
                         <Card.Content>

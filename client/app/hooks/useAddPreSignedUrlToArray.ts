@@ -18,7 +18,6 @@ export function useAddPreSignedUrlToArray<T extends SectionData>(
         } else
         {
             setIsLoading(false);
-            setImages([]);
         }
     }, [dependencyArray])
 

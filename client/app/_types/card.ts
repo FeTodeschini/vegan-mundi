@@ -2,7 +2,7 @@
 import { ChildrenProps } from "./global"
 
 export interface CardProps extends ChildrenProps {
-    key: number,
+    key: string,
     bgColor?: string,
     additionalClass?: string
 }

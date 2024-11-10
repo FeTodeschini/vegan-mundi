@@ -54,8 +54,8 @@ export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCoo
             <>
                 <ClassRescheduleDisclaimer />
                 <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-                    {classesPreSignedUrl.map((item, index)=>( 
-                        <Card additionalClass={"gray-border"} key={index}>
+                    {classesPreSignedUrl.map((item)=>( 
+                        <Card additionalClass={"gray-border"} key={item.TITLE}>
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                             </Card.Title>

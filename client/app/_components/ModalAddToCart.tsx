@@ -1,20 +1,19 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { Modal } from "./Modal";
 import { useGetPrices } from "../hooks/useGetPrices";
 import SectionHeader from "./SectionHeader";
 import ButtonsAddToCartCancel from "./ButtonsAddToCartCancel";
 import ItemCounter from "./ItemCounter";
-
 import { ModalAddToCartProps } from "@/_types/cart";
 import { Price, SelectedPrice, initialSelectedPrice } from "@/_types/price";
-
-import "../_styles/cart.css"
 import { enumDeliveryMethods } from "@/_lib/enums";
 import CustomDatePicker from "./CustomDatePicker";
+import "../_styles/cart.css"
 
-export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: ModalAddToCartProps) {
+const ModalAddToCart = React.memo(function ModalAddToCart({ modalTitle, modalSubTitle, padding }: ModalAddToCartProps) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [prices, setPrices] = useState<Price[]>([]);
@@ -83,7 +82,7 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
     useGetPrices( prices, setPrices, isLoading, setIsLoading );
 
     return (
-        <Modal padding={padding}>
+       <Modal padding={padding}>
             <div className="cart-modal">
                 <SectionHeader 
                     subTitle={modalSubTitle}
@@ -145,4 +144,7 @@ export default function ModalAddToCart({ modalTitle, modalSubTitle, padding }: M
             />
         </Modal>
     )
-}
+})
+
+
+export default ModalAddToCart;
