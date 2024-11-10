@@ -34,8 +34,8 @@ export default function FreeClasses() {
                     subTitle="Free Classes"/>
                 
                 <div className="free-classes__list grid-auto-fit">
-                    {images.map((item, index)=>(
-                        <Card key={index}>
+                    {images.map((item)=>(
+                        <Card key={item.TITLE}>
                             <Card.TopImage 
                                 imgSource={item.PRE_SIGNED_URL}
                                 imgLink={`/videoplayer/${item.VIDEO}`}

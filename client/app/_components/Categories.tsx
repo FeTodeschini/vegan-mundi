@@ -13,8 +13,8 @@ export default function Categories({categories}: ArrayProps<CookingClassCategory
                     title="Pick the class level that best fits your needs and skills" 
                     subTitle="3 Levels of Classes"/>
                 <div className="grid-auto-fit">
-                    {categories.map( (item, index) => 
-                        <Card key={index}>
+                    {categories.map( (item) => 
+                        <Card key={item.TITLE}>
                             <Card.TopImage imgSource={`/assets/${item.PHOTO}`} imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} />
                             <Card.Title callOutTag={item.LEVEL}>{item.TITLE}</Card.Title>
                             <Card.Description>{item.DESCRIPTION}</Card.Description>
