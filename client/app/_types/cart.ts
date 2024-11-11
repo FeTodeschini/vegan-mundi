@@ -11,6 +11,7 @@ export interface ItemCounterProps {
 export interface ModalAddToCartProps {
     modalTitle: string,
     modalSubTitle: string,
+    closeModal: () => void;
     padding: string
 }
 

@@ -13,7 +13,7 @@
     .header__action-icons { 
         grid-area: header__action-icons; 
         gap: 3rem;
-        justify-content: end;
+        justify-content: flex-end;
         display: flex;
         align-items: center;
     }
