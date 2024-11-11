@@ -21,7 +21,8 @@
     "start:test": "cross-env NODE_ENV=test next start",
     "build:test": "cross-env NODE_ENV=test next build",
     "prod": "cross-env NODE_ENV=production next start",
-    "build:production": "cross-env NODE_ENV=production next build"
+    "build:production": "cross-env NODE_ENV=production next build",
+    "build:analyze": "cross-env ANALYZE=true NODE_ENV=test next build"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.0.3",
     "@types/axios": "^0.14.0",
     "@types/node": "^22.7.6",
     "@types/react": "^18.3.11",

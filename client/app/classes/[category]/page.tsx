@@ -7,8 +7,6 @@ import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSignedUrlToArray
 import FilteredClasses from "../../_components/FilteredClasses";
 import useSetToken from "@/hooks/useSetToken";
 import { CookingClass } from "@/_types/cooking-class"
-import store from '@/redux/store'
-import { Provider } from "react-redux";
 import config from "../../_lib/config";
 import { StateContext } from "@/StateProvider";
 import '../../_styles/main.css';
