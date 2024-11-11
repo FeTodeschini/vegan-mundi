@@ -1,9 +1,17 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
 const nextConfig = {
     // 7zoutput: 'export', // Outputs a Single-Page Application (SPA) as a Static Site.
     // distDir: './dist', // Changes the build output directory to `./dist/`.
     // missingSuspenseWithCSRBailout: false, // this is necessary to avoid the useSearchParams() in the search page to have to be wrapped in a Suspense Boundary
-    reactStrictMode: false,
+    reactStrictMode: true,
+    disableOptimizedLoading: true,
+    optimizeCss: true,
+    webpack(config, { isServer }) {
+      return config;
+    },
   }
 
-
-  export default nextConfig
+  export default withBundleAnalyzer({
+    enabled: process.env.ANALYZE === 'true',
+  })(nextConfig);
