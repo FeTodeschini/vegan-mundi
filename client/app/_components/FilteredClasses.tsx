@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useCallback, useContext } from "react";
 import { StateContext } from "../StateProvider";
 import { useSelector } from "react-redux";
@@ -6,7 +6,6 @@ import SectionHeader from './SectionHeader';
 import Card from "./Card"
 import Button from "./Button";
 import ButtonRemoveFromCart from "./ButtonRemoveFromCart";
-import { useModal } from "./Modal";
 import ModalAddToCart from "./ModalAddToCart";
 import { ReduxRootState } from "@/_types/redux";
 import { FilteredClassesProps } from '@/_types/global';
@@ -16,14 +15,15 @@ import '../_styles/gallery.css';
 
 const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFound, title, subTitle}: FilteredClassesProps){
     const { cartItems } = useSelector((state: ReduxRootState)=> state.cart)
-    const { isModalOpen, selectedClass, setSelectedClass } = useContext(StateContext);
-    const { openModal } = useModal();
+    const { selectedClass, isModalOpen, setIsModalOpen, setSelectedClass } = useContext(StateContext);
+    
+    const closeModal = () => {setIsModalOpen(false);};
 
     const onSelectClassType = useCallback((item: CookingClass) => {
         if (setSelectedClass)
             setSelectedClass(item);
-        openModal();
-    }, [selectedClass, openModal])
+        setIsModalOpen(true);
+    }, [selectedClass])
 
     // Memoize all cards to prevent re-computation and wasted renders
     const memoizedCards = useMemo(() => (
@@ -66,7 +66,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
                 {memoizedCards}
             </div>
             { isModalOpen && (
-                <ModalAddToCart padding={"8"} modalTitle={"Select Your Class Type:"} modalSubTitle={selectedClass!.TITLE}/>
+                <ModalAddToCart padding={"8"} closeModal={closeModal} modalTitle={"Select Your Class Type:"} modalSubTitle={selectedClass!.TITLE}/>
             )}
         </div>
     )

@@ -1,25 +1,32 @@
 'use client'
 
-import { useState } from "react";
-import { StateContext } from "@/StateProvider";
-import { useContext } from "react";
+import dynamic from 'next/dynamic';
+import React, { useContext, useState } from "react";
 import { useGetSectionDataWithS3Image } from "@/hooks/useGetSectionDataWithS3Image";
 import SectionHeader from "./SectionHeader";
+import { StateContext } from '@/StateProvider';
 import { useAddPreSignedUrlToArray } from "@/hooks/useAddPreSignedUrlToArray";
-import { Modal, useModal } from "./Modal";
 import { SectionDataGallery } from "@/_types/section-data";
 import '../_styles/gallery.css';
 
 export default function Gallery (){
-
     const [isLoading, setIsLoading] = useState(true);
     const [images, setImages] = useState<SectionDataGallery[]>([]);
     const [sectionData, setSectionData] = useState<SectionDataGallery[]>([]);
     const [preSignedUrl, setPreSignedUrl] = useState("");
 
-    const { openModal } = useModal();
     const { isModalOpen, setIsModalOpen } = useContext(StateContext);
-    
+    const closeModal = () => {setIsModalOpen(false);};
+
+    // In pure React, lazy loading/code splitting is implemented with React.lazy and wrapping the Modal in a Suspense
+    // const LazyModal = React.lazy(() => import('./Modal'));
+    // <Suspense fallback={<p>Loading picture...</p>}> ... </Suspense>
+    const LazyModal = dynamic(() => import('./Modal'), {
+        loading: () => <p>Loading picture...</p>,
+        ssr: false, // Disable SSR to make sure that NextJs won';'t render the Modal in the server
+    });
+
+   
     // Retrieves all gallery info from the database
     useGetSectionDataWithS3Image(setSectionData, 'gallery')
 
@@ -28,7 +35,7 @@ export default function Gallery (){
 
     function openGalleryPicture(url: string){
         setPreSignedUrl(url);
-        openModal();
+        setIsModalOpen(true);
     }
 
     // checks if API calls are still being executed. If this line is ommited, than a runtime error (as freeClasses array will be empty) will occur when page is refreshed or user hits the browser's back button
@@ -36,7 +43,6 @@ export default function Gallery (){
         return(<p>loading...</p>);
     }
     else {
-
         return (
             <>
                 <section className="gallery-container">
@@ -65,15 +71,15 @@ export default function Gallery (){
                 </section>
 
                 { isModalOpen &&
-                    <Modal padding={"8"}>
+                    <LazyModal padding={"8"} closeModal={closeModal}>
                         <div className="gallery-modal-img">
                             <img
                                 className="gallery__img-modal" 
                                 src={preSignedUrl}
                             />
                         </div>
-                    </Modal>
-                }
+                    </LazyModal>
+                 }
             </>
         )
     }

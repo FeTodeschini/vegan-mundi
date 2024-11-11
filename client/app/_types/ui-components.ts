@@ -4,6 +4,7 @@ import { ChildrenProps } from './global'
 
 export interface ModalProps extends ChildrenProps {
     padding: string,
+    closeModal: () => void;
 }
 
 export interface SectionHeaderProps {

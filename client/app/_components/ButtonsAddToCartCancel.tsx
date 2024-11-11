@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { StateContext } from "../StateProvider";
-import { useModal } from "./Modal";
 import Button from "./Button";
 import { SelectedPriceProps } from "@/_types/price";
 import { useDispatch } from "react-redux";
@@ -8,8 +7,9 @@ import { addItem } from "@/redux/slices/cartSlice"
 
 export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPriceProps){
 
-    const { selectedClass } = useContext(StateContext);
-    const { closeModal } = useModal();
+    const { selectedClass, setIsModalOpen } = useContext(StateContext);
+
+    const closeModal = () => {setIsModalOpen(false);};
     const dispatch = useDispatch();
     
     function onAddToCart() {
@@ -27,8 +27,8 @@ export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPricePr
             CLASS_DATE: selectedPrice.CLASS_DATE
         }
 
-        dispatch(addItem(selectedClassWithPrice))
-        closeModal();
+        dispatch(addItem(selectedClassWithPrice));
+        setIsModalOpen(false);
     }
 
     return (
