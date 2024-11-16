@@ -26,6 +26,12 @@ export default function Page() {
 
     const { userInfo } = useContext(StateContext)
     
+    const params = useMemo(() => {
+        return userInfo?.email ? { email: userInfo.email } : null;
+    }, [userInfo?.email]);
+
+    useGetSectionDataWithParams(setSectionData, 'classes/user', params);
+
     // Filter cooking classes based on delivery method (IN_PERSON, ONLINE_WITH_INSTRUCTOR and ONLINE_SELF_PACED
     useEffect (() => {
         const filterClassPerDeliveryMethod = (deliveryMethod: number) =>
@@ -36,12 +42,6 @@ export default function Page() {
         setClassesInPerson(filterClassPerDeliveryMethod(enumDeliveryMethods.IN_PERSON));
     },[images])
 
-    const params = useMemo(() => {
-        return userInfo?.email ? { email: userInfo.email } : null;
-    }, [userInfo?.email]);
-
-    useGetSectionDataWithParams(setSectionData, 'classes/user', params);
-    
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
     useAddPreSignedUrlToArray(sectionData, 'vegan-mundi-thumbnails', setImages, setIsLoading);
 

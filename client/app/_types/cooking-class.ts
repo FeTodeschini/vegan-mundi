@@ -61,6 +61,8 @@ export interface MyCookingClass extends CookingClass{
     DELIVERY_METHOD_ID: number;
     VIDEO: string;
     CLASS_DATE?: Date;
+    STARS?: number;
+    REVIEW_TEXT?: string;
 }
 
 export interface Recipe{

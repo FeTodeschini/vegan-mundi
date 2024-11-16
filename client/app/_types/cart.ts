@@ -19,4 +19,4 @@ export interface CartState {
     cartQuantity: number;
     cartAmount: number;
     cartItems: SelectedCookingClassWithPrices[];
-  }
+}

@@ -2,10 +2,8 @@ import TokenProvider from '@/_components/TokenProvider';
 import { addPreSignedUrlToString } from '@/_lib/S3Helper';
 import { MyCookingClass, Recipe } from '@/_types/cooking-class';
 import { ArrayProps } from '@/_types/global';
-import { useContext, useEffect, useState } from 'react';
-import ExpandableText from './ExpandableText';
+import React, { useContext, useEffect, useState } from 'react';
 import Card from './Card';
-import React from 'react';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
 import VideoCallLink from './VideoCallLink';
@@ -13,37 +11,28 @@ import ClassRescheduleDisclaimer from './ClassRescheduleDisclaimer';
 import { useSetClassDate } from '@/hooks/useSetClassDate';
 import { handleSetMyClasstDate } from '@/_lib/MyClassesHelper';
 import { StateContext } from '@/StateProvider';
+import ReviewDisplay from './ReviewDisplay';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxRootState } from '@/_types/redux';
+import useGetMyClasses from '@/hooks/useGetMyClassesAndPendingReviews';
 import "@/_styles/myclasses.css"
+import ReviewCollector from './ReviewCollector';
+import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
 
 export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCookingClass>) {
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
+    const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
+
     const { userInfo } = useContext(StateContext)
 
-    useEffect(() => {
-        const addPreSignedUrl = async () => {
-            const updatedClasses = await Promise.all(classes.map(async (item) => {
-                if (item.CLASSES_LIST) {
-                    const recipes = JSON.parse(item.CLASSES_LIST);
-                    // Add pre signed Url to each recipe in the list of recipes per Class (item.CLASSES_LIST)
-                    const recipesPreSignedUrl = await Promise.all(recipes.map(async (recipe: any) => {
-                        const photoPreSignedUrl = await addPreSignedUrlToString('vegan-mundi-thumbnails', recipe.PHOTO);
-                        return { ...recipe, PHOTO: photoPreSignedUrl };
-                    }));
-                    // update CLASSES_LIST with pre signed urls
-                    return { ...item, CLASSES_LIST: recipesPreSignedUrl };
-                }
-                return undefined;
-            }));
+    const dispatch = useDispatch();
 
-            setClassesPreSignedUrl(updatedClasses.filter((item): item is MyCookingClass => item !== undefined));
-        };
-
-        addPreSignedUrl();
-
-    }, [classes]);
-
+    useGetUnsubmittedReviews()
     
+    // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
+    useGetMyClasses(classes, setClassesPreSignedUrl);
+   
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
     useSetClassDate(classesPreSignedUrl, setSelectedDates);
 
@@ -59,10 +48,18 @@ export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCoo
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                             </Card.Title>
-                            <Card.Description>
-                                {<ExpandableText labelShowMore={"Show Description"} labelShowLess={"Hide Description"}>{item.DESCRIPTION}</ExpandableText>}
-                            </Card.Description>
-
+                            <Card.Description><p>{item.DESCRIPTION}</p></Card.Description>
+                            {item.STARS || classesReview[item.CLASS_ID] !== undefined ?
+                                    <ReviewDisplay 
+                                        stars={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].stars : item.STARS} 
+                                        reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}/>                                        
+                                :
+                                    <ReviewCollector 
+                                        classId={item.CLASS_ID}
+                                        // unsubmittedReview={unsubmittedReviews[item.CLASS_ID] || { stars: 0, reviewText: '' }}
+                                        unsubmittedReview={unsubmittedReviews[item.CLASS_ID] || {}}
+                                    />
+                            }
                             <div className="myclasses__classes-list">
                                 {
                                     item.CLASSES_LIST.map((recipe: Recipe, index: number) => {

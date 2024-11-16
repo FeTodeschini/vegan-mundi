@@ -1,41 +1,28 @@
 import TokenProvider from '@/_components/TokenProvider';
-import { addPreSignedUrlToString } from '@/_lib/S3Helper';
 import { MyCookingClass, Recipe } from '@/_types/cooking-class';
 import { ArrayProps } from '@/_types/global';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import ExpandableText from './ExpandableText';
+import React, { useState } from 'react';
 import Card from './Card';
-import "@/_styles/myclasses.css"
-import React from 'react';
 import MyClassTitle from './MyClassTitle';
+import ReviewDisplay from './ReviewDisplay';
+import ReviewCollector from './ReviewCollector';
+import { useSelector } from 'react-redux';
+import { ReduxRootState } from '@/_types/redux';
+import useGetMyClasses from '@/hooks/useGetMyClassesAndPendingReviews';
+import "@/_styles/myclasses.css"
+import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
+
 
 export default function MyClassesOnlineSelfPaced({classes}:ArrayProps<MyCookingClass>) {
-
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
-    useEffect(() => {
-        const addPreSignedUrl = async () => {
-            const updatedClasses = await Promise.all(classes.map(async (item) => {
-                if (item.CLASSES_LIST) {
-                    const recipes = JSON.parse(item.CLASSES_LIST);
-                    // Add pre signed Url to each recipe in the list of recipes per Class (item.CLASSES_LIST)
-                    const recipesPreSignedUrl = await Promise.all(recipes.map(async (recipe: any) => {
-                        const photoPreSignedUrl = await addPreSignedUrlToString('vegan-mundi-thumbnails', recipe.PHOTO);
-                        return { ...recipe, PHOTO: photoPreSignedUrl };
-                    }));
-                    // update CLASSES_LIST with pre signed urls
-                    return { ...item, CLASSES_LIST: recipesPreSignedUrl };
-                }
-                return undefined;
-            }));
+    const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
 
-            setClassesPreSignedUrl(updatedClasses.filter((item): item is MyCookingClass => item !== undefined));
-        };
+    useGetUnsubmittedReviews()
 
-        addPreSignedUrl();
+    // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
+    useGetMyClasses(classes, setClassesPreSignedUrl, );
 
-    }, [classes]); // Dependency array ensures this runs when classes change
-    
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online Self Paced classes yet</p>
     else 
@@ -46,30 +33,43 @@ export default function MyClassesOnlineSelfPaced({classes}:ArrayProps<MyCookingC
                         <Card.Title>
                             <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                         </Card.Title>
-                        <Card.Description>
-                            {<ExpandableText labelShowMore={"Show Description"} labelShowLess={"Hide Description"}>{item.DESCRIPTION}</ExpandableText>}
-                        </Card.Description>
-
-                        <div className="myclasses__classes-list">
-                            {
-                                item.CLASSES_LIST.map((recipe: Recipe, index: number) => {
-                                    return (
-                                        <React.Fragment key={index}>
-                                            <div className="myclasses__img-wrapper">
-                                                <img className="img-small" src={recipe.PHOTO} />
-                                                <Link href={`/videoplayer/${recipe.RECIPE_ID}`}>
-                                                    <img className='icon-play' src="/assets/icon-play.svg" />
-                                                </Link>
-                                            </div>
-                                            <p className="align-self-c">{recipe.TITLE}</p>
-                                        </React.Fragment>
-                                    )
-                                    }
-                                )
+                        <Card.Content>
+                            {item.DESCRIPTION}
+                        </Card.Content>
+                            {item.STARS || classesReview[item.CLASS_ID] !== undefined ?
+                                    <ReviewDisplay 
+                                        stars={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].stars : item.STARS} 
+                                        reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}/>                                        
+                                :
+                                    <ReviewCollector 
+                                        classId={item.CLASS_ID}
+                                        unsubmittedReview={unsubmittedReviews[item.CLASS_ID] || {}}
+                                    />
                             }
-                        </div>
+                            <div className="myclasses__classes-list">
+                                {
+                                    item.CLASSES_LIST.map((recipe: Recipe, index: number) => {
+                                        return (
+                                            <React.Fragment key={index}>
+                                                <div className="myclasses__img-wrapper">
+                                                    <img className="img-small" src={recipe.PHOTO} />
+                                                    <Link href={`/videoplayer/${recipe.RECIPE_ID}`}>
+                                                        <img className='icon-play' src="/assets/icon-play.svg" />
+                                                    </Link>
+                                                </div>
+                                                <p className="align-self--c">{recipe.TITLE}</p>
+                                            </React.Fragment>
+                                        )
+                                        }
+                                    )
+                                }
+                            </div>
                     </Card>
                 ))}
             </div>
         )
+}
+
+function dispatch(arg0: any) {
+    throw new Error('Function not implemented.');
 }

@@ -32,7 +32,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
                 <Card key={item.TITLE}>
                     <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} />
                     <Card.Title>{item.TITLE}</Card.Title>
-                    <Card.Description>{item.DESCRIPTION}</Card.Description>
+                    <Card.Content>{item.DESCRIPTION}</Card.Content>
                     <Card.Content>
                         {item.CLASSES_LIST ? item.CLASSES_LIST.split("|").map((listItem: any) => (
                             <div className="card__items-list" key={listItem}>
@@ -60,14 +60,19 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
         <div className="container">
             <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
             <SectionHeader title={title} subTitle={subTitle}/>
-
-            {(resultsFound ?? 0) > 0 || subTitle!.includes("Category:") ? <SectionHeader subTitle={"Add a class to your cart to select if it will be in person or online"}/> : ""}
-            <div className="grid-auto-fit top-margin--medium">
-                {memoizedCards}
-            </div>
-            { isModalOpen && (
-                <ModalAddToCart padding={"8"} closeModal={closeModal} modalTitle={"Select Your Class Type:"} modalSubTitle={selectedClass!.TITLE}/>
-            )}
+            {(resultsFound ?? 0) > 0 || subTitle!.includes("Category:") ? 
+                <>
+                    <SectionHeader subTitle={"Add a class to your cart to select if it will be in person or online"}/>
+                    <div className="grid-auto-fit top-margin--medium">
+                        {memoizedCards}
+                    </div>
+                    { isModalOpen && (
+                        <ModalAddToCart padding={"8"} closeModal={closeModal} modalTitle={"Select Your Class Type:"} modalSubTitle={selectedClass!.TITLE}/>
+                    )}
+                </>
+            : 
+                ""
+            }
         </div>
     )
 })

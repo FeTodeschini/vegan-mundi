@@ -63,7 +63,7 @@ function SearchResultSuspense(){
     }
     else {
         return (
-            <FilteredClasses images={images} resultsFound={results} title={`${results} result${results !== 1 ? "s" : "" } found for your search`} subTitle={`Keyword: ${keyword}`}/>            
+            <FilteredClasses key={images.length} images={images} resultsFound={results} title={`${results} result${results !== 1 ? "s" : "" } found for your search`} subTitle={`Keyword: ${keyword}`}/>            
         )        
     }
 
