@@ -25,7 +25,7 @@ export default function DeliveryMethods({ deliveryMethods }: ArrayProps<CookingC
                                                 <img src={`assets/${item.ICON}`} alt="In Person Classes" className="icon-medium" />{item.TITLE}
                                             </div>}
                                         </Card.Title>
-                                        <Card.Description>{item.DESCRIPTION}</Card.Description>                                        
+                                        <Card.Content>{item.DESCRIPTION}</Card.Content>                                        
                                         <Button >Learn More &rarr;</Button>
                                     </ Card>
                                 ) : null

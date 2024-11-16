@@ -12,6 +12,8 @@ export default function Button({ bgColor, additionalClass, isSubmit="false", typ
     className = className.concat(
         size === "medium" ? 
             " btn-medium" :
+            size === "small" ?
+            " btn-small" :
             size === "full" ?
                 " btn-full " :
             size === "square" ?

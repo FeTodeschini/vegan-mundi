@@ -17,7 +17,7 @@ export default function Categories({categories}: ArrayProps<CookingClassCategory
                         <Card key={item.TITLE}>
                             <Card.TopImage imgSource={`/assets/${item.PHOTO}`} imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} />
                             <Card.Title callOutTag={item.LEVEL}>{item.TITLE}</Card.Title>
-                            <Card.Description>{item.DESCRIPTION}</Card.Description>
+                            <Card.Content>{item.DESCRIPTION}</Card.Content>
                             {/* Split the items of a recipe's list that are stored altogether in a single field in the database, 
                             separated by a delimiter ("|") instead of them being stored in individual rows in a related table */}
                             <Card.Content>{

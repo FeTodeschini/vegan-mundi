@@ -55,6 +55,6 @@ export default function CategoryClasses(){
      const memoizedImages = useMemo(() => images, [images]);
     
     return (
-            <FilteredClasses images={memoizedImages} title={`${classes} class${classes !== 1 ? "es" : "" } in this category`} subTitle={`Category: ${categoryTitle}`}/>            
+            <FilteredClasses key={images.length} images={memoizedImages} title={`${classes} class${classes !== 1 ? "es" : "" } in this category`} subTitle={`Category: ${categoryTitle}`}/>            
     )
 }

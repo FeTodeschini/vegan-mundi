@@ -64,3 +64,8 @@
 .react-datepicker__day--disabled:hover {
     background-color: var(--color-gray-light);
 }
+
+.react-datepicker__input-container > input {
+    padding: .6rem 0;
+    font-family: 'Lato';
+}
