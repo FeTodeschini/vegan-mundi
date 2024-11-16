@@ -5,14 +5,14 @@ import { CardProps, CardTitleProps } from "../_types/card"
 import { CardTopImageProps } from '../_types/card'
 import '../_styles/card.css';
 
-function CardComponent({ bgColor, key, additionalClass="", children}: CardProps){
+function CardComponent({ bgColor, additionalClass="", children}: CardProps){
     // Creates an object for applying a background color style in case a bgColor was received by the Card 
     const style = bgColor !== undefined ? {backgroundColor: bgColor} : {};
 
     // Think of a better implementation for avoiding prop drilling
     return (
         // Before Typescript, the key was defined as key={title}, but Typescript complains 
-        <div className={`card${style ? ` ${additionalClass}` : ''}`} style={style} key={key}>
+        <div className={`card${style ? ` ${additionalClass}` : ''}`} style={style}>
             { children }
         </div>
     )
@@ -44,7 +44,8 @@ function TopImage({isVideo, imgLink, imgSource}: CardTopImageProps){
 
 function Title({ callOutTag, children}: CardTitleProps){
     return (
-        <div className="card__section">
+        // <div className="card__section">
+        <div>
             {/* JSX for card content when there is no call out tag */}
             {callOutTag === undefined && 
                 <>
@@ -67,24 +68,28 @@ function Title({ callOutTag, children}: CardTitleProps){
 function Description({ children }: ChildrenProps){
         return (
             <div className="card__section">
-                    <p className='card__description'>{children}</p>
+                    <div className='card__description'>{children}</div>
             </div>
 )}
 
-function Content({children }: ChildrenProps) {
+function Content({ children }: ChildrenProps){
     return (
-        <div className='card__section'>
-            <div className='card__description-list'>
-                { children }
-            </div>
+        <div className="card__section">
+                <div className='card__description'>{children}</div>
         </div>
 )}
+
+function Footer({ children }: ChildrenProps){
+    return (
+        <div className='card__footer'>{children}</div>
+    )}
 
 type CardType = React.MemoExoticComponent<typeof CardComponent> & {
     TopImage: typeof TopImage;
     Title: typeof Title;
     Description: typeof Description;
     Content: typeof Content;
+    Footer: typeof Footer;
 };
 
 // Memoize the component and assign static properties
@@ -94,6 +99,7 @@ Card.TopImage = TopImage;
 Card.Title = Title;
 Card.Description = Description;
 Card.Content = Content;
+Card.Footer = Footer;
 
 //const Card = React.memo(CardComponent) as CardType;
 export default Card;

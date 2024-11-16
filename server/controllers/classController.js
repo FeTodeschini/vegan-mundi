@@ -206,17 +206,19 @@ async function getUserClasses (req, res, next) {
                 `    INNER JOIN CLASS_RECIPE C ON R.RECIPE_ID = C.RECIPE_ID ` +
                 `        AND C.CLASS_ID = CLS.CLASS_ID ` +
                 `    WHERE C.CLASS_ID = CLS.CLASS_ID ` +
-                ` ) AS CLASSES_LIST ` + 
+                ` ) AS CLASSES_LIST, ` + 
+                ` REV.STARS , REV.REVIEW_TEXT ` +
                 ` FROM CLASS_CATEGORY CAT ` +
                 ` INNER JOIN CLASS CLS ON ` +
                 `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` +
                 `   AND CLS.CLASS_ID IN (SELECT CLASS_ID FROM ORDER_CLASS OCL WHERE EMAIL = ?) ` +
                 ` INNER JOIN ORDER_CLASS OCL ON CLS.CLASS_ID = OCL.CLASS_ID ` +
                 ` 	AND OCL.EMAIL = ? ` +
-                ` INNER JOIN DELIVERY_METHOD DME ON OCL.DELIVERY_METHOD_ID = DME.ID `
+                ` INNER JOIN DELIVERY_METHOD DME ON OCL.DELIVERY_METHOD_ID = DME.ID ` + 
+                ` LEFT JOIN REVIEW REV ON CLS.CLASS_ID = REV.CLASS_ID AND REV.EMAIL = ?`
 
         // result needs to be destructured as mysql2/promise returns 2 items: the rows themselves plus metadata about the result
-        const [result] = await connection.query(query, [email, email]);
+        const [result] = await connection.query(query, [email, email, email]);
         // In the old version of this API using mysql.createConnection (single connection), the whole data returned by the db was stored in result 
         // Now that mysql2/promises wth createPool is being used, it is necessary to add the "top level" of the db return to result (categoryTitle and classes)
         res.send(result);

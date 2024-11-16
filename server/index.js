@@ -27,6 +27,7 @@ const classesRouter = require('./routes/classRouter');
 const deliveryMethodsRouter = require('./routes/deliveryMethodsRouter');
 const accountRouter = require('./routes/accountRouter');
 const orderRouter = require('./routes/orderRouter');
+const reviewRouter = require('./routes/reviewRouter');
 
 app.listen(4000, ()=> {
   console.log('Server listening on port 4000...');
@@ -39,5 +40,6 @@ app.use('/classes', classesRouter);
 app.use('/delivery-methods', deliveryMethodsRouter);
 app.use('/account', accountRouter);
 app.use('/order', orderRouter);
+app.use('/review', reviewRouter);
 
 app.use(errorHandler);
