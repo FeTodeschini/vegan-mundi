@@ -3,7 +3,7 @@ import { SetStateAction, useEffect } from 'react';
 import { MyCookingClass } from '@/_types/cooking-class';
 
 //export default function useGetMyClasses(classes: MyCookingClass[], setClassesPreSignedUrl: React.Dispatch<SetStateAction<MyCookingClass>>) {
-export default function useGetMyClasses(classes: MyCookingClass[], setClassesPreSignedUrl: (arg: MyCookingClass[]) => void) {
+export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[], setClassesPreSignedUrl: (arg: MyCookingClass[]) => void) {
     useEffect(() => {
         const addPreSignedUrl = async () => {
             const updatedClasses = await Promise.all(classes.map(async (item: MyCookingClass) => {

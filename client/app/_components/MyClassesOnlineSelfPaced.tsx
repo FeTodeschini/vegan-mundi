@@ -9,7 +9,7 @@ import ReviewDisplay from './ReviewDisplay';
 import ReviewCollector from './ReviewCollector';
 import { useSelector } from 'react-redux';
 import { ReduxRootState } from '@/_types/redux';
-import useGetMyClasses from '@/hooks/useGetMyClassesAndPendingReviews';
+import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
 import "@/_styles/myclasses.css"
 import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
 
@@ -21,7 +21,7 @@ export default function MyClassesOnlineSelfPaced({classes}:ArrayProps<MyCookingC
     useGetUnsubmittedReviews()
 
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
-    useGetMyClasses(classes, setClassesPreSignedUrl, );
+    useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl, );
 
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online Self Paced classes yet</p>
