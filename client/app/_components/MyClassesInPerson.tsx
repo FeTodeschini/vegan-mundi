@@ -13,7 +13,7 @@ import ReviewCollector from './ReviewCollector';
 import ReviewDisplay from './ReviewDisplay';
 import { useSelector } from 'react-redux';
 import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
-import useGetMyClasses from '@/hooks/useGetMyClassesAndPendingReviews';
+import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
 import { ReduxRootState } from '@/_types/redux';
 import "@/_styles/myclasses.css"
 
@@ -27,7 +27,7 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
     useGetUnsubmittedReviews()
 
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
-    useGetMyClasses(classes, setClassesPreSignedUrl, );
+    useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl, );
 
     
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker

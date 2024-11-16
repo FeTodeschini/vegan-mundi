@@ -1,8 +1,7 @@
 import TokenProvider from '@/_components/TokenProvider';
-import { addPreSignedUrlToString } from '@/_lib/S3Helper';
 import { MyCookingClass, Recipe } from '@/_types/cooking-class';
 import { ArrayProps } from '@/_types/global';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
@@ -12,9 +11,9 @@ import { useSetClassDate } from '@/hooks/useSetClassDate';
 import { handleSetMyClasstDate } from '@/_lib/MyClassesHelper';
 import { StateContext } from '@/StateProvider';
 import ReviewDisplay from './ReviewDisplay';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ReduxRootState } from '@/_types/redux';
-import useGetMyClasses from '@/hooks/useGetMyClassesAndPendingReviews';
+import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
 import "@/_styles/myclasses.css"
 import ReviewCollector from './ReviewCollector';
 import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
@@ -26,12 +25,10 @@ export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCoo
 
     const { userInfo } = useContext(StateContext)
 
-    const dispatch = useDispatch();
-
     useGetUnsubmittedReviews()
     
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
-    useGetMyClasses(classes, setClassesPreSignedUrl);
+    useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl);
    
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
     useSetClassDate(classesPreSignedUrl, setSelectedDates);
@@ -56,7 +53,6 @@ export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCoo
                                 :
                                     <ReviewCollector 
                                         classId={item.CLASS_ID}
-                                        // unsubmittedReview={unsubmittedReviews[item.CLASS_ID] || { stars: 0, reviewText: '' }}
                                         unsubmittedReview={unsubmittedReviews[item.CLASS_ID] || {}}
                                     />
                             }
