@@ -116,6 +116,10 @@ section {
     justify-content: space-between;
 }
 
+.full-width {
+    width: 100%;
+}
+
 .btn, 
 .btn--link {
     background-color: #fff;
@@ -141,6 +145,11 @@ section {
 
 .btn--link:hover {
     transform: scale(1.2);
+}
+
+.btn-small {
+    width: 8rem;
+    font-size: 1.2rem;
 }
 
 .btn-medium {

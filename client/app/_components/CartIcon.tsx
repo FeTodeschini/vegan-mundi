@@ -4,7 +4,7 @@ import "../_styles/cart.css";
 import { ReduxRootState } from '@/_types/redux';
 
 export default function CartIcon () {
-    const { cartAmount, cartQuantity } = useSelector((state: ReduxRootState)=> state.cart)
+    const { cartAmount, cartQuantity } = useSelector((state: ReduxRootState)=> state.cart);
     return (
         <div className="shopping-cart-icon">
             <figure className="header-icon-container">

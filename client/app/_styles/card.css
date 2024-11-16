@@ -23,12 +23,14 @@
 }
 
 .card__title {
-    /* display: flex;
-    align-items: center; */
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
     color: var(--color-primary-dark);
     font-size: 1.8rem;
     font-weight: 600;
     margin: 2.4rem 0 2rem 0;
+    /* position: relative; */
 }
 
 /* When there is a call out tag to the right of the card title, then a flexbox is needed for aligning the title and the tag */
@@ -54,6 +56,22 @@
     position: relative;
 }
 
+.card__content {
+    font-size: 1.8rem;
+    padding: 0 1rem;
+    cursor: auto;
+}
+
+.card__footer {
+    justify-self: flex-start;
+}
+
+.card__description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .card__description,
 .card__expandable-text--content {
     color: var(--color-gray-dark);
@@ -62,9 +80,12 @@
     letter-spacing: .1rem;
 }
 
+.card__expandable-text--content {
+    cursor: pointer;
+}
+
 .card__description {
     padding: 3rem 0 2rem 0;
-
 }
 
 .card__description-list {
@@ -87,7 +108,8 @@
 
 .card__expandable-text--toggle{
     color: var(--color-primary-dark);
-    font-size: 1.6rem;;
+    font-size: 1.6rem;
+    cursor: pointer;
 }
 
 .card__expandable-text--content {

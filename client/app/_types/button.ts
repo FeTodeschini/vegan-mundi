@@ -6,6 +6,6 @@ export interface ButtonProps extends ChildrenProps{
     isSubmit?: string,
     type?: 'button' | 'link';
     link?: string | null;
-    size?: 'large' | 'medium' | 'full' | 'square';
+    size?: 'large' | 'medium' | 'small' | 'full' | 'square';
     onClick?: (...args: any[]) => any;
 }
