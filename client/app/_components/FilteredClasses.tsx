@@ -35,7 +35,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
                     <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} />
                     <Card.Title>
                         {item.TITLE}
-                        <ReviewStarsContainer stars={item.AVERAGE_STARS} isReviewed={false} />
+                        <ReviewStarsContainer stars={item.AVERAGE_STARS}/>
                     </Card.Title>
                     <Card.Content>{item.DESCRIPTION}</Card.Content>
                     <Card.Content>

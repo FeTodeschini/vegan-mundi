@@ -1,7 +1,7 @@
 import StarFull from "./StarFull";
 import StarEmpty from "./StarEmpty";
 
-export default function ReviewStarsContainer({stars}: {stars: number | undefined, isReviewed: boolean}){
+export default function ReviewStarsContainer({stars}: {stars: number | undefined}){
     return (
         <div className="review__container">
             <div className="review__star-container">
