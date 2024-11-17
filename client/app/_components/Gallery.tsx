@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import React, { useContext, useState } from "react";
-import { useGetSectionDataWithS3Image } from "@/hooks/useGetSectionDataWithS3Image";
+import { useGetSectionData } from "@/hooks/useGetSectionData";
 import SectionHeader from "./SectionHeader";
 import { StateContext } from '@/StateProvider';
 import { useAddPreSignedUrlToArray } from "@/hooks/useAddPreSignedUrlToArray";
@@ -28,7 +28,7 @@ export default function Gallery (){
 
    
     // Retrieves all gallery info from the database
-    useGetSectionDataWithS3Image(setSectionData, 'gallery')
+    useGetSectionData(setSectionData, 'gallery')
 
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
     useAddPreSignedUrlToArray(sectionData, 'vegan-mundi-gallery', setImages, setIsLoading);

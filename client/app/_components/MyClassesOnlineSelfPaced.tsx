@@ -33,13 +33,13 @@ export default function MyClassesOnlineSelfPaced({classes}:ArrayProps<MyCookingC
                         <Card.Title>
                             <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                         </Card.Title>
-                        <Card.Content>
-                            {item.DESCRIPTION}
-                        </Card.Content>
+                        <Card.Content>{item.DESCRIPTION}</Card.Content>
                             {item.STARS || classesReview[item.CLASS_ID] !== undefined ?
                                     <ReviewDisplay 
                                         stars={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].stars : item.STARS} 
-                                        reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}/>                                        
+                                        reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}
+                                        isReviewed={true}
+                                    />                                        
                                 :
                                     <ReviewCollector 
                                         classId={item.CLASS_ID}

@@ -79,7 +79,8 @@ section {
 .grid-auto-fit {
     display: grid;
     grid-template-columns: repeat(auto-fit, 32rem);
-    gap: 8.6rem;
+    column-gap: 8.6rem;
+    row-gap: 18rem;
     justify-content: space-between;
     width: 100%;
 }

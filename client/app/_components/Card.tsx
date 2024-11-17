@@ -65,17 +65,10 @@ function Title({ callOutTag, children}: CardTitleProps){
         </div>
 )}
 
-function Description({ children }: ChildrenProps){
-        return (
-            <div className="card__section">
-                    <div className='card__description'>{children}</div>
-            </div>
-)}
-
 function Content({ children }: ChildrenProps){
     return (
         <div className="card__section">
-                <div className='card__description'>{children}</div>
+                <div className='card__content'>{children}</div>
         </div>
 )}
 
@@ -87,7 +80,6 @@ function Footer({ children }: ChildrenProps){
 type CardType = React.MemoExoticComponent<typeof CardComponent> & {
     TopImage: typeof TopImage;
     Title: typeof Title;
-    Description: typeof Description;
     Content: typeof Content;
     Footer: typeof Footer;
 };
@@ -97,7 +89,6 @@ const Card = React.memo(CardComponent) as CardType;
 
 Card.TopImage = TopImage;
 Card.Title = Title;
-Card.Description = Description;
 Card.Content = Content;
 Card.Footer = Footer;
 
