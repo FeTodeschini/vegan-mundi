@@ -58,7 +58,7 @@ export default function ShoppingCart () {
                         <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={"/classes"} />
                         <Card.Title>{item.TITLE}</Card.Title>
                         <Card.Content>
-                            <div className="cart--class-detail card__description">
+                            <div className="cart--class-detail card__content">
                                     <p>Delivery: <span className="bold">{item.PRICE_TYPE_DESCRIPTION}</span></p>
                                     {item.CLASS_DATE && <p>Date: <span className="bold">{format((item.CLASS_DATE), 'MM/dd/yyyy')}</span></p>}
                                     <p>Price: <span className="bold">${item.PRICE}</span></p>

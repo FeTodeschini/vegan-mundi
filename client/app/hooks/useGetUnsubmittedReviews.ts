@@ -10,7 +10,6 @@ export function useGetUnsubmittedReviews(){
         const unsubmittedReviewsString = localStorage.getItem("unsubmittedReviews");
 
         if (unsubmittedReviewsString) {
-          console.log("Entranzya");
             const unsubmittedReviews = JSON.parse(unsubmittedReviewsString);
      
             if (Object.keys(unsubmittedReviews).length > 0) {
