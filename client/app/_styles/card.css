@@ -64,15 +64,17 @@
 
 .card__footer {
     justify-self: flex-start;
+    padding-top: 2rem;
 }
 
-.card__description {
+.card__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding: 0 0 2rem 0;
 }
 
-.card__description,
+.card__content,
 .card__expandable-text--content {
     color: var(--color-gray-dark);
     font-size: 1.8rem;
@@ -84,11 +86,7 @@
     cursor: pointer;
 }
 
-.card__description {
-    padding: 3rem 0 2rem 0;
-}
-
-.card__description-list {
+.card__content-list {
     padding-bottom: 4rem;
     flex: 1;
 }
@@ -121,7 +119,7 @@
         font-size: 1.8rem;
     }
 
-    .card__description {
+    .card__content {
         font-size: 1.6rem;
         letter-spacing: 0.1rem;
     }

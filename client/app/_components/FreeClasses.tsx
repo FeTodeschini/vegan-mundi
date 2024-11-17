@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useGetSectionDataWithS3Image } from '../hooks/useGetSectionDataWithS3Image';
+import { useGetSectionData } from '../hooks/useGetSectionData';
 import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSignedUrlToArray';
 import SectionHeader from './SectionHeader';
 import { CookingClassRecipe } from '@/_types/cooking-class.js';
@@ -15,7 +15,7 @@ export default function FreeClasses() {
     const [sectionData, setSectionData] = useState<CookingClassRecipe[]>([]);
 
     // Retrieves all free classes from the database
-    useGetSectionDataWithS3Image(setSectionData, 'classes/free');
+    useGetSectionData(setSectionData, 'classes/free');
 
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
     useAddPreSignedUrlToArray(sectionData, 'vegan-mundi-thumbnails', setImages, setIsLoading);
@@ -42,7 +42,7 @@ export default function FreeClasses() {
                                 isVideo={true}
                             />
                             <Card.Title>{item.TITLE}</Card.Title>
-                            <Card.Description>{item.DESCRIPTION}</Card.Description>
+                            <Card.Content>{item.DESCRIPTION}</Card.Content>
                         </Card>
                     ))}
                 </div>

@@ -5,7 +5,7 @@ import axios from "axios";
 import config from '../_lib/config';
 import { SectionData } from "@/_types/section-data"
 
-export function useGetSectionDataWithS3Image<T extends SectionData>(
+export function useGetSectionData<T extends SectionData>(
         setSectionData: (data: T[]) => void, 
         apiEndpoint: string,
         params: {} | null = null
@@ -14,11 +14,11 @@ export function useGetSectionDataWithS3Image<T extends SectionData>(
     // Fetch from the database the data for the landing page section received as an input parameter
 
     useEffect( ()=> {
-        getSectionDataWithS3Image(setSectionData, apiEndpoint, params)
+        getSectionData(setSectionData, apiEndpoint, params)
     } , []);
 
 
-    async function getSectionDataWithS3Image(setSectionData: (data: T[]) => void, apiEndpoint: string, params: {} | null) {
+    async function getSectionData(setSectionData: (data: T[]) => void, apiEndpoint: string, params: {} | null) {
 
         let response;
 

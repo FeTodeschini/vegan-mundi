@@ -2,6 +2,7 @@ export interface CookingClass {
     CATEGORY_ID: number,
     CLASS_ID: number,
     TITLE: string,
+    AVERAGE_STARS: number,
     DESCRIPTION: string,
     PHOTO: string,
     CLASSES_LIST: any,
