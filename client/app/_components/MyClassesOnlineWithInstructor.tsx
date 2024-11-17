@@ -45,11 +45,15 @@ export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCoo
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                             </Card.Title>
-                            <Card.Description><p>{item.DESCRIPTION}</p></Card.Description>
+                            <Card.Content>
+                                <p>{item.DESCRIPTION}</p>
+                            </Card.Content>
                             {item.STARS || classesReview[item.CLASS_ID] !== undefined ?
                                     <ReviewDisplay 
                                         stars={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].stars : item.STARS} 
-                                        reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}/>                                        
+                                        reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}
+                                        isReviewed={true}
+                                    />                                        
                                 :
                                     <ReviewCollector 
                                         classId={item.CLASS_ID}

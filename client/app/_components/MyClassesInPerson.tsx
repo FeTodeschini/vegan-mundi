@@ -41,17 +41,24 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
             <>
                 <ClassRescheduleDisclaimer />
                 <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-                    {classesPreSignedUrl!.map((item)=>( 
+                    {classesPreSignedUrl!.map((item)=> {
+                        console.log(item.TITLE)
+                        return (
                         <Card key={item.TITLE} additionalClass={"gray-border"}>
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                             </Card.Title>
-                            <Card.Content><p>{item.DESCRIPTION}</p></Card.Content>
+                            <Card.Content>
+                                <p>{item.DESCRIPTION}</p>
+                            </Card.Content>
                             <Card.Content>
                                 {item.STARS || classesReview[item.CLASS_ID] !== undefined ?
+                                        
                                         <ReviewDisplay 
                                             stars={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].stars : item.STARS} 
-                                            reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}/>                                        
+                                            reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}
+                                            isReviewed={true}
+                                        />                                        
                                     :
                                         <ReviewCollector 
                                             classId={item.CLASS_ID}
@@ -83,7 +90,7 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
                                 </div>
                             </Card.Footer>
                         </Card>
-                    ))}
+                    )})}
                 </div>
             </>
         )

@@ -14,6 +14,7 @@ import { MyCookingClass } from '@/_types/cooking-class';
 import Tabs from '@/_components/Tabs';
 import Tab from '@/_components/Tab';
 import '@/_styles/main.css';
+import Button from '@/_components/Button';
 
 export default function Page() {
 
@@ -49,6 +50,7 @@ export default function Page() {
         <>
             <TokenProvider />
             <section className="container">
+                <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
                 <SectionHeader title="My Classes" />
                 <Tabs>
                     <Tab label="Self-Paced">
