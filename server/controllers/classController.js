@@ -1,7 +1,7 @@
 const connectToDb = require('../config/dbConfig');
 const { CustomError } = require('../middlewares/errorHandler');
 
-const sqlReviewsAverage = ` (SELECT TRUNCATE(AVG(STARS),1) FROM REVIEW REV WHERE REV.CLASS_ID = CLS.CLASS_ID GROUP BY CLASS_ID ) AS AVERAGE_STARS, `
+const sqlStarsAverage = ` (SELECT TRUNCATE(AVG(STARS),1) FROM REVIEW REV WHERE REV.CLASS_ID = CLS.CLASS_ID GROUP BY CLASS_ID ) AS AVERAGE_STARS, `
 
 async function getFreeClasses (req, res, next) {
 
@@ -46,7 +46,7 @@ async function getClassesPerCategory (req, res, next) {
 
         connection = await connectToDb();
         let query = `SELECT DISTINCT CAT.TITLE AS CATEGORY_TITLE, CLS.CLASS_ID, CLS.CATEGORY_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO , ` +
-                    sqlReviewsAverage + 
+            sqlStarsAverage + 
                         ` ( SELECT GROUP_CONCAT(TITLE SEPARATOR '|') 
                             FROM 
                               RECIPE R 
@@ -128,7 +128,7 @@ async function getClassesPerKeyword (req, res, next) {
     try {
         connection = await connectToDb();
         let query = `SELECT DISTINCT CLS.CATEGORY_ID, CLS.CLASS_ID, CLS.TITLE, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO, ` +
-            sqlReviewsAverage + 
+            sqlStarsAverage + 
           ` ( SELECT GROUP_CONCAT(TITLE SEPARATOR '|') 
               FROM 
               RECIPE R 
