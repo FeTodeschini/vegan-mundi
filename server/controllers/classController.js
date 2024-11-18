@@ -111,7 +111,6 @@ async function getCategories (req, res, next) {
     }
 };
 
-
 async function getClassesPerKeyword (req, res, next) {
 
     const email = req.query.email || null
@@ -211,7 +210,7 @@ async function getUserClasses (req, res, next) {
                 `        AND C.CLASS_ID = CLS.CLASS_ID ` +
                 `    WHERE C.CLASS_ID = CLS.CLASS_ID ` +
                 ` ) AS CLASSES_LIST, ` + 
-                ` REV.STARS , REV.REVIEW_TEXT ` +
+                ` REV.STARS , REV.REVIEW_TITLE, REV.REVIEW_TEXT ` +
                 ` FROM CLASS_CATEGORY CAT ` +
                 ` INNER JOIN CLASS CLS ON ` +
                 `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` +
@@ -232,6 +231,6 @@ async function getUserClasses (req, res, next) {
     finally {
         if (connection) connection.release();
     }
-    
 };
+
 module.exports = { getCategories, getClassesPerCategory, getFreeClasses, getClassesPerKeyword, getUserClasses, updateClassDate };

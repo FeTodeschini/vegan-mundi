@@ -63,6 +63,7 @@ export interface MyCookingClass extends CookingClass{
     VIDEO: string;
     CLASS_DATE?: Date;
     STARS?: number;
+    REVIEW_TITLE?: string;
     REVIEW_TEXT?: string;
 }
 

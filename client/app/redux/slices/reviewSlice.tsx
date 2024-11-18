@@ -3,13 +3,16 @@ import { ReviewState } from "@/_types/review";
 import axios from "axios";
 import config from "@/_lib/config";
 
+// type for a single review to be submitted
 export type SubmitReviewPayload = {
   email: string;
   classId: number;
+  reviewTitle: string,
   reviewText: string;
   stars: number;
 };
 
+// type for the complete state of all reviews
 const initialState: ReviewState = {
     email: '',
     isReviewVisible: {},
@@ -64,16 +67,20 @@ const reviewSlice = createSlice({
       },
       // Save unsubmitted reviews in the state and localstorage, in case user refreshes the page or change tabs without submitting the review
       saveUnsubmittedReview(state, action) {
-        const { classId, stars, reviewText } = action.payload
+        const { classId, stars, reviewTitle, reviewText } = action.payload
         // Initialize item if it still doesn't exist
         if (!state.unsubmittedReviews[classId]) {
           state.unsubmittedReviews[classId] = { 
             stars: 0,
+            reviewTitle: '',
             reviewText: '' };
         }
         
         if (stars != null){
           state.unsubmittedReviews[classId].stars = stars;
+        }
+        if (reviewTitle != null) {
+          state.unsubmittedReviews[classId].reviewTitle = reviewTitle;
         }
         if (reviewText != null) {
           state.unsubmittedReviews[classId].reviewText = reviewText;
@@ -95,10 +102,10 @@ const reviewSlice = createSlice({
           state.error = null;
         })
         .addCase(submitReview.fulfilled, (state, action) => {
-          const { classId, stars, reviewText } = action.payload;
+          const { classId, stars, reviewTitle, reviewText } = action.payload;
           state.status = "success";
           state.isReviewVisible[action.payload.classId] = false
-          state.classesReview[classId] = { stars, reviewText }
+          state.classesReview[classId] = { stars, reviewTitle, reviewText }
 
           // removes item from list of unsubmitted reviews in the local storage and also from the state
           removePersistedReview(classId, state);
