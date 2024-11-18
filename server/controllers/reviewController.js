@@ -7,11 +7,11 @@ async function addReview (req, res, next) {
 
     try {
 
-        const { email, classId, stars, reviewText } = req.body
-        const params = [email, classId, stars, reviewText]
+        const { email, classId, stars, reviewTitle, reviewText } = req.body
+        const params = [email, classId, stars, reviewTitle, reviewText]
 
         connection = await connectToDb();
-        const query = 'INSERT INTO REVIEW (EMAIL, CLASS_ID, STARS, REVIEW_TEXT ) VALUES ( ?, ?, ?, ?) '
+        const query = 'INSERT INTO REVIEW (EMAIL, CLASS_ID, STARS, REVIEW_TITLE, REVIEW_TEXT ) VALUES ( ?, ?, ?, ?, ?) '
         await connection.query(query, params);
         res.status(201).json({message: `Review added successfully for class ${classId}`});
     } catch (err) {
@@ -67,4 +67,25 @@ async function getAllReviews (req, res, next) {
     }
 };
 
-module.exports = { addReview, getReview, getAllReviews };
+async function getClassReviews (req, res, next) {
+
+    let connection;
+    const classId = req.query.classId;
+
+    try {
+        connection = await connectToDb();
+        const query = `SELECT STARS, REVIEW_TITLE, REVIEW_TEXT, ` +
+            ` (SELECT FIRST_NAME FROM ACCOUNT ACT WHERE REV.EMAIL = ACT.EMAIL) AS REVIEWER_NAME ` +
+            ` FROM REVIEW REV WHERE CLASS_ID = ? `
+        // result needs to be destructured as mysql2/promise returns 2 items: the rows themselves plus metadata about the result
+        const [result] = await connection.query(query, [classId]);
+        res.send(result);
+    } catch (err) {
+        next(new CustomError(err.message, 500));
+    }
+    finally {
+        if (connection) connection.release();
+    }
+};
+
+module.exports = { addReview, getReview, getAllReviews, getClassReviews };
