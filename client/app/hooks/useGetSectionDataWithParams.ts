@@ -15,18 +15,16 @@ export function useGetSectionDataWithParams<T extends SectionData>(
 
     // Fetch from the database the data for the landing page section received as an input parameter
     useEffect( ()=> {
+
         if (params) {
             getSectionDataWithParams(setSectionData, apiEndpoint, params)
         }
-            
     } , [params]);
 
 
     async function getSectionDataWithParams(setSectionData: (data: T[]) => void, apiEndpoint: string, params: ObjectProperty) {
 
         let response;
-
-        if (!params || !params.email) return;
 
         try {
             response = await axios.get(`${config.serverEndpoint}${apiEndpoint}`, { params });

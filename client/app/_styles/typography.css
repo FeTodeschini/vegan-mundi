@@ -133,13 +133,18 @@ p {
     margin-top: 4.2rem;
 }
 
-.bottom-margin--micro {
-    margin-top: .8rem;
-}
-
 .bottom-margin--small {
     margin-bottom: 2.4rem;
 }
+
+.bottom-margin--mini {
+    margin-bottom: 1.2rem;
+}
+
+.bottom-margin--micro {
+    margin-bottom: .8rem;
+}
+
 
 .bottom-margin--large {
     margin-bottom: 4.2rem;

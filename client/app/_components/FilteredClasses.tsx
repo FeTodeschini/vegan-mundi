@@ -10,10 +10,9 @@ import ModalAddToCart from "./ModalAddToCart";
 import { ReduxRootState } from "@/_types/redux";
 import { FilteredClassesProps } from '@/_types/global';
 import { CookingClass } from '@/_types/cooking-class';
+import ReviewStarsContainer from "./ReviewStarsContainer";
 import '../_styles/gallery.css';
 import '../_styles/review.css';
-import ReviewStarsContainer from "./ReviewStarsContainer";
-
 
 const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFound, title, subTitle}: FilteredClassesProps){
     const { cartItems } = useSelector((state: ReduxRootState)=> state.cart)
@@ -35,7 +34,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
                     <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} />
                     <Card.Title>
                         {item.TITLE}
-                        <ReviewStarsContainer stars={item.AVERAGE_STARS}/>
+                        <ReviewStarsContainer key={item.CLASS_ID} classId={item.CLASS_ID} classTitle={item.TITLE} stars={item.AVERAGE_STARS}/>
                     </Card.Title>
                     <Card.Content>{item.DESCRIPTION}</Card.Content>
                     <Card.Content>
