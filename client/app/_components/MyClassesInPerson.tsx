@@ -53,10 +53,10 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
                             </Card.Content>
                             <Card.Content>
                                 {item.STARS || classesReview[item.CLASS_ID] !== undefined ?
-                                        
                                         <ReviewDisplay 
                                             stars={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].stars : item.STARS} 
                                             reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}
+                                            reviewTitle={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewTitle : item.REVIEW_TITLE}
                                             isReviewed={true}
                                         />                                        
                                     :

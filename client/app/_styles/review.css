@@ -39,17 +39,35 @@
     fill: var(--color-yellow-dark);
 }
 
-.review__star-text {
+.review__text-container {
     line-height: 1;
     margin: 0;
     color: var(--color-yellow-dark);
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     cursor: auto;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.review__text-all-reviews {
+    text-decoration: none;
+    color: var(--color-gray-dark);
+    justify-self: end;
+}
+
+.review__text-no-reviews {
+    justify-self: end;
+    grid-column: 1 / -1;
+}
+.review__text-all-reviews:visited {
+    color: var(--color-gray-dark);
 }
 
 .review__review-text {
     border: 1px solid var(--color-gray-dark-rgb-3);
     font-size: 1.2rem;
+    font-family: 'Lato';
     width: 100%;
     height: auto;
     resize: none;
