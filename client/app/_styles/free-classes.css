@@ -1,3 +1,4 @@
 .free-classes__list {
     grid-template-rows: repeat(2, 1fr);
+    row-gap: 9.6rem;
 }

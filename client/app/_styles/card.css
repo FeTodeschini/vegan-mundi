@@ -2,7 +2,6 @@
     position: relative;
     overflow: hidden;
     transition: all .3s ease-in-out;
-    justify-content: space-between;
     justify-items: start;
     height: 100%;
 }

@@ -11,7 +11,8 @@ export default function Categories({categories}: ArrayProps<CookingClassCategory
             <section className="classes-categories container">
                 <SectionHeader 
                     title="Pick the class level that best fits your needs and skills" 
-                    subTitle="3 Levels of Classes"/>
+                    subTitle="3 Levels of Classes"
+                />
                 <div className="grid-auto-fit">
                     {categories.map( (item) => 
                         <Card key={item.TITLE}>
@@ -24,8 +25,8 @@ export default function Categories({categories}: ArrayProps<CookingClassCategory
                                 item.DESCRIPTION_ITEMS_LIST.split("|").map(item => {
                                     return (
                                         <div className="card__items-list" key={item}>
-                                            <img className='icon-list' src="/assets/icon-leaf.svg" alt="Leaf icon" />
-                                            <p>{item}</p>
+                                             <img className='icon-list' src="/assets/icon-leaf.svg" alt="Leaf icon" />
+                                             <p>{item}</p>
                                         </div>
                                     )
                                     }
