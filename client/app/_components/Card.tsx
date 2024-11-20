@@ -62,13 +62,15 @@ function Title({ callOutTag, children}: CardTitleProps){
 function Content({ children }: ChildrenProps){
     return (
         <div className="card__section">
-                <p>{children}</p>
+                {children}
         </div>
 )}
 
 function Footer({ children }: ChildrenProps){
     return (
-        <div className='card__footer'>{children}</div>
+        <div className='card__footer'>
+            {children}
+        </div>
     )}
 
 type CardType = React.MemoExoticComponent<typeof CardComponent> & {

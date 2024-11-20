@@ -7,6 +7,7 @@ import Header from "@/_components/Header";
 import { usePathname  } from 'next/navigation';
 import  { ChildrenProps } from './_types/global'
 import './_styles/main.css';
+import './_styles/layout.css';
 import './_styles/header.css';
 import DarkBackground from './_components/DarkBackground';
 

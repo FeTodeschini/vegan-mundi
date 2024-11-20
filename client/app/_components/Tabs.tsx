@@ -15,7 +15,7 @@ export default function Tabs({ children }: TabsProps) {
                 {children!.map((tab, index) => (
                     <button
                         key={index}
-                        className={`regular-text tab-button ${activeTab === index ? 'active' : ''}`}
+                        className={`tab-label tab-button ${activeTab === index ? 'active' : ''}`}
                         onClick={() => setActiveTab(index)}
                     >
                         {tab.props.label}

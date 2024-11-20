@@ -9,7 +9,8 @@ export interface ModalProps extends ChildrenProps {
 
 export interface SectionHeaderProps {
     title?: string,
-    subTitle?: string
+    subTitle?: string,
+    titleAdditionalClass?: string
 }
 
 export interface FilteredClassesProps extends SectionHeaderProps {

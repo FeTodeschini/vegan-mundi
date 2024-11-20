@@ -22,3 +22,15 @@
 .tab-content {
     padding: 1rem 0;
 }
+
+.tab-label {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    letter-spacing: .1rem;
+}
+
+@media only screen and (max-width: 438px){
+    .tab-label {
+        font-size: 1.4rem;
+    }
+}
