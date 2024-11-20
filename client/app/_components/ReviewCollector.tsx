@@ -14,7 +14,7 @@ export default function ReviewCollector ({ classId, unsubmittedReview }:
     const reviewTitle = unsubmittedReview?.reviewTitle !== undefined ? unsubmittedReview.reviewTitle : null;
    
     return (
-        <div className="full-width">
+        <div className="card__section full-width">
             <ReviewStars classId={classId} pendingStars={stars}/>
             {isReviewVisible[classId] && 
                 <ReviewInput key={classId} classId={classId} pendingReviewTitle={reviewTitle} pendingReviewText={reviewText}/>

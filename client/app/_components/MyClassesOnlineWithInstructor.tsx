@@ -14,11 +14,12 @@ import ReviewDisplay from './ReviewDisplay';
 import { useSelector } from 'react-redux';
 import { ReduxRootState } from '@/_types/redux';
 import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
+import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
+import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
 import "@/_styles/myclasses.css"
 import ReviewCollector from './ReviewCollector';
-import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
 
-export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCookingClass>) {
+export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {classes: ArrayProps<MyCookingClass>, dataLoaded: boolean}) {
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
@@ -33,21 +34,20 @@ export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCoo
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
     useSetClassDate(classesPreSignedUrl, setSelectedDates);
 
+    const containerRef = useResponsiveCardRows([dataLoaded]);
+    
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online classes with Instructor yet</p>
     else 
         return (
             <>
                 <ClassRescheduleDisclaimer />
-                <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
+                <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
                     {classesPreSignedUrl.map((item)=>( 
                         <Card additionalClass={"gray-border"} key={item.TITLE}>
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
                             </Card.Title>
-                            <Card.Content>
-                                <p>{item.DESCRIPTION}</p>
-                            </Card.Content>
                             {item.STARS || classesReview[item.CLASS_ID] !== undefined ?
                                     <ReviewDisplay 
                                         stars={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].stars : item.STARS} 
@@ -61,7 +61,10 @@ export default function MyClassesOnlineWithInstructor({classes}:ArrayProps<MyCoo
                                         unsubmittedReview={unsubmittedReviews[item.CLASS_ID] || {}}
                                     />
                             }
-                            <div className="myclasses__classes-list">
+                            <Card.Content>
+                                <p>{item.DESCRIPTION}</p>
+                            </Card.Content>
+                            <div className="card__section myclasses__classes-list">
                                 {
                                     item.CLASSES_LIST.map((recipe: Recipe, index: number) => {
                                         return (

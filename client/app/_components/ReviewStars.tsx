@@ -53,8 +53,8 @@ export default function ReviewStars({classId, pendingStars}: {classId: number | 
           />
         ))}
       </div>
-      <p className="review__star-text" id={`stars[${classId}]`}>
-        {tempStars || stars || ""}
+      <p className="review__star-label" id={`stars[${classId}]`}>
+        {tempStars || stars || <span className="review__collector-no-reviews">Provide your review!</span>}
       </p>
     </div>
   );

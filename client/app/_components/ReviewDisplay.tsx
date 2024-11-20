@@ -4,7 +4,7 @@ import ExpandableText from "./ExpandableText";
 export default function ReviewDisplay({stars, reviewTitle, reviewText}: 
         {stars: number | undefined, reviewTitle: string | undefined, reviewText: string | undefined, isReviewed: boolean}) {
     return (
-        <div>
+        <div className="card__section">
             <ReviewStarsContainer classId={null} stars={stars} classTitle={null}/>
             {reviewText!=="" && 
                 <ExpandableText labelShowMore={"Show Review"} labelShowLess={"Hide Review"}>
