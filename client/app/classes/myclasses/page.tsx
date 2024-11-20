@@ -54,13 +54,13 @@ export default function Page() {
                 <SectionHeader title="My Classes" />
                 <Tabs>
                     <Tab label="Self-Paced">
-                        <MyClassesOnlineSelfPaced classes={classesOnlineSelfPaced} />
+                        <MyClassesOnlineSelfPaced classes={classesOnlineSelfPaced} dataLoaded={!isLoading} />
                     </Tab>
                     <Tab label="Online Instructor">
-                        <MyClassesOnlineWithInstructor classes={classesOnlineWithInstructor} />
+                        <MyClassesOnlineWithInstructor classes={classesOnlineWithInstructor} dataLoaded={!isLoading}/>
                     </Tab>
                     <Tab label="In Person">
-                        <MyClassesInPerson classes={classesInPerson} />
+                        <MyClassesInPerson classes={classesInPerson} dataLoaded={!isLoading}/>
                     </Tab>
                 </Tabs>
             </section>

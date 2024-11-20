@@ -13,7 +13,7 @@ import { CookingClass } from '@/_types/cooking-class';
 import ReviewStarsContainer from "./ReviewStarsContainer";
 import '../_styles/gallery.css';
 import '../_styles/review.css';
-import useAdjustCardRowsHeight from "@/hooks/useAdjustCardRowsHeight";
+import useResponsiveCardRows from "@/hooks/useResponsiveCardRows";
 
 const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFound, title, subTitle, dataLoaded}: FilteredClassesProps){
     const { cartItems } = useSelector((state: ReduxRootState)=> state.cart)
@@ -23,7 +23,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
 
     // The hook for adjusting the cards rows heights can only be called after the data in the parent Components that call FilteredClasses is loaded
     // (CategooryClasses and SearchResult), as before that there will be still no cards "painted" in the DOM
-    const containerRef = useAdjustCardRowsHeight([dataLoaded]);
+    const containerRef = useResponsiveCardRows([dataLoaded]);
 
     const onSelectClassType = useCallback((item: CookingClass) => {
         if (setSelectedClass)

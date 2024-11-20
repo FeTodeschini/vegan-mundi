@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 // Adjust the height of the rows of all cards in a specific page. The baseline for the adjustment is the height of the row with more content
 // The logic is based on the classes (css) applied to the <Card/> component
 // Only the rows with the class .card-content will be adjusted
-export default function useAdjustCardRowsHeight(dependencyArray) {
+export default function useResponsiveCardRows(dependencyArray) {
     // Creates a ref to the card container so it can be manipulated in the DOM
     const containerRef = useRef();
     const cardSelector = ".card";
@@ -16,7 +16,7 @@ export default function useAdjustCardRowsHeight(dependencyArray) {
             return;
         }
 
-        function adjustCardRowsHeight() {
+        function responsiveCardRows() {
             const container = containerRef.current;
             if (!container) return;
 
@@ -24,7 +24,7 @@ export default function useAdjustCardRowsHeight(dependencyArray) {
             const cards = Array.from(container.querySelectorAll(cardSelector));
             if (cards.length === 0) {
                 console.log("No cards found, retrying...");
-                setTimeout(adjustCardRowsHeight, 100);
+                setTimeout(responsiveCardRows, 100);
                 return;
             }
 
@@ -54,13 +54,13 @@ export default function useAdjustCardRowsHeight(dependencyArray) {
             });
         }
 
-        adjustCardRowsHeight();
+        responsiveCardRows();
 
         // makes sure that the resize function is called in case the browser is resized
-        window.addEventListener("resize", adjustCardRowsHeight);
+        window.addEventListener("resize", responsiveCardRows);
 
         // Cleanup function for removing the event listener when the component is unmounted
-        return () => window.removeEventListener("resize", adjustCardRowsHeight);
+        return () => window.removeEventListener("resize", responsiveCardRows);
     }, [dependencyArray]);
 
     return containerRef; // Return the container ref for the component to attach
