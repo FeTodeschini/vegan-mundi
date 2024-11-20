@@ -13,12 +13,17 @@ import { CookingClass } from '@/_types/cooking-class';
 import ReviewStarsContainer from "./ReviewStarsContainer";
 import '../_styles/gallery.css';
 import '../_styles/review.css';
+import useAdjustCardRowsHeight from "@/hooks/useAdjustCardRowsHeight";
 
-const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFound, title, subTitle}: FilteredClassesProps){
+const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFound, title, subTitle, dataLoaded}: FilteredClassesProps){
     const { cartItems } = useSelector((state: ReduxRootState)=> state.cart)
     const { selectedClass, isModalOpen, setIsModalOpen, setSelectedClass } = useContext(StateContext);
     
     const closeModal = () => {setIsModalOpen(false);};
+
+    // The hook for adjusting the cards rows heights can only be called after the data in the parent Components that call FilteredClasses is loaded
+    // (CategooryClasses and SearchResult), as before that there will be still no cards "painted" in the DOM
+    const containerRef = useAdjustCardRowsHeight([dataLoaded]);
 
     const onSelectClassType = useCallback((item: CookingClass) => {
         if (setSelectedClass)
@@ -29,7 +34,6 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
     // Memoize all cards to prevent re-computation and wasted renders
     const memoizedCards = useMemo(() => (
         images.map((item) => (
-            <div key={item.TITLE}>
                 <Card key={item.TITLE}>
                     <Card.TopImage imgSource={item.PRE_SIGNED_URL} imgLink={`/classes/${encodeURIComponent(item.CATEGORY_ID)}`} />
                     <Card.Title>
@@ -58,7 +62,6 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
                         </div>
                     </Card.Footer>
                 </Card>
-            </div>
         ))
     ), [images, cartItems, onSelectClassType]);
 
@@ -69,7 +72,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
             {(resultsFound ?? 0) > 0 || subTitle!.includes("Category:") ? 
                 <>
                     <SectionHeader subTitle={"Add a class to your cart to select if it will be in person or online"}/>
-                    <div className="grid-auto-fit top-margin--medium">
+                    <div ref={containerRef} className="grid-auto-fit top-margin--medium">
                         {memoizedCards}
                     </div>
                     { isModalOpen && (

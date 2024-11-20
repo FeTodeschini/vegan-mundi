@@ -5,6 +5,7 @@ import { useState, useEffect, useContext, useMemo } from "react";
 import { useParams } from 'next/navigation'
 import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSignedUrlToArray";
 import FilteredClasses from "../../_components/FilteredClasses";
+import useAdjustCardRowsHeight from "@/hooks/useAdjustCardRowsHeight";
 import useSetToken from "@/hooks/useSetToken";
 import { CookingClass } from "@/_types/cooking-class"
 import config from "../../_lib/config";
@@ -39,7 +40,7 @@ export default function CategoryClasses(){
                 response = await axios.get(apiUrl);
 
             setCategoryTitle(response.data.categoryTitle);
-            setFilterResult([...response.data.classes]); 
+            setFilterResult([...response.data.classes]);
         }
 
         getResults();
@@ -49,12 +50,19 @@ export default function CategoryClasses(){
 
     // Add the AWS S3 pre-signed URL to the images (as they are in private buckets and can't be accessed with their regular URLs)
     useAddPreSignedUrlToArray(filterResult, 'vegan-mundi-thumbnails', setImages, setIsLoading);
+
     const classes = filterResult.length;
 
      // Memoize the images array to ensure that FilteredClasses gets a stable reference
      const memoizedImages = useMemo(() => images, [images]);
     
     return (
-            <FilteredClasses key={images.length} images={memoizedImages} title={`${classes} class${classes !== 1 ? "es" : "" } in this category`} subTitle={`Category: ${categoryTitle}`}/>            
+            <FilteredClasses
+                key={images.length}
+                images={memoizedImages}
+                title={`${classes} class${classes !== 1 ? "es" : "" } in this category`}
+                subTitle={`Category: ${categoryTitle}`}
+                dataLoaded={!isLoading} 
+            />            
     )
 }

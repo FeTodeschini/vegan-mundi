@@ -28,12 +28,10 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
 
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
     useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl, );
-
-    
+   
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
     useSetClassDate(classesPreSignedUrl, setSelectedDates);
 
-    
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any In Person classes yet</p>
     else 
@@ -42,7 +40,6 @@ export default function MyClassesInPerson({classes}:ArrayProps<MyCookingClass>) 
                 <ClassRescheduleDisclaimer />
                 <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
                     {classesPreSignedUrl!.map((item)=> {
-                        console.log(item.TITLE)
                         return (
                         <Card key={item.TITLE} additionalClass={"gray-border"}>
                             <Card.Title>
