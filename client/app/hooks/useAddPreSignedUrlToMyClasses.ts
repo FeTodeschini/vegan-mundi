@@ -1,4 +1,4 @@
-import { addPreSignedUrlToString } from '@/_lib/S3Helper';
+import { addPreSignedUrlToString } from '../_lib/S3Helper';
 import { useEffect } from 'react';
 import { MyCookingClass } from '../_types/cooking-class';
 
