@@ -2,11 +2,11 @@
 
 import dynamic from 'next/dynamic';
 import React, { useContext, useState } from "react";
-import { useGetSectionData } from "@/hooks/useGetSectionData";
+import { useGetSectionData } from "../hooks/useGetSectionData";
 import SectionHeader from "./SectionHeader";
-import { StateContext } from '@/StateProvider';
-import { useAddPreSignedUrlToArray } from "@/hooks/useAddPreSignedUrlToArray";
-import { SectionDataGallery } from "@/_types/section-data";
+import { StateContext } from '../StateProvider';
+import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSignedUrlToArray";
+import { SectionDataGallery } from "../_types/section-data";
 import '../_styles/gallery.css';
 
 export default function Gallery (){
