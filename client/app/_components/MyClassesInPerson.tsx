@@ -11,14 +11,14 @@ import { handleSetMyClasstDate } from '@/_lib/MyClassesHelper';
 import { StateContext } from '@/StateProvider';
 import ReviewCollector from './ReviewCollector';
 import ReviewDisplay from './ReviewDisplay';
-import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
+// import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
 import { useSelector } from 'react-redux';
 import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
 import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
 import { ReduxRootState } from '@/_types/redux';
 import "@/_styles/myclasses.css"
 
-export default function MyClassesInPerson({classes, dataLoaded}: {classes: ArrayProps<MyCookingClass>, dataLoaded: boolean}) {
+export default function MyClassesInPerson({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)

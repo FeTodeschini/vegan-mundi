@@ -11,11 +11,11 @@ import { useSelector } from 'react-redux';
 import { ReduxRootState } from '@/_types/redux';
 import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
 import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
-import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
+// import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
 import "@/_styles/myclasses.css"
 
 
-export default function MyClassesOnlineSelfPaced({classes, dataLoaded}: {classes: ArrayProps<MyCookingClass>, dataLoaded: boolean}) {
+export default function MyClassesOnlineSelfPaced({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
 
