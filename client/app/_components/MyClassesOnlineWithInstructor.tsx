@@ -15,11 +15,11 @@ import { useSelector } from 'react-redux';
 import { ReduxRootState } from '@/_types/redux';
 import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
 import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
-import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
+// import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
 import "@/_styles/myclasses.css"
 import ReviewCollector from './ReviewCollector';
 
-export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {classes: ArrayProps<MyCookingClass>, dataLoaded: boolean}) {
+export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)

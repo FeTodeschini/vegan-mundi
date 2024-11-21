@@ -13,7 +13,7 @@ import { CookingClass } from '@/_types/cooking-class';
 import ReviewStarsContainer from "./ReviewStarsContainer";
 import '../_styles/gallery.css';
 import '../_styles/review.css';
-import useResponsiveCardRows from "@/hooks/useResponsiveCardRows";
+// import useResponsiveCardRows from "@/hooks/useResponsiveCardRows";
 
 const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFound, title, subTitle, dataLoaded}: FilteredClassesProps){
     const { cartItems } = useSelector((state: ReduxRootState)=> state.cart)
@@ -23,7 +23,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
 
     // The hook for adjusting the cards rows heights can only be called after the data in the parent Components that call FilteredClasses is loaded
     // (CategooryClasses and SearchResult), as before that there will be still no cards "painted" in the DOM
-    const containerRef = useResponsiveCardRows([dataLoaded]);
+    // const containerRef = useResponsiveCardRows([dataLoaded]);
 
     const onSelectClassType = useCallback((item: CookingClass) => {
         if (setSelectedClass)
@@ -72,7 +72,8 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
             {(resultsFound ?? 0) > 0 || subTitle!.includes("Category:") ? 
                 <>
                     <SectionHeader subTitle={"Add a class to your cart to select if it will be in person or online"}/>
-                    <div ref={containerRef} className="grid-auto-fit top-margin--medium">
+                    {/* <div ref={containerRef} className="grid-auto-fit top-margin--medium"> */}
+                    <div className="grid-auto-fit top-margin--medium">                        
                         {memoizedCards}
                     </div>
                     { isModalOpen && (
