@@ -7,13 +7,13 @@ import Card from "./Card"
 import Button from "./Button";
 import ButtonRemoveFromCart from "./ButtonRemoveFromCart";
 import ModalAddToCart from "./ModalAddToCart";
-import { ReduxRootState } from "@/_types/redux";
-import { FilteredClassesProps } from '@/_types/global';
-import { CookingClass } from '@/_types/cooking-class';
+import { ReduxRootState } from "../_types/redux";
+import { FilteredClassesProps } from '../_types/global';
+import { CookingClass } from '../_types/cooking-class';
 import ReviewStarsContainer from "./ReviewStarsContainer";
 import '../_styles/gallery.css';
 import '../_styles/review.css';
-// import useResponsiveCardRows from "@/hooks/useResponsiveCardRows";
+// import useResponsiveCardRows from "../hooks/useResponsiveCardRows";
 
 const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFound, title, subTitle, dataLoaded}: FilteredClassesProps){
     const { cartItems } = useSelector((state: ReduxRootState)=> state.cart)

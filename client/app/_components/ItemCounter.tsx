@@ -2,7 +2,7 @@ import Button from "./Button"
 import { useEffect, ChangeEvent } from "react";
 import "../_styles/item-counter.css";
 
-import { ItemCounterProps } from '@/_types/cart'
+import { ItemCounterProps } from '../_types/cart'
 
 
 export default function ItemCounter({minItems, maxItems, initialItems, items, setItems}: ItemCounterProps){

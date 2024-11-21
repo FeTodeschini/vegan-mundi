@@ -1,5 +1,5 @@
 import config from "@/_lib/config";
-import { CookingClass } from "@/_types/cooking-class";
+import { CookingClass } from "../_types/cooking-class";
 
 export async function addPreSignedUrlToArray<T extends CookingClass>(array: T[], bucket: string) {
     const s3Objects: T[] = await Promise.all(

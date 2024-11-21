@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import { StateContext } from "../StateProvider";
 import { useRouter } from 'next/navigation';
-import { PrimitiveTypeProp } from "@/_types/global";
+import { PrimitiveTypeProp } from "../_types/global";
 
 async function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>, keyword: string, router: ReturnType<typeof useRouter>) {
     // In case user presses ENTER and types more than 3 letters, calls the API that fetches classes from the DB based on the keyword typed

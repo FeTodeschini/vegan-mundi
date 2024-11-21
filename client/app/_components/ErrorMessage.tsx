@@ -1,4 +1,4 @@
-import { PrimitiveTypeProp } from "@/_types/global"
+import { PrimitiveTypeProp } from "../_types/global"
 
 export default function ErrorMessage({ message }: PrimitiveTypeProp<String>) {
     return (

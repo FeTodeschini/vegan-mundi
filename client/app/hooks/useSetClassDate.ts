@@ -1,6 +1,6 @@
 'use client';
 
-import { MyCookingClass } from "@/_types/cooking-class";
+import { MyCookingClass } from "../_types/cooking-class";
 import { useEffect } from "react";
 
 export function useSetClassDate(classes: MyCookingClass[], setSelectedDates: (newSelectedDates: {[key: number]: Date | null})=>void){

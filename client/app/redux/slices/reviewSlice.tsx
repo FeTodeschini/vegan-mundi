@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ReviewState } from "@/_types/review";
+import { ReviewState } from "../../_types/review";
 import axios from "axios";
-import config from "@/_lib/config";
+import config from "../../_lib/config";
 
 // type for a single review to be submitted
 export type SubmitReviewPayload = {

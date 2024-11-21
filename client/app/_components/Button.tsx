@@ -1,4 +1,4 @@
-import { ButtonProps } from '@/_types/button';
+import { ButtonProps } from '../_types/button';
 import Link from 'next/link';
 
 export default function Button({ bgColor, additionalClass, isSubmit="false", type="link", link=null, size="large", children, onClick}: ButtonProps) {

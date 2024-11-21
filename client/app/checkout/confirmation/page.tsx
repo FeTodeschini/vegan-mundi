@@ -1,10 +1,10 @@
 'use client';
 
 import { useContext } from "react";
-import { StateContext } from "@/StateProvider";
-import SectionHeader from "@/_components/SectionHeader";
+import { StateContext } from "../../StateProvider";
+import SectionHeader from "../../_components/SectionHeader";
 import Link from "next/link";
-import Button from "@/_components/Button";
+import Button from "../../_components/Button";
 
 export default function Page () {
     const { error, userInfo, orderNumber  } = useContext(StateContext)

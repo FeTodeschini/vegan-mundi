@@ -1,8 +1,8 @@
 import SectionHeader from './SectionHeader';
 import Button from "./Button";
 import Card from './Card';
-import { CookingClassDeliveryMethods } from '@/_types/cooking-class';
-import { ArrayProps } from '@/_types/global';
+import { CookingClassDeliveryMethods } from '../_types/cooking-class';
+import { ArrayProps } from '../_types/global';
 
 export default function DeliveryMethods({ deliveryMethods }: ArrayProps<CookingClassDeliveryMethods>) {
 

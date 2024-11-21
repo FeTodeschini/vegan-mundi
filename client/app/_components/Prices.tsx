@@ -1,6 +1,6 @@
 import SectionHeader from './SectionHeader';
-import { ArrayProps } from '@/_types/global';
-import { Price } from '@/_types/price';
+import { ArrayProps } from '../_types/global';
+import { Price } from '../_types/price';
 import '../_styles/prices.css';
 
 export default function Prices({ prices }: ArrayProps<Price>) {

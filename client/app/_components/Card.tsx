@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ChildrenProps } from '@/_types/global';
+import { ChildrenProps } from '../_types/global';
 import React from 'react';
 import { CardProps, CardTitleProps } from "../_types/card"
 import { CardTopImageProps } from '../_types/card'

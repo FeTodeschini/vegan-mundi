@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useState } from 'react';
 import Tab, { TabProps } from './Tab';
-import "@/_styles/tabs.css";
+import "../_styles/tabs.css";
 
 interface TabsProps {
     children: ReactElement<TabProps>[];

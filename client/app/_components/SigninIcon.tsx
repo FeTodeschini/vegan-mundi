@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useContext } from "react";
-import { StateContext } from "@/StateProvider";
+import { StateContext } from "../StateProvider";
 
 export default function SigninIcon() {
 

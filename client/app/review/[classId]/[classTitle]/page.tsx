@@ -1,15 +1,15 @@
 'use client'
 
-import { useGetSectionDataWithParams } from '@/hooks/useGetSectionDataWithParams';
+import { useGetSectionDataWithParams } from '../../../hooks/useGetSectionDataWithParams';
 import { useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
-import SectionHeader from '@/_components/SectionHeader';
-import Button from '@/_components/Button';
-import Card from '@/_components/Card';
-import { Review } from '@/_types/review';
-import ReviewStarsContainer from '@/_components/ReviewStarsContainer';
-import '@/_styles/main.css';
-import '@/_styles/review.css';
+import SectionHeader from '../../../_components/SectionHeader';
+import Button from '../../../_components/Button';
+import Card from '../../../_components/Card';
+import { Review } from '../../../_types/review';
+import ReviewStarsContainer from '../../../_components/ReviewStarsContainer';
+import '../../../_styles/main.css';
+import '../../../_styles/review.css';
 
 export default function Page() {
 

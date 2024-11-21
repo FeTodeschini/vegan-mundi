@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import "../_styles/cart.css";
-import { ReduxRootState } from '@/_types/redux';
+import { ReduxRootState } from '../_types/redux';
 
 export default function CartIcon () {
     const { cartAmount, cartQuantity } = useSelector((state: ReduxRootState)=> state.cart);

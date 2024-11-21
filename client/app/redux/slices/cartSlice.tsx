@@ -1,6 +1,5 @@
-import { CartState } from "@/_types/cart";
-import { SelectedCookingClassWithPrices } from "@/_types/cooking-class";
-import { StateContext } from "@/StateProvider";
+import { CartState } from "../../_types/cart";
+import { SelectedCookingClassWithPrices } from "../../_types/cooking-class";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: CartState = {

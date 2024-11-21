@@ -1,6 +1,6 @@
 import ReviewInput from "./ReviewInput";
 import ReviewStars from "./ReviewStars";
-import { ReduxRootState } from "@/_types/redux";
+import { ReduxRootState } from "../_types/redux";
 import { useSelector } from "react-redux";
 
 export default function ReviewCollector ({ classId, unsubmittedReview }:

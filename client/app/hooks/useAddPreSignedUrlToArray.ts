@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import config from '../_lib/config';
-import { SectionData } from "@/_types/section-data"
+import { SectionData } from "../_types/section-data"
 
 
 export function useAddPreSignedUrlToArray<T extends SectionData>(

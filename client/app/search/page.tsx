@@ -7,7 +7,7 @@ import { StateContext } from "../StateProvider";
 import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSignedUrlToArray";
 import FilteredClasses from "../_components/FilteredClasses";
 import config from "../_lib/config";
-import { CookingClass } from '@/_types/cooking-class'
+import { CookingClass } from '../_types/cooking-class'
 import '../_styles/main.css';
 
 function SearchResultSuspense(){

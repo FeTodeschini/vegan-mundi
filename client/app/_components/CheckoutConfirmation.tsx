@@ -1,9 +1,9 @@
 'use client';
 
 import { useContext } from "react";
-import { StateContext } from "@/StateProvider";
+import { StateContext } from "../StateProvider";
 import SectionHeader from "./SectionHeader";
-import { PrimitiveTypeProp } from "@/_types/global";
+import { PrimitiveTypeProp } from "../_types/global";
 import Link from "next/link";
 
 export default function CheckoutConfirmation ({ orderNumber }: PrimitiveTypeProp<string>) {

@@ -2,8 +2,8 @@ import React from 'react';
 import SectionHeader from './SectionHeader';
 import Button from './Button';
 import Card from './Card';
-import { CookingClassCategory } from '@/_types/cooking-class';
-import { ArrayProps } from '@/_types/global';
+import { CookingClassCategory } from '../_types/cooking-class';
+import { ArrayProps } from '../_types/global';
 
 export default function Categories({categories}: ArrayProps<CookingClassCategory>) {
     return (

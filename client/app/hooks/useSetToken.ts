@@ -1,6 +1,6 @@
 'use client';
 
-import { StateContext } from "@/StateProvider";
+import { StateContext } from "../StateProvider";
 import { useContext, useEffect } from "react";
 
 export default function useSetToken() {
