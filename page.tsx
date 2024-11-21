@@ -1,10 +1,10 @@
 'use client';
 
 import { useContext, useEffect } from "react";
-import { StateContext } from "../StateProvider";
-import SeactionHeader from '../_components/SectionHeader';
-import Button from "../_components/Button";
-import ButtonRemoveFromCart from "../_components/ButtonRemoveFromCart";
+import { StateContext } from "./client/app/StateProvider";
+import SeactionHeader from './client/app/_components/SectionHeader';
+import Button from "./client/app/_components/Button";
+import ButtonRemoveFromCart from "./client/app/_components/ButtonRemoveFromCart";
 import Card from "@/_components/Card"
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
@@ -30,7 +30,7 @@ export default function ShoppingCart () {
     }
 
     return (
-        <div className="container section-cart">
+        <div className="container">
             <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
 
             <div className="cart-toolbar">

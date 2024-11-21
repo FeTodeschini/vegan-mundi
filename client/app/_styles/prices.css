@@ -1,4 +1,10 @@
+.prices {
+    padding-bottom: 19.2rem;
+}
+
 .prices__list-card {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     padding: 4.8rem;
 }
@@ -13,19 +19,20 @@
 }
 
 .prices__list-card-description {
-    padding-bottom: 3.6rem;
     color: var(--color-gray-dark);
+    padding-top: 9.6rem;
+    font-size: 2.4rem;
+    padding-top: 0;
+    padding-bottom: 4.2rem;
 }
 
 .prices__list-card-price {
     color: var(--color-primary-dark-rgb-8);
     font-size: 4.8rem;
-    padding-bottom: 1rem;
 }
 
 .prices__list-card-additional-info {
     font-size: 1.6rem;
-    /* font-weight: 700; */
     padding-bottom: 0.6rem;
 }
 
@@ -41,5 +48,24 @@
     .prices__list-card-yellow-ribbon {
         top: 8%;
         right: -15%;
+    }
+}
+
+@media only screen and (max-width: 575px){
+    .prices__card-border {
+        border: 1px solid var(--color-gray-light);
+    }
+    .prices__list-card {
+        padding: 4.8rem;
+    }
+
+    .prices__list-card-yellow-ribbon {
+        top: 12%;
+        right: -30%;
+    }
+
+    .prices__list-card-description {
+        padding-bottom: 3.2em;
+        font-size: 2rem;
     }
 }

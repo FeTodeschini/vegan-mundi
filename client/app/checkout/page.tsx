@@ -13,10 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReduxRootState } from "@/_types/redux";
 import { generateOrderNumber } from "@/_lib/functions";
 import config from "../_lib/config";
+import "../_styles/layout.css";
 import "../_styles/card.css";
-import "../_styles/typography.css";
-
-
 
 export default function Page () {
 
@@ -79,17 +77,18 @@ export default function Page () {
     }
 
     return (
-        <div className="container">
+        <div className="container section-checkout">
             <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
-            <div className="cart-buttons">
+            <div className="cart-toolbar">
                 <div className="cart-buttons--title">
-                    <SectionHeader title={"Checkout"} />                    
+                    <SectionHeader 
+                        title={"Checkout"}
+                        titleAdditionalClass={"cart-header"}
+                    />                    
                 </div>
 
                 <div className="cart-buttons--btn">
                     <Button type={"button"} onClick={backToCart}>Back to Cart</Button>
-                </div>
-                <div className="cart-buttons--btn">
                     <Button type={"button"} bgColor={"yellow"} onClick={handleCheckOut}>Confirm Order</Button>
                 </div>
             </div>

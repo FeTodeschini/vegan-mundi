@@ -24,7 +24,7 @@ export default function CheckoutItems() {
                     
                     <div>
                         <SectionHeader subTitle="Classes in your shopping cart"/>
-                        <div className="checkout regular-text">
+                        <div className="checkout__summary regular-text">
                             {cartItems.map( item => 
                                 <div >
                                     <p>{item.TITLE}</p>

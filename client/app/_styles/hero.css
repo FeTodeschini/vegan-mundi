@@ -1,7 +1,3 @@
-.section-hero {
-    background-color: var(--color-primary);
-    padding: 0 0 4rem 0;
-}
 
 .hero {
     display: grid;
