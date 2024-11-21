@@ -3,7 +3,7 @@
 import StateProvider from './StateProvider';
 import { Provider } from "react-redux";
 import store from './redux/store';
-import Header from "@/_components/Header";
+import Header from "./_components/Header";
 import { usePathname  } from 'next/navigation';
 import  { ChildrenProps } from './_types/global'
 import './_styles/main.css';
