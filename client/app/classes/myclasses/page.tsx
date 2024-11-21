@@ -1,20 +1,20 @@
 'use client'
 
 import { useContext, useEffect, useMemo, useState } from 'react';
-import SectionHeader from '@/_components/SectionHeader';
-import TokenProvider from '@/_components/TokenProvider';
-import MyClassesOnlineSelfPaced from '@/_components/MyClassesOnlineSelfPaced';
-import MyClassesInPerson from '@/_components/MyClassesInPerson';
-import MyClassesOnlineWithInstructor from '@/_components/MyClassesOnlineWithInstructor';
-import { enumDeliveryMethods } from '@/_lib/enums';
-import { useAddPreSignedUrlToArray } from '@/hooks/useAddPreSignedUrlToArray';
-import { useGetSectionDataWithParams } from '@/hooks/useGetSectionDataWithParams';
-import { StateContext } from '@/StateProvider';
-import { MyCookingClass } from '@/_types/cooking-class';
-import Tabs from '@/_components/Tabs';
-import Tab from '@/_components/Tab';
-import '@/_styles/main.css';
-import Button from '@/_components/Button';
+import SectionHeader from '../../_components/SectionHeader';
+import TokenProvider from '../../_components/TokenProvider';
+import MyClassesOnlineSelfPaced from '../../_components/MyClassesOnlineSelfPaced';
+import MyClassesInPerson from '../../_components/MyClassesInPerson';
+import MyClassesOnlineWithInstructor from '../../_components/MyClassesOnlineWithInstructor';
+import { enumDeliveryMethods } from '../../_lib/enums';
+import { useAddPreSignedUrlToArray } from '../../hooks/useAddPreSignedUrlToArray';
+import { useGetSectionDataWithParams } from '../../hooks/useGetSectionDataWithParams';
+import { StateContext } from '../../StateProvider';
+import { MyCookingClass } from '../../_types/cooking-class';
+import Tabs from '../../_components/Tabs';
+import Tab from '../../_components/Tab';
+import '../../_styles/main.css';
+import Button from '../../_components/Button';
 
 export default function Page() {
 

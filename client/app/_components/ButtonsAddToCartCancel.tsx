@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { StateContext } from "../StateProvider";
 import Button from "./Button";
-import { SelectedPriceProps } from "@/_types/price";
+import { SelectedPriceProps } from "../_types/price";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/slices/cartSlice"
 

@@ -2,9 +2,9 @@
 
 import React from 'react';
 import SectionHeader from './SectionHeader';
-import { SelectedCookingClassWithPrices } from '@/_types/cooking-class';
+import { SelectedCookingClassWithPrices } from '../_types/cooking-class';
 import { useSelector } from 'react-redux';
-import { ReduxRootState } from '@/_types/redux';
+import { ReduxRootState } from '../_types/redux';
 
 export default function CheckoutItems() {
 

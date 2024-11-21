@@ -1,22 +1,22 @@
-import TokenProvider from '@/_components/TokenProvider';
-import { MyCookingClass, Recipe } from '@/_types/cooking-class';
-import { ArrayProps } from '@/_types/global';
+import TokenProvider from '../_components/TokenProvider';
+import { MyCookingClass, Recipe } from '../_types/cooking-class';
+import { ArrayProps } from '../_types/global';
 import React, { useContext, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
 import ClassRescheduleDisclaimer from './ClassRescheduleDisclaimer';
-import { useSetClassDate } from '@/hooks/useSetClassDate';
-import { handleSetMyClasstDate } from '@/_lib/MyClassesHelper';
-import { StateContext } from '@/StateProvider';
+import { useSetClassDate } from '../hooks/useSetClassDate';
+import { handleSetMyClasstDate } from '../_lib/MyClassesHelper';
+import { StateContext } from '../StateProvider';
 import ReviewCollector from './ReviewCollector';
 import ReviewDisplay from './ReviewDisplay';
-// import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
+// import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
 import { useSelector } from 'react-redux';
-import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
-import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
-import { ReduxRootState } from '@/_types/redux';
-import "@/_styles/myclasses.css"
+import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
+import useAddPreSignedUrlToMyClasses from '../hooks/useAddPreSignedUrlToMyClasses';
+import { ReduxRootState } from '../_types/redux';
+import "../_styles/myclasses.css"
 
 export default function MyClassesInPerson({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);

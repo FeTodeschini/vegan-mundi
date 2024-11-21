@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import axios from "axios";
 import config from '../_lib/config';
-import { SectionData } from "@/_types/section-data"
+import { SectionData } from "../_types/section-data"
 
 export function useGetSectionData<T extends SectionData>(
         setSectionData: (data: T[]) => void, 

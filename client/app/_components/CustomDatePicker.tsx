@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import { addDays } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../_styles/datepicker.css'
-import { CustomDatePickerProps } from '@/_types/global';
+import { CustomDatePickerProps } from '../_types/global';
 
 export default function CustomDatePicker({ label, selectedDate, onDateChange }: CustomDatePickerProps) {
     return (

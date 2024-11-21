@@ -6,10 +6,10 @@ import { useParams } from 'next/navigation'
 import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSignedUrlToArray";
 import FilteredClasses from "../../_components/FilteredClasses";
 // import useAdjustCardRowsHeight from "@/hooks/useResponsiveCardRows";
-import useSetToken from "@/hooks/useSetToken";
-import { CookingClass } from "@/_types/cooking-class"
+import useSetToken from "../../hooks/useSetToken";
+import { CookingClass } from "../../_types/cooking-class"
 import config from "../../_lib/config";
-import { StateContext } from "@/StateProvider";
+import { StateContext } from "../../StateProvider";
 import '../../_styles/main.css';
 
 export default function CategoryClasses(){

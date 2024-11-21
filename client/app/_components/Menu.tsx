@@ -1,5 +1,5 @@
 import { toggleDarkBackground } from "../_lib/functions";
-import useSetToken from "@/hooks/useSetToken";
+import useSetToken from "../hooks/useSetToken";
 export default function Menu(){
     const token = useSetToken();
 

@@ -1,4 +1,4 @@
-import { setUnsubmittedReviews } from "@/redux/slices/reviewSlice";
+import { setUnsubmittedReviews } from "../redux/slices/reviewSlice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 

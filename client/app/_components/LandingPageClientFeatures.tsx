@@ -2,7 +2,7 @@
 
 import { useContext, useEffect } from "react";
 import { StateContext } from "../StateProvider";
-import useSetToken from "@/hooks/useSetToken";
+import useSetToken from "../hooks/useSetToken";
 
 export default function LandingPageClientFeatures(){
     const { setKeyword } = useContext(StateContext);

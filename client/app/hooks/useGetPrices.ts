@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import config from '../_lib/config';
 
-import { Price } from '@/_types/price';
+import { Price } from '../_types/price';
 
 export function useGetPrices( prices: Price[], setPrices: (arg: Price[])=> void, isLoading: boolean, setIsLoading: (arg: boolean)=> void  ) {
     useEffect( ()=> {

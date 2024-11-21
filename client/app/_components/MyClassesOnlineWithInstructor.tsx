@@ -1,22 +1,22 @@
-import TokenProvider from '@/_components/TokenProvider';
-import { MyCookingClass, Recipe } from '@/_types/cooking-class';
-import { ArrayProps } from '@/_types/global';
+import TokenProvider from '../_components/TokenProvider';
+import { MyCookingClass, Recipe } from '../_types/cooking-class';
+import { ArrayProps } from '../_types/global';
 import React, { useContext, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
 import VideoCallLink from './VideoCallLink';
 import ClassRescheduleDisclaimer from './ClassRescheduleDisclaimer';
-import { useSetClassDate } from '@/hooks/useSetClassDate';
-import { handleSetMyClasstDate } from '@/_lib/MyClassesHelper';
-import { StateContext } from '@/StateProvider';
+import { useSetClassDate } from '../hooks/useSetClassDate';
+import { handleSetMyClasstDate } from '../_lib/MyClassesHelper';
+import { StateContext } from '../StateProvider';
 import ReviewDisplay from './ReviewDisplay';
 import { useSelector } from 'react-redux';
-import { ReduxRootState } from '@/_types/redux';
-import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
-import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
-// import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
-import "@/_styles/myclasses.css"
+import { ReduxRootState } from '../_types/redux';
+import useAddPreSignedUrlToMyClasses from '../hooks/useAddPreSignedUrlToMyClasses';
+import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
+// import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
+import "../_styles/myclasses.css"
 import ReviewCollector from './ReviewCollector';
 
 export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {

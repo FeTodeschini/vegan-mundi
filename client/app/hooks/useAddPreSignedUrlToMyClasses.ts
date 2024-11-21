@@ -1,6 +1,6 @@
 import { addPreSignedUrlToString } from '@/_lib/S3Helper';
-import { SetStateAction, useEffect } from 'react';
-import { MyCookingClass } from '@/_types/cooking-class';
+import { useEffect } from 'react';
+import { MyCookingClass } from '../_types/cooking-class';
 
 //export default function useGetMyClasses(classes: MyCookingClass[], setClassesPreSignedUrl: React.Dispatch<SetStateAction<MyCookingClass>>) {
 export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[], setClassesPreSignedUrl: (arg: MyCookingClass[]) => void) {

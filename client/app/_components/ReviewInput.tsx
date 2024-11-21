@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
-import { submitReview, cancelReview, saveUnsubmittedReview } from "@/redux/slices/reviewSlice";
-import { DispatchType } from "@/redux/store"
+import { submitReview, cancelReview, saveUnsubmittedReview } from "../redux/slices/reviewSlice";
+import { DispatchType } from "../redux/store"
 import { useState } from "react";
-import { ReduxRootState } from "@/_types/redux";
+import { ReduxRootState } from "../_types/redux";
 
 // Component with the text area for the review and a submit button that dispatches the submitReview reducer action
 export default function ReviewInput({ classId, pendingReviewTitle, pendingReviewText }

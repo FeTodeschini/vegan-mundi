@@ -2,16 +2,16 @@
 
 import Button from "../_components/Button";
 import { FormEvent, useContext } from "react";
-import CheckoutItems from "@/_components/CheckOutItems";
-import SectionHeader from "@/_components/SectionHeader";
+import CheckoutItems from "../_components/CheckOutItems";
+import SectionHeader from "../_components/SectionHeader";
 import { useRouter } from "next/navigation";
 import { StateContext } from "../StateProvider";
-import { emptyCart } from "@/redux/slices/cartSlice";
+import { emptyCart } from "../redux/slices/cartSlice";
 import axios from "axios";
-import { SelectedCookingClassWithPrices } from "@/_types/cooking-class";
+import { SelectedCookingClassWithPrices } from "../_types/cooking-class";
 import { useDispatch, useSelector } from "react-redux";
-import { ReduxRootState } from "@/_types/redux";
-import { generateOrderNumber } from "@/_lib/functions";
+import { ReduxRootState } from "../_types/redux";
+import { generateOrderNumber } from "../_lib/functions";
 import config from "../_lib/config";
 import "../_styles/layout.css";
 import "../_styles/card.css";

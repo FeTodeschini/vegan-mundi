@@ -1,6 +1,6 @@
-import TokenProvider from '@/_components/TokenProvider';
-import { MyCookingClass, Recipe } from '@/_types/cooking-class';
-import { ArrayProps } from '@/_types/global';
+import TokenProvider from '../_components/TokenProvider';
+import { MyCookingClass, Recipe } from '../_types/cooking-class';
+import { ArrayProps } from '../_types/global';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import Card from './Card';
@@ -8,11 +8,11 @@ import MyClassTitle from './MyClassTitle';
 import ReviewDisplay from './ReviewDisplay';
 import ReviewCollector from './ReviewCollector';
 import { useSelector } from 'react-redux';
-import { ReduxRootState } from '@/_types/redux';
-import useAddPreSignedUrlToMyClasses from '@/hooks/useAddPreSignedUrlToMyClasses';
-import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
-// import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
-import "@/_styles/myclasses.css"
+import { ReduxRootState } from '../_types/redux';
+import useAddPreSignedUrlToMyClasses from '../hooks/useAddPreSignedUrlToMyClasses';
+import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
+// import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
+import "../_styles/myclasses.css"
 
 
 export default function MyClassesOnlineSelfPaced({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {

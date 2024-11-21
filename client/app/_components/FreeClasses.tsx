@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useGetSectionData } from '../hooks/useGetSectionData';
 import { useAddPreSignedUrlToArray } from '../hooks/useAddPreSignedUrlToArray';
 import SectionHeader from './SectionHeader';
-import { CookingClassRecipe } from '@/_types/cooking-class.js';
+import { CookingClassRecipe } from '../_types/cooking-class.js';
 import '../_styles/free-classes.css';
 import Card from './Card';
 

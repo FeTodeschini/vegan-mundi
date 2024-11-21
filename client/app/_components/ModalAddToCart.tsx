@@ -7,9 +7,9 @@ import { useGetPrices } from "../hooks/useGetPrices";
 import SectionHeader from "./SectionHeader";
 import ButtonsAddToCartCancel from "./ButtonsAddToCartCancel";
 import ItemCounter from "./ItemCounter";
-import { ModalAddToCartProps } from "@/_types/cart";
-import { Price, SelectedPrice, initialSelectedPrice } from "@/_types/price";
-import { enumDeliveryMethods } from "@/_lib/enums";
+import { ModalAddToCartProps } from "../_types/cart";
+import { Price, SelectedPrice, initialSelectedPrice } from "../_types/price";
+import { enumDeliveryMethods } from "../_lib/enums";
 import CustomDatePicker from "./CustomDatePicker";
 import "../_styles/cart.css"
 

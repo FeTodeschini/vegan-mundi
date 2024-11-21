@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExpandableTextProps } from "@/_types/ui-components";
+import { ExpandableTextProps } from "../_types/ui-components";
 
 export default function ExpandableText({ labelShowMore, labelShowLess, children }: ExpandableTextProps) {
 

@@ -5,13 +5,13 @@ import { StateContext } from "../StateProvider";
 import SeactionHeader from '../_components/SectionHeader';
 import Button from "../_components/Button";
 import ButtonRemoveFromCart from "../_components/ButtonRemoveFromCart";
-import Card from "@/_components/Card"
+import Card from "../_components/Card"
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from "react-redux";
-import { ReduxRootState } from "@/_types/redux";
-import { emptyCart } from "@/redux/slices/cartSlice"
-import { SelectedCookingClassWithPrices } from "@/_types/cooking-class";
+import { ReduxRootState } from "../_types/redux";
+import { emptyCart } from "../redux/slices/cartSlice"
+import { SelectedCookingClassWithPrices } from "../_types/cooking-class";
 import "../_styles/card.css";
 
 export default function ShoppingCart () {

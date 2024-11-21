@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import axios from "axios";
 import config from '../_lib/config';
-import { SectionData } from "@/_types/section-data"
-import { ObjectProperty } from "@/_types/global";
+import { SectionData } from "../_types/section-data"
+import { ObjectProperty } from "../_types/global";
 
 
 export function useGetSectionDataWithParams<T extends SectionData>(

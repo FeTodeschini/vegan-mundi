@@ -1,5 +1,5 @@
 'use client';
-import { ModalProps } from "@/_types/ui-components";
+import { ModalProps } from "../_types/ui-components";
 import '../_styles/modal.css';
 
 export default function Modal({ padding, closeModal, children }: ModalProps) {
