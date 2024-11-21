@@ -1,7 +1,7 @@
 import Button from "./Button";
 import { useDispatch } from "react-redux";
 import { CookingClassProps } from "@/_types/cooking-class";
-import { removeItem } from "@/redux/slices/cartSlice";
+import { removeItem } from "../redux/slices/cartSlice";
 
 export default function ButtonRemoveFromCart({item}: CookingClassProps) {
     const dispatch = useDispatch();

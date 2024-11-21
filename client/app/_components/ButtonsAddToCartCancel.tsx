@@ -3,7 +3,7 @@ import { StateContext } from "../StateProvider";
 import Button from "./Button";
 import { SelectedPriceProps } from "@/_types/price";
 import { useDispatch } from "react-redux";
-import { addItem } from "@/redux/slices/cartSlice"
+import { addItem } from "../redux/slices/cartSlice"
 
 export default function ButtonsAddToCartCancel ({selectedPrice}: SelectedPriceProps){
 
