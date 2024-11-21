@@ -42,7 +42,6 @@
     ]
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^15.0.3",
     "@types/axios": "^0.14.0",
     "@types/node": "^22.7.6",
     "@types/react": "^18.3.11",
