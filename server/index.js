@@ -30,7 +30,7 @@ const orderRouter = require('./routes/orderRouter');
 const reviewRouter = require('./routes/reviewRouter');
 
 app.listen(4000, ()=> {
-  console.log('Server listening on port 4000...');
+  console.log('Server listening on port 4000..');
 })
 
 app.use('/prices', priceRouter);
