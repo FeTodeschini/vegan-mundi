@@ -22,7 +22,7 @@ export default function Page () {
     }
     
     return (
-        <div className="container">
+        <div className="container section-checkout-confirmation">
             <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
             <SectionHeader title={title} subTitle={subTitle}/>
             <div className="regular-text">

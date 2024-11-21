@@ -46,7 +46,7 @@ export default function Gallery (){
         return (
             <>
                 <section className="gallery-container">
-                    <div className="container">
+                    <div className="gallery">
                         <SectionHeader title="Pictures of our happy students" subTitle="Gallery" />
                     </div>    
                     <div className="gallery__content grid-auto-fit">

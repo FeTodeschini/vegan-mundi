@@ -10,6 +10,7 @@ import { getPrices } from "@/_lib/functions";
 import config from '../_lib/config';
 import axios from "axios";
 
+
 export default async function LandingPage (){
 
     // Fetch data for SSG (Static Site Generation) components

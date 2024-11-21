@@ -19,7 +19,7 @@ export default function ReviewStarsContainer({classId=null, classTitle=null, sta
             <p className="review__text-container">
                 {stars !== null ? 
                         <>
-                            <span className="review__text-stars">{stars}</span> {classId !== null && (
+                            <span>{stars}</span> {classId !== null && (
                                 <>
                                     <a className="review__text-all-reviews" href={`/review/${encodeURIComponent(classId)}/${encodeURIComponent(classTitle as string)}`}>See all reviews</a> 
                                 </>

@@ -14,14 +14,20 @@
     font-weight: 600;
 }
 
-.cart-buttons--title {
-    flex: 1;
+.cart-header {
+    margin: 0;
 }
-.cart-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 2rem;
-    gap: 2rem;
+
+.cart-buttons--title {
+    margin: 0;
+}
+
+.cart-toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+    align-items: center;
+    padding-bottom: 9.6rem;
 }
 
 .cart-buttons--btn {
@@ -64,4 +70,52 @@
 
 .modal-atc--item-counter {
     margin-top: .5rem;
+}
+
+@media only screen and (max-width: 575px){
+    .cart-toolbar {
+        padding-bottom: 0;
+    }
+
+    .cart-buttons--title {
+        margin-top: 4.2em;
+        margin-bottom: 4.2rem;
+    }
+
+    .cart-buttons--title .heading-tertiary {
+        margin-top: -10rem;
+    }
+
+    .cart-buttons--btn {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .cart-buttons--btn .btn{
+        font-size: 1.6rem;
+    }
+}
+
+@media only screen and (max-width: 1150px){
+    /* applies the modified grid-auto-fit class to elements styled with grid-auto-fit--cart */
+    .grid-auto-fit--cart .grid-auto-fit {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .cart-toolbar {
+        grid-template-areas: 
+            "cart-buttons--btn"
+            "cart-buttons--title";
+    }
+
+    .cart-buttons--btn{
+        grid-area: cart-buttons--btn;
+        justify-self: end;
+        padding-bottom: 4.2rem;
+    }
+
+    .cart-buttons--title{
+        grid-area: cart-buttons--title;
+    }    
 }

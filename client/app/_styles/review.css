@@ -22,6 +22,11 @@
     cursor: pointer;
 }
 
+.review__star-label {
+    color: var(--color-yellow-dark);
+    font-size: 1.5rem;
+}
+
 .review__star-display {
     cursor: auto;
 }
@@ -62,6 +67,11 @@
 }
 .review__text-all-reviews:visited {
     color: var(--color-gray-dark);
+}
+
+.review__collector-no-reviews {
+    color: var(--color-gray-dark);
+    font-weight: 600;
 }
 
 .review__review-text {

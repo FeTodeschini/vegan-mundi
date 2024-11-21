@@ -33,7 +33,8 @@ export interface FilteredClassesProps {
     images: CookingClass[];
     resultsFound?: number;
     title: string;
-    subTitle: string
+    subTitle: string;
+    dataLoaded: boolean;
 }
 
 export interface UserInfo {
