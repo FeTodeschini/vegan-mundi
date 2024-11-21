@@ -41,12 +41,6 @@
 }
 
 /*  sections, containers and divs*/
-footer {
-    background-color: var(--color-primary-dark-rgb-8);
-    color: #fff;
-    padding: 4rem 0;
-}
-
 .main{
     max-width: 1200px;
     margin: auto;
@@ -56,12 +50,62 @@ section {
     padding: 9.6rem 0;
 }
 
+.header-container {
+    position: fixed;
+    width: 100%;
+    z-index:999;
+    background-color: var(--color-primary);
+}
+
+.section-hero{
+    padding: 20rem 0 4rem 0;
+}
+
+.section-filtered-classes,
+.section-cart,
+.section-checkout,
+.section-checkout-confirmation,
+.section-my-classes{
+    padding: 13.6rem 0 4rem 0;
+}
+
+.section-hero {
+    background-color: var(--color-primary);
+}
+
+.hero-container {
+    width: 100%
+}
+
+.section-disclaimer {
+    background-color: var(--color-primary-dark-rgb-8);
+    padding: 0.9rem;
+    margin-bottom: 3.2rem;
+    color: #fff;
+    font-size: 1.6rem;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.25rem;
+}
+
 .container,
 .gallery {
     max-width: 148rem;
     margin: 0 auto;
     padding-left: 4rem;
     padding-right: 4rem;
+}
+
+.checkout__summary { 
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 3rem;
+}
+
+footer {
+    background-color: var(--color-primary-dark-rgb-8);
+    color: #fff;
+    padding: 4rem 0;
 }
 
 /* margin and padding */
@@ -123,17 +167,6 @@ section {
     text-justify: center;
 }
 
-@media only screen and (max-width: 982px){
-    .grid-auto-fit--large {
-        justify-content: center;
-    }
-}
-
-@media only screen and (max-width: 820px){
-    .grid-auto-fit {
-        justify-content: center;
-    }
-}
 
 @media only screen and (max-width: 575px){
     /* CSS Grid and flexbox */
@@ -147,6 +180,35 @@ section {
         max-width: 575px;
         margin: 0 2rem;
         padding: 0;
+    }
+
+    .header-container {
+        padding-bottom: 1rem;
+    }
+
+    .header__search {
+        padding-top: 1rem;
+    }
+
+    .hero__cta {
+        justify-content: space-between;
+    }
+
+    .section-hero {
+        padding-top: 21rem;
+        padding-bottom: 2.4rem;
+    }
+
+    .section-disclaimer {
+        margin-bottom: 0;
+    }
+
+    .section-filtered-classes,
+    .section-cart,
+    .section-checkout,
+    .section-checkout-confirmation,
+    .section-my-classes{
+        padding: 13.6rem 0 4rem 0;
     }
 
     .classes-categories,
@@ -172,5 +234,26 @@ section {
     /* margin and padding */
     .top-margin--small {
         margin-top: .8rem;
+    }
+}
+
+@media only screen and (max-width: 820px){
+    .grid-auto-fit {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 982px){
+    .grid-auto-fit--large {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 1500px){
+    .section-cart,
+    .section-checkout,
+    .section-checkout-confirmation,
+    .section-my-classes{
+        padding-top: 21rem;
     }
 }
