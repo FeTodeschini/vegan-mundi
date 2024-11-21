@@ -241,6 +241,10 @@ input[type="radio"] {
         font-size: 1.4rem;
     }
 
+    .btn-full {
+        width: 100%;
+    }
+    
     .img-large {
         width: 32rem;
     }

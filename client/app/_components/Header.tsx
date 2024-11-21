@@ -11,7 +11,7 @@ export default function Header() {
     useGetCartItemsFromLocalStorage()
 
     return (
-        <>
+        <div className="header-container">
             <div className="header">
                 <LogoHeader />
                 <div className="header__action-icons">
@@ -22,7 +22,7 @@ export default function Header() {
                 
                 <SearchInput placeholder={"What do you want to cook today? (type at least 4 letters)"}/>
             </div>
-        </>
+        </div>
     )
 }
 

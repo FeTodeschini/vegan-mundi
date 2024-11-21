@@ -35,7 +35,7 @@ export default function MyClassesInPerson({classes, dataLoaded}: {classes: Array
 
     // The hook for adjusting the cards rows heights can only be called after the data in the parent Components that call FilteredClasses is loaded
     // (CategooryClasses and SearchResult), as before that there will be still no cards "painted" in the DOM
-    const containerRef = useResponsiveCardRows([dataLoaded]);
+    // const containerRef = useResponsiveCardRows([dataLoaded]);
 
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any In Person classes yet</p>
@@ -43,7 +43,8 @@ export default function MyClassesInPerson({classes, dataLoaded}: {classes: Array
         return (
             <>
                 <ClassRescheduleDisclaimer />
-                <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
+                {/* <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium"> */}
+                <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
                     {classesPreSignedUrl!.map((item)=> {
                         return (
                         <Card key={item.TITLE} additionalClass={"gray-border"}>

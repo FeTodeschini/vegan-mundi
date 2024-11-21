@@ -34,7 +34,7 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
     useSetClassDate(classesPreSignedUrl, setSelectedDates);
 
-    const containerRef = useResponsiveCardRows([dataLoaded]);
+    // const containerRef = useResponsiveCardRows([dataLoaded]);
     
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online classes with Instructor yet</p>
@@ -42,7 +42,8 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
         return (
             <>
                 <ClassRescheduleDisclaimer />
-                <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
+                {/* <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium"> */}
+                <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
                     {classesPreSignedUrl.map((item)=>( 
                         <Card additionalClass={"gray-border"} key={item.TITLE}>
                             <Card.Title>

@@ -66,7 +66,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
     ), [images, cartItems, onSelectClassType]);
 
     return (
-        <div className="container">
+        <div className="container section-filtered-classes">
             <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
             <SectionHeader title={title} subTitle={subTitle}/>
             {(resultsFound ?? 0) > 0 || subTitle!.includes("Category:") ? 
