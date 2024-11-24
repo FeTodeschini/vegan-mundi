@@ -11,6 +11,8 @@ import { CookingClass } from "../../_types/cooking-class"
 import config from "../../_lib/config";
 import { StateContext } from "../../StateProvider";
 import '../../_styles/main.css';
+import "../../_styles/card.css";
+import '../../_styles/review.css';
 
 export default function CategoryClasses(){
     const {userInfo} = useContext(StateContext)

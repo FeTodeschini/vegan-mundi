@@ -24,23 +24,35 @@
     scale: 1.2;
 }
 
-.gallery__img-modal {
-    height: 80vh;
+.gallery__modal-img {
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    margin: auto;
+    display: block;
 }
 
-.gallery__img-modal:hover {
+.gallery__modal-img:hover {
     scale: reset;
 }
 
 .gallery__caption {
     font-size: 1.6rem;
-    /* font-weight: 600; */
     color: var(--color-primary-dark);
     padding-top: .4rem;
+}
+
+.gallery__modal {
+    padding: 8rem;
+    margin: 2rem;
 }
 
 @media only screen and (max-width: 575px){
     .gallery__caption {
         font-size: 1.6rem;
+    }
+
+    .gallery__modal {
+        padding: 4rem;
     }
 }

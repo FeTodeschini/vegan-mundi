@@ -71,13 +71,11 @@ export default function Gallery (){
                 </section>
 
                 { isModalOpen &&
-                    <LazyModal padding={"8"} closeModal={closeModal}>
-                        <div className="gallery-modal-img">
-                            <img
-                                className="gallery__img-modal" 
-                                src={preSignedUrl}
-                            />
-                        </div>
+                    <LazyModal additionalClass='gallery__modal' closeModal={closeModal}>
+                        <img
+                            className="gallery__modal-img" 
+                            src={preSignedUrl}
+                        />
                     </LazyModal>
                  }
             </>

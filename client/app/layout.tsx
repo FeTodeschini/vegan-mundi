@@ -32,7 +32,6 @@ export default function Layout({ children }: ChildrenProps){
               {/* Conditional rendering of the Header needed to be implemented as the App Router hirerachical structure with different layouts
               doesn't work properly with client side components */}
               {!excludeHeaderRoutes.includes(route) && <Header/>}
-              <DarkBackground />
               {children}
             </Provider>
           </StateProvider>

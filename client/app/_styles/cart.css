@@ -46,6 +46,9 @@
 }
 
 /*  Styles for the Add To Cart (atc) Modal */
+.modal-act--padding {
+    padding: 8rem;
+}
 
 .modal-act--content {
     margin-top: -4rem;
@@ -93,6 +96,14 @@
 
     .cart-buttons--btn .btn{
         font-size: 1.6rem;
+    }
+
+    .modal-act--padding {
+        padding: 4rem;
+    }
+    
+    .modal-act--content {
+        margin-top: 0;
     }
 }
 

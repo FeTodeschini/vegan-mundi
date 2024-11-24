@@ -1,108 +1,42 @@
-
 .menu{
   padding-left: 10px;
 }
 
-#menuToggle
-{
-  display: block;
-  position: relative;
-  
-  z-index: 999;
-  
-  -webkit-user-select: none;
-  user-select: none;
+.menu-container{
+  position: fixed;
+  color: var(--color-primary-dark);
+  background-color: var(--color-gray-dark-rgb-9);
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 
-#menuToggle a
-{
-  text-decoration: none;
-  color: var(--color-primary-dark-rgb-8);
-  
-  transition: color 0.3s ease;
-}
-
-#menuToggle a:hover
-{
-  color: tomato;
-}
-
-
-#menuToggle input
-{
-  display: block;
-  width: 40px;
-  height: 32px;
+.menu-hamburguer__close {
+  font-size: 6.4rem;
+  color: var(--color-primary-dark);
   position: absolute;
-  
-  cursor: pointer;
-  
-  opacity: 0; /* hide this */
-  z-index: 2; /* and place it over the hamburger */
-  
-  -webkit-touch-callout: none;
+  top: 0;
+  right: 0;
+  padding-right: 40px;
+  padding-top: 25px;
+  z-index: 1010;
 }
 
-/*
-* Just a quick hamburger
-*/
-#menuToggle span
-{
-  display: block;
-  width: 25px;
-  height: 4px;
-  position: relative;
-  
-  background: var(--color-primary-dark-rgb-9);
-  border-radius: 3px;
-  
-  z-index: 1;
-  
-  transform-origin: 4px 0px;
-  
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              opacity 0.55s ease;
-}
-
-.menu-icon-top {
-  transform: translateY(-5px);
-}
-
-.menu-icon-bottom{
-  transform: translateY(5px);
-}
-
-/* 
-* Transform all the slices of hamburger
-* into a crossmark.
-*/
-#menuToggle input:checked ~ span
-{
+.menu-container__visible {
+  visibility: visible;
   opacity: 1;
-  transform: rotate(45deg) translate(2px,1px);
 }
 
-/*
-* Hide the middle line of the menu
-*/
-#menuToggle input:checked ~ span:nth-child(3)
-{
+.menu-container__hidden {
+  visibility: hidden;
   opacity: 0;
 }
 
-/*
-* Rotate the last line of the menu -45deg
-*/
-#menuToggle input:checked ~ span:nth-child(4)
-{
-  transform: rotate(-45deg) translate(-6px,3px);
-}
-
-/*
-* Make this absolute positioned
-* at the top left of the screen
-*/
+/* Position the menu items at the top left of the screen */
 .menu-items
 {
   position: fixed;
@@ -112,16 +46,29 @@
   height: 100vh;
   padding: 50px;
   padding-top: 125px;
-  
+  z-index: 1000;
   background: white;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
-  /* to stop flickering of text in safari */
-  
-  transform-origin: 0% 0%;
-  transform: translate(100%, 0);
-  
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+.menu-items a {
+  text-decoration: none;
+  color: var(--color-primary-dark);
+}
+
+.menu-items a:hover
+{
+  color: var(--color-yellow-dark);
+}
+
+.menu-items__visible {
+  transform: translateX(0);
+}
+
+.menu-items__hidden {
+  transform: translateX(100%);
 }
 
 .menu-items li
@@ -130,10 +77,12 @@
   font-size: 22px;
 }
 
-/*
-* And let's slide it in from the left
-*/
-#menuToggle input:checked ~ ul
-{
-  transform: none;
+@media only screen and (max-width: 575px){
+  .menu-hamburguer__close {
+    padding-right: 20px;
+    padding-top: 20px;
+  }
 }
+
+
+

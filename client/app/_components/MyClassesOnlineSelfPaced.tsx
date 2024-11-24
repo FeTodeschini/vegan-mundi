@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { ReduxRootState } from '../_types/redux';
 import useAddPreSignedUrlToMyClasses from '../hooks/useAddPreSignedUrlToMyClasses';
 import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
-// import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
+import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
 import "../_styles/myclasses.css"
 
 
@@ -19,19 +19,22 @@ export default function MyClassesOnlineSelfPaced({classes, dataLoaded}: {classes
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
 
+    // Trick to resize page in case the ExpandableText component is being used in a page that uses the useResponsiveCardRows hook
+    // so the div container height of the ExpandableText will be recalculated
+    const [reloadPage, setReloadPage] = useState<{ [key: number]: boolean }>({});
+
     useGetUnsubmittedReviews()
 
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
     useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl, );
 
-    // const containerRef = useResponsiveCardRows([dataLoaded]);
+    const containerRef = useResponsiveCardRows([dataLoaded]);
     
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online Self Paced classes yet</p>
     else 
         return (
-            // <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-            <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
+            <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
                 {classesPreSignedUrl.map((item)=>( 
                     <Card key={item.TITLE} additionalClass={"gray-border"}>
                         <Card.Title>
@@ -43,6 +46,8 @@ export default function MyClassesOnlineSelfPaced({classes, dataLoaded}: {classes
                                     reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}
                                     reviewTitle={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewTitle : item.REVIEW_TITLE}
                                     isReviewed={true}
+                                    setReloadPage={setReloadPage}
+                                    itemIndex={item.CLASS_ID}
                                 />                                        
                             :
                                 <ReviewCollector 
