@@ -1,7 +1,7 @@
 import TokenProvider from '../_components/TokenProvider';
 import { MyCookingClass, Recipe } from '../_types/cooking-class';
-import { ArrayProps } from '../_types/global';
-import React, { useContext, useState } from 'react';
+import { ArrayProps, Setter } from '../_types/global';
+import React, { useContext, useEffect, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { ReduxRootState } from '../_types/redux';
 import useAddPreSignedUrlToMyClasses from '../hooks/useAddPreSignedUrlToMyClasses';
 import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
-// import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
+import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
 import "../_styles/myclasses.css"
 import ReviewCollector from './ReviewCollector';
 
@@ -23,9 +23,17 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
+    
+    // Trick to resize page in case the ExpandableText component is being used in a page that uses the useResponsiveCardRows hook
+    // so the div container height of the ExpandableText will be recalculated
+    const [reloadPage, setReloadPage] = useState<{ [key: number]: boolean }>({});;
 
     const { userInfo } = useContext(StateContext)
 
+    useEffect (()=> {
+        console.log(`reloadPage: ${JSON.stringify(reloadPage)}`)
+    }, [reloadPage])
+    
     useGetUnsubmittedReviews()
     
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
@@ -34,7 +42,7 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
     useSetClassDate(classesPreSignedUrl, setSelectedDates);
 
-    // const containerRef = useResponsiveCardRows([dataLoaded]);
+    const containerRef = useResponsiveCardRows([dataLoaded]);
     
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online classes with Instructor yet</p>
@@ -42,8 +50,7 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
         return (
             <>
                 <ClassRescheduleDisclaimer />
-                {/* <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium"> */}
-                <div className="grid-auto-fit grid-auto-fit--large top-margin--medium">
+                <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
                     {classesPreSignedUrl.map((item)=>( 
                         <Card additionalClass={"gray-border"} key={item.TITLE}>
                             <Card.Title>
@@ -55,6 +62,8 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
                                         reviewText={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewText : item.REVIEW_TEXT}
                                         reviewTitle={classesReview[item.CLASS_ID] !== undefined ? classesReview[item.CLASS_ID].reviewTitle : item.REVIEW_TITLE}
                                         isReviewed={true}
+                                        setReloadPage={setReloadPage}
+                                        itemIndex={item.CLASS_ID}
                                     />                                        
                                 :
                                     <ReviewCollector 

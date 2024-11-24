@@ -17,8 +17,8 @@ export type ObjectProperty = {
 
 export type Setter<T> = (value: T | ((prevState: T) => T)) => void;
 
-export interface StateProps<T> {
-    [key: string]: T | ((value: T) => void);
+export interface StateObject<T> {
+    [key: string | number]: T | ((value: T) => void);
 }
 
 export interface HTMLElementsProps {

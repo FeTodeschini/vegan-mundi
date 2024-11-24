@@ -13,7 +13,7 @@ import { enumDeliveryMethods } from "../_lib/enums";
 import CustomDatePicker from "./CustomDatePicker";
 import "../_styles/cart.css"
 
-const ModalAddToCart = React.memo(function ModalAddToCart({ modalTitle, modalSubTitle, closeModal, padding }: ModalAddToCartProps) {
+const ModalAddToCart = React.memo(function ModalAddToCart({ modalTitle, modalSubTitle, closeModal, additionalClass }: ModalAddToCartProps) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [prices, setPrices] = useState<Price[]>([]);
@@ -82,7 +82,7 @@ const ModalAddToCart = React.memo(function ModalAddToCart({ modalTitle, modalSub
     useGetPrices( prices, setPrices, isLoading, setIsLoading );
 
     return (
-       <Modal padding={padding} closeModal={closeModal}>
+       <Modal additionalClass={additionalClass} closeModal={closeModal}>
             <div className="cart-modal">
                 <SectionHeader 
                     subTitle={modalSubTitle}

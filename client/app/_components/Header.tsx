@@ -1,7 +1,7 @@
 import LogoHeader from "./LogoHeader";
 import SearchInput from './SearchInput';
 import SigninIcon from "./SigninIcon";
-import Menu from './Menu';
+import Menu from "./Menu";
 import CartIcon from './CartIcon';
 import { useGetCartItemsFromLocalStorage } from "../hooks/useGetCartItemsFromLocalStorage";
 import "../_styles/menu.css";

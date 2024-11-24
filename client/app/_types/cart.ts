@@ -12,7 +12,7 @@ export interface ModalAddToCartProps {
     modalTitle: string,
     modalSubTitle: string,
     closeModal: () => void;
-    padding: string
+    additionalClass: string
 }
 
 export interface CartState {

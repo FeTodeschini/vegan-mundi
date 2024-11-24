@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import {  CookingClass } from './cooking-class'
-import { ChildrenProps } from './global'
+import { ChildrenProps, Setter } from './global'
 
 export interface ModalProps extends ChildrenProps {
-    padding: string,
+    additionalClass: string,
     closeModal: () => void;
 }
 
@@ -26,7 +26,10 @@ export interface GalleryPictures {
 export interface ExpandableTextProps {
     labelShowMore: string,
     labelShowLess: string,
+    setReloadPage?: Dispatch<SetStateAction<{ [key: number]: boolean }>>,
+    itemIndex?: number,
     children: ReactNode
 }
+
 
 

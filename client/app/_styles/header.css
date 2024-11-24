@@ -1,8 +1,8 @@
     .header {
         display: grid;
         grid-template-areas: 
-            "header__logo header__action-icons"
-            "header__search header__search";
+            "header__logo header__search header__action-icons";
+        grid-template-columns: min-content auto min-content;
         grid-row-gap: 1.5rem;
         padding: 2rem 4rem;
         background-color: var(--color-primary);
@@ -16,13 +16,6 @@
         justify-content: flex-end;
         display: flex;
         align-items: center;
-    }
-
-    .header {
-        grid-template-areas: 
-            "header__logo header__search header__action-icons";
-        grid-template-columns: min-content auto min-content;
-
     }
 
     .header__logo-menu{
