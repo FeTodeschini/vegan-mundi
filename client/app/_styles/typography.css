@@ -181,5 +181,9 @@ p {
     .hero__description {
         font-size: 1.6rem;
     }
+
+    .section-filtered-classes .heading-tertiary {
+        padding-top: 0;
+    }
 }
 
