@@ -26,7 +26,7 @@ export default function ReviewStarsContainer({classId=null, classTitle=null, sta
                             )}
                         </>
                     : 
-                        <p className="review__text-no-reviews">No reviews yet</p>
+                        <span className="review__text-no-reviews">No reviews yet</span>
                 }
             </p>
         </div>
