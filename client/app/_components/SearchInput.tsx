@@ -6,10 +6,15 @@ import { useRouter } from 'next/navigation';
 import { PrimitiveTypeProp } from "../_types/global";
 
 async function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>, keyword: string, router: ReturnType<typeof useRouter>) {
-    // In case user presses ENTER and types more than 3 letters, calls the API that fetches classes from the DB based on the keyword typed
-    if (e.key === "Enter" && keyword.length > 3) {
-        router.push(`/search?keyword=${keyword}`);
+    if (e.key === "Enter") {
+        handleSearch(keyword, router);
     } }
+
+function handleSearch(keyword: string, router: ReturnType<typeof useRouter>){
+    if (keyword.length > 3) {
+        router.push(`/search?keyword=${keyword}`);
+    }
+}
 
 export default function SearchInput({ placeholder }: PrimitiveTypeProp<string>){
     const { keyword, setKeyword } = useContext(StateContext);
@@ -26,7 +31,7 @@ export default function SearchInput({ placeholder }: PrimitiveTypeProp<string>){
                     onChange={(e)=>setKeyword(e.target.value)}
                     onKeyUp={(e)=>handleKeyUp(e, keyword, router)}
                 />
-                <button type="button" className="search__button">
+                <button type="button" className="search__button" onClick={()=>handleSearch(keyword, router)}>
                     <img className="search__icon"  src="/assets/magnifying-glass.svg" alt="Magnifying Glass" />
                 </button>
             </div>
