@@ -45,7 +45,7 @@ const FilteredClasses = React.memo(function FilteredClasses ({images, resultsFou
                         {item.CLASSES_LIST ? item.CLASSES_LIST.split("|").map((listItem: any) => (
                             <div className="card__items-list" key={listItem}>
                                 <img className="icon-list" src="/assets/icon-leaf.svg" alt="Leaf icon" />
-                                <p>{listItem}</p>
+                                <span>{listItem}</span>
                             </div>
                         )) : ''}
                     </Card.Content>
