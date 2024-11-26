@@ -7,7 +7,7 @@ export default function ReviewStarsContainer({classId=null, classTitle=null, sta
         <div className="review__container">
             <div className="review__star-container">
                 {Array.from({ length: 5 }, (_, i) => (
-                    <span className="review__star-display">
+                    <span key={i} className="review__star-display">
                         {(i + 1 <= stars!) ? 
                             <StarFull key={i}/> 
                         : 
