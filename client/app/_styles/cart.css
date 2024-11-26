@@ -22,6 +22,10 @@
     margin: 0;
 }
 
+.cart-buttons--title .heading-secondary{
+    margin-bottom: 0;
+}
+
 .cart-toolbar {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -73,6 +77,16 @@
 
 .modal-atc--item-counter {
     margin-top: .5rem;
+}
+
+/* Checkout  */
+.checkout__form {
+    display: grid;
+}
+
+.checkout__summary .heading-tertiary,
+.checkout__credit-card .heading-tertiary{
+    margin-bottom: 4.2rem;
 }
 
 @media only screen and (max-width: 575px){
