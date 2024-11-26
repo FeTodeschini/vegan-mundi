@@ -30,13 +30,6 @@ function TopImage({isVideo, imgLink, imgSource}: CardTopImageProps){
                     <img className='icon-play' src="/assets/icon-play.svg" />
                 </Link>
             }
-
-            {/* The code below opens the videoplayer in a new tab, but the page layout is messed up */}
-            {/* <Link href={imgLink} legacyBehavior>
-                <a target="_blank" rel="noopener noreferrer">
-                    <img className="img-medium" src={imgSource} />
-                </a>
-            </Link> */}
         </div>
     )
 }
