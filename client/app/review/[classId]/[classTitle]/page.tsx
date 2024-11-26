@@ -27,7 +27,7 @@ export default function Page() {
     
     return (
         <>
-            <section className="container">
+            <section className="container section-review">
                 <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
                 <SectionHeader title={`REVIEWS: ${decodeURIComponent(classTitle)}`}/>
                 <div className="grid-auto-fit">
