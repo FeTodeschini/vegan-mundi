@@ -13,13 +13,6 @@ export interface CardTopImageProps {
     isVideo?: boolean,
 }
 
-export  interface CardContentProps {
-    callOutTag: string,
-    title: string,
-    description: string,
-    descriptionList: string
-}
-
 export interface CardTitleProps {
     callOutTag?: string;
     children: React.ReactNode;
