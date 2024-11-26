@@ -22,7 +22,7 @@ export default function DeliveryMethods({ deliveryMethods }: ArrayProps<CookingC
                                     <Card key={item.TITLE}>
                                         <Card.Title>
                                             {<div className="align-items-flex--c">
-                                                <img src={`assets/${item.ICON}`} alt="In Person Classes" className="icon-medium" />{item.TITLE}
+                                                <img src={`/assets/${item.ICON}`} alt="In Person Classes" className="icon-medium" />{item.TITLE}
                                             </div>}
                                         </Card.Title>
                                         <Card.Content>{item.DESCRIPTION}</Card.Content>                                        
