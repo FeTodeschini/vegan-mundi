@@ -109,10 +109,6 @@ const reviewSlice = createSlice({
 
           // removes item from list of unsubmitted reviews in the local storage and also from the state
           removePersistedReview(classId, state);
-          // const { [classId]: removedReview, ...updatedUnsubmittedReviews } = state.unsubmittedReviews;
-          // state.unsubmittedReviews = updatedUnsubmittedReviews;
-        
-          // localStorage.setItem("unsubmittedReviews", JSON.stringify(updatedUnsubmittedReviews));
         })
         .addCase(submitReview.rejected, (state, action) => {
           state.status = "failure";
