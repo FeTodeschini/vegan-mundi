@@ -19,7 +19,6 @@ export default function Header() {
                     <SigninIcon />
                     <Menu />
                 </div>
-                
                 <SearchInput placeholder={"What do you want to cook today? (type at least 4 letters)"}/>
             </div>
         </div>
