@@ -42,7 +42,7 @@ export default function SignIn() {
                 
                 const token = response.data.token;
                 setToken(token);
-                localStorage.setItem("token", JSON.stringify(token));
+                localStorage.setItem("token", token);
 
                 const userInfo = response.data.userInfo;
                 setUserInfo(userInfo);
