@@ -25,13 +25,15 @@ export default function Page() {
     const [classesOnlineWithInstructor, setClassesOnlineWithInstructor] = useState<MyCookingClass[]>([]);
     const [classesInPerson, setClassesInPerson] = useState<MyCookingClass[]>([]);
 
-    const { userInfo } = useContext(StateContext)
+    const { userInfo, token } = useContext(StateContext)
     
     const params = useMemo(() => {
         return userInfo?.email ? { email: userInfo.email } : null;
     }, [userInfo?.email]);
 
-    useGetSectionDataWithParams(setSectionData, 'classes/user', params);
+    const header = { Authorization: `Bearer ${token}` }
+
+    useGetSectionDataWithParams(setSectionData, 'classes/user', params, header );
 
     // Filter cooking classes based on delivery method (IN_PERSON, ONLINE_WITH_INSTRUCTOR and ONLINE_SELF_PACED
     useEffect (() => {
