@@ -4,11 +4,13 @@ import SigninIcon from "./SigninIcon";
 import Menu from "./Menu";
 import CartIcon from './CartIcon';
 import { useGetCartItemsFromLocalStorage } from "../hooks/useGetCartItemsFromLocalStorage";
+import useSetToken from "@/hooks/useSetToken";
 import "../_styles/menu.css";
 
 export default function Header() {
 
     useGetCartItemsFromLocalStorage()
+    useSetToken();
 
     return (
         <div className="header-container">
