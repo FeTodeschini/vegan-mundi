@@ -6,7 +6,7 @@ import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
 import ClassRescheduleDisclaimer from './ClassRescheduleDisclaimer';
 import { useSetClassDate } from '../hooks/useSetClassDate';
-import { handleSetMyClasstDate } from '../_lib/MyClassesHelper';
+import { handleSetMyClasstDate } from '../_lib/myClassesHelper';
 import { StateContext } from '../StateProvider';
 import ReviewCollector from './ReviewCollector';
 import ReviewDisplay from './ReviewDisplay';

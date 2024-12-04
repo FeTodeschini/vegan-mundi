@@ -6,28 +6,17 @@ import { useContext } from 'react';
 import { StateContext } from "../StateProvider";
 import { useRouter } from "next/navigation";
 import "../_styles/form.css";
+import { signOutCleanUp } from "@/_lib/accountHelper";
 
 export default function SignOut() {
-
     const { setUserInfo, setToken } = useContext(StateContext);
     const router = useRouter();
-
-    const objUserInfo = {
-        firstName: "Sign in",
-        lastName: "",
-        email: ""
-    }
 
     const handleSignOut = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         // Resets User info and token and navigate to Home page
-        setToken("");
-        setUserInfo(objUserInfo);
-
-        localStorage.removeItem("userInfo")
-        localStorage.removeItem("token")
-
+        signOutCleanUp(setUserInfo, setToken);
         router.push(`/`);
     }
 

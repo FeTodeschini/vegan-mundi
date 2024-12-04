@@ -15,6 +15,7 @@ import Tabs from '../../_components/Tabs';
 import Tab from '../../_components/Tab';
 import '../../_styles/main.css';
 import Button from '../../_components/Button';
+import useCheckTokenExpiration from '@/hooks/useCheckTokenExpiration';
 
 export default function Page() {
 
@@ -24,21 +25,25 @@ export default function Page() {
     const [classesOnlineSelfPaced, setClassesOnlineSelfPaced] = useState<MyCookingClass[]>([]);
     const [classesOnlineWithInstructor, setClassesOnlineWithInstructor] = useState<MyCookingClass[]>([]);
     const [classesInPerson, setClassesInPerson] = useState<MyCookingClass[]>([]);
+    const [isTokenValid, setIsTokenValid] = useState(false);
 
     const { userInfo, token } = useContext(StateContext)
-    
+
+    //  If token is expired, redirects user to the login page
+    useCheckTokenExpiration(token, setIsTokenValid);
+
     const params = useMemo(() => {
         return userInfo?.email ? { email: userInfo.email } : null;
     }, [userInfo?.email]);
 
     const header = { Authorization: `Bearer ${token}` }
 
-    useGetSectionDataWithParams(setSectionData, 'classes/user', params, header );
+    useGetSectionDataWithParams(setSectionData, 'classes/user', params, header, isTokenValid );
 
     // Filter cooking classes based on delivery method (IN_PERSON, ONLINE_WITH_INSTRUCTOR and ONLINE_SELF_PACED
     useEffect (() => {
         const filterClassPerDeliveryMethod = (deliveryMethod: number) =>
-            images.filter((classItem) => classItem.DELIVERY_METHOD_ID === deliveryMethod);
+        images.filter((classItem) => classItem.DELIVERY_METHOD_ID === deliveryMethod);
 
         setClassesOnlineSelfPaced(filterClassPerDeliveryMethod(enumDeliveryMethods.ONLINE_SELF_PACED));
         setClassesOnlineWithInstructor(filterClassPerDeliveryMethod(enumDeliveryMethods.ONLINE_WITH_INSTRUCTOR));

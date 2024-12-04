@@ -1,7 +1,7 @@
 'use client';
 
 import Button from "../_components/Button";
-import { FormEvent, useContext } from "react";
+import { FormEvent, useContext, useState } from "react";
 import CheckoutItems from "../_components/CheckOutItems";
 import SectionHeader from "../_components/SectionHeader";
 import { useRouter } from "next/navigation";
@@ -11,19 +11,26 @@ import axios from "axios";
 import { SelectedCookingClassWithPrices } from "../_types/cooking-class";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxRootState } from "../_types/redux";
-import { generateOrderNumber } from "../_lib/functions";
+import { generateOrderNumber } from "../_lib/miscHelper";
 import config from "../_lib/config";
 import "../_styles/layout.css";
 import "../_styles/card.css";
+import { isUserLogged } from "@/_lib/accountHelper";
+import { checkTokenExpiration } from "@/_lib/tokenHelper";
 
 export default function Page () {
 
-    const { userInfo, setError, orderNumber, setOrderNumber } = useContext(StateContext)
+    const { token, userInfo, setUserInfo, setToken, setError, setResponseMessage, orderNumber, setOrderNumber } = useContext(StateContext)
     const { cartItems } : { cartItems: SelectedCookingClassWithPrices[] } = useSelector((state: ReduxRootState)=> state.cart);
 
     const dispatch = useDispatch()
     
     const router = useRouter();
+
+    const [isTokenValid, setIsTokenValid] = useState(false);
+
+    // If token is expired, redirects user to the login page
+    // useCheckTokenExpiration(token, setIsTokenValid);
 
     function backToCart(){
         router.push("/cart");
@@ -31,6 +38,18 @@ export default function Page () {
 
     const handleCheckOut = async (e: FormEvent) => {
         e.preventDefault();
+
+        //  Check if user is logged in
+        if (!isUserLogged( userInfo!.email, setResponseMessage, router, `For checking out, please sign in or create an account. ` +
+            ` Your items will be kept in your cart.`)) {
+            return null;
+        }
+
+        //  Check once more if the token is valid, just in case it was valid when page was loaded, but user took too long to click "Confirm Order"
+        await checkTokenExpiration(token, setUserInfo, setToken, setIsTokenValid, setResponseMessage, router);
+        if (!isTokenValid){
+            return null
+        };
 
         async function addOrder(): Promise<string | null>{
 
@@ -72,8 +91,9 @@ export default function Page () {
             router.push("/checkout/confirmation");
             return null;
         }
-
-        await addOrder()
+        if (isTokenValid) {
+            await addOrder()
+        }
     }
 
     return (
