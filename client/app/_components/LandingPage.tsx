@@ -6,7 +6,7 @@ import Categories from "./Categories";
 import FreeClasses from "./FreeClasses";
 import Prices from "./Prices";
 import Gallery from "./Gallery";
-import { getPrices } from "../_lib/functions";
+import { getPrices } from "../_lib/miscHelper";
 import config from '../_lib/config';
 import axios from "axios";
 

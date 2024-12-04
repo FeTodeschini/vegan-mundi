@@ -3,7 +3,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
-import { getPreSignedUrl } from '../../_lib/functions';
+import { getPreSignedUrl } from '../../_lib/miscHelper';
 
 export default function VideoPlayer() {
     

@@ -5,21 +5,25 @@ import axios from "axios";
 import config from '../_lib/config';
 import { SectionData } from "../_types/section-data"
 import { ObjectProperty } from "../_types/global";
+import { useRouter } from "next/navigation";
 
 // The optional header param is the "authorization" header with the jwt token for protected routes
 export function useGetSectionDataWithParams<T extends SectionData>(
         setSectionData: (data: T[]) => void, 
         apiEndpoint: string,
         params: ObjectProperty | null,
-        header?: object
+        header?: object,
+        isTokenValid?: boolean
     ) {
 
+    const router = useRouter();
     // Fetch from the database the data for the landing page section received as an input parameter
     useEffect( ()=> {
-        if (params) {
+        // Fetches data only if there is no token provided (route is not protected) or, if a token was provided, if  is valid/not expired (protected route)
+        if (params && (isTokenValid === undefined || isTokenValid)) {
             getSectionDataWithParams(setSectionData, apiEndpoint, params, header)
         }
-    } , [params]);
+    } , [params, isTokenValid]);
 
     async function getSectionDataWithParams(setSectionData: (data: T[]) => void, 
             apiEndpoint: string,
@@ -27,8 +31,6 @@ export function useGetSectionDataWithParams<T extends SectionData>(
             header?: object) {
 
         let response;
-
-        console.log(`header: ${JSON.stringify(header)}`);
 
         try {
             response = await axios.get(`
@@ -38,9 +40,13 @@ export function useGetSectionDataWithParams<T extends SectionData>(
                     headers: header || {},
                  },
             );
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            throw error;
+        } catch (error: any) {
+            if (error.response && error.status ===403) {
+                router.push('/account/signin');
+            } else {
+                console.error("Error fetching data from getSectionDataWithParams:", error);
+                throw error;
+            }
         }
 
         if (response && response.data) {
