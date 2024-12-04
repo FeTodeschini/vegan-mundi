@@ -1,6 +1,6 @@
 'use client'
 
-import config from '../_lib/config';
+import config from './config';
 import axios from "axios";
 
 export function handleSetMyClasstDate(email: string,
