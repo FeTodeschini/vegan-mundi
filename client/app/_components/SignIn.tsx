@@ -21,12 +21,14 @@ export default function SignIn() {
     const passwordRef = useRef<HTMLInputElement>(null);
     
     useEffect(()=>{
-        setResponseMessage("");
         setError("");
     }, [])
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+
+        setResponseMessage("");
+        setError("");
 
         const email = focusElement.current!.value;
         const password = passwordRef.current!.value;
@@ -47,6 +49,8 @@ export default function SignIn() {
                 const userInfo = response.data.userInfo;
                 setUserInfo(userInfo);
                 localStorage.setItem("userInfo", JSON.stringify(userInfo));
+
+
                 
                 router.push(`/`);
             }

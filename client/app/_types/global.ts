@@ -62,15 +62,15 @@ export interface StateContextType {
     error: string;
     setError: (error: string) => void;
     responseMessage: string;
-    setResponseMessage: (responseMessage: string) => void;
+    setResponseMessage: React.Dispatch<React.SetStateAction<string>>
     isModalOpen: boolean;
     setIsModalOpen: (isModalOpen: boolean) => void;
     selectedClass: SelectedCookingClass | null;
     setSelectedClass: (selectedClass: any) => void;
     userInfo: UserInfo | undefined,
-    setUserInfo: (userInfo: UserInfo) => void;
+    setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
     orderNumber: string;
     setOrderNumber: (orderNumber: string) => void;
     token: string;
-    setToken: (token: string) => void;
+    setToken: React.Dispatch<React.SetStateAction<string>>
 }

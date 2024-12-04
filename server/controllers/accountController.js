@@ -46,44 +46,46 @@ async function signIn (req, res, next) {
         [result] = await connection.query(`SELECT * FROM ACCOUNT WHERE EMAIL = '${email}'`)
 
         if (result.length === 0) {
-            return next(new CustomError(`The e-mail ${email} is not registered in this site`, 400));
+            return next(new CustomError("Invalid credentials", 400));
         }
-    } catch (err) {
-        if (err) {
-            return next(new CustomError(`There was while retrieving User info`, 500));
-        }
-    }
 
-    bcrypt.compare(password, result[0].PASSWORD, (err, isValidPassword) => {
-        if (err) {
-            return next(new CustomError(`It seems like our servers are napping after a cooking class. There was an error while signin in`, 500));
-        }
-        else {
-            if (isValidPassword) {
-                const userInfo = {
-                    firstName: result[0].FIRST_NAME,
-                    lastName: result[0].LAST_NAME,
-                    email: result[0].EMAIL
-                };
-                
-                const token = jwt.sign(
-                    userInfo,
-                    config.jwtSecretKey,
-                    { expiresIn: '1h' }
-                );
-
-                res.status(200).json({
-                    message: "Signin successfull",
-                    token: token,
-                    userInfo: userInfo
-                });
-
+        bcrypt.compare(password, result[0].PASSWORD, (err, isValidPassword) => {
+            if (err) {
+                return next(new CustomError(`It seems like our servers are napping after a cooking class. There was an error while signin in`, 500));
             }
             else {
-                return next(new CustomError(`Invalid credentials`, 400));
+                if (isValidPassword) {
+                    const userInfo = {
+                        firstName: result[0].FIRST_NAME,
+                        lastName: result[0].LAST_NAME,
+                        email: result[0].EMAIL
+                    };
+                    
+                    const token = jwt.sign(
+                        userInfo,
+                        config.jwtSecretKey,
+                        { expiresIn: '1h' }
+                    );
+
+                    res.status(200).json({
+                        message: "Signin successfull",
+                        token: token,
+                        userInfo: userInfo
+                    });
+
+                }
+                else {
+                    return next(new CustomError("Invalid credentials", 400));
+                }
             }
-        }
-    });
+        });
+    } catch (err) {
+        console.error("Error during sign-in:", err);
+        return next(new CustomError("Error while retrieving user info", 500));
+    } finally {
+        // Ensure the connection is released back to the pool
+        if (connection) connection.release();
+    }
 }
 
 module.exports = { createAccount, signIn };
