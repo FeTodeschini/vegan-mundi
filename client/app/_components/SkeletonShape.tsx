@@ -1,6 +1,5 @@
-import { enumSkeletonShapes } from "@/_lib/enums"
+import { enumSkeletonShapes } from "../_lib/enums"
 import Skeleton from "react-loading-skeleton"
-import Button from "./Button";
 
 const SkeletonShape = ({shape}: {shape: number}) => {
 

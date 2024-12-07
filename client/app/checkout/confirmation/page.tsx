@@ -1,11 +1,10 @@
 'use client';
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { StateContext } from "../../StateProvider";
 import SectionHeader from "../../_components/SectionHeader";
 import Link from "next/link";
 import Button from "../../_components/Button";
-import useCheckTokenExpiration from "@/hooks/useCheckTokenExpiration";
 
 export default function Page () {
     const { error, userInfo, orderNumber  } = useContext(StateContext)

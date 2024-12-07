@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { StateContext } from "../StateProvider";
 import { useRouter } from "next/navigation";
 import "../_styles/form.css";
-import { signOutCleanUp } from "@/_lib/accountHelper";
+import { signOutCleanUp } from "../_lib/accountHelper";
 
 export default function SignOut() {
     const { setUserInfo, setToken } = useContext(StateContext);
