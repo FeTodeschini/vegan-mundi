@@ -1,6 +1,4 @@
-import TokenProvider from '../_components/TokenProvider';
 import { MyCookingClass, Recipe } from '../_types/cooking-class';
-import { ArrayProps } from '../_types/global';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
