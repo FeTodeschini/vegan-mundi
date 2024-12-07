@@ -1,7 +1,5 @@
-import TokenProvider from '../_components/TokenProvider';
 import { MyCookingClass, Recipe } from '../_types/cooking-class';
-import { ArrayProps, Setter } from '../_types/global';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
@@ -13,14 +11,12 @@ import { StateContext } from '../StateProvider';
 import ReviewDisplay from './ReviewDisplay';
 import { useSelector } from 'react-redux';
 import { ReduxRootState } from '../_types/redux';
-import useAddPreSignedUrlToMyClasses from '../hooks/useAddPreSignedUrlToMyClasses';
 import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
 import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
 import "../_styles/myclasses.css"
 import ReviewCollector from './ReviewCollector';
 
-export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {
-    const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
+export default function MyClassesOnlineWithInstructor({classes}: {classes: MyCookingClass[]}) {
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
     
@@ -30,19 +26,12 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
 
     const { userInfo } = useContext(StateContext)
 
-    useEffect (()=> {
-        console.log(`reloadPage: ${JSON.stringify(reloadPage)}`)
-    }, [reloadPage])
-    
     useGetUnsubmittedReviews()
     
-    // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
-    useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl);
-   
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
-    useSetClassDate(classesPreSignedUrl, setSelectedDates);
+    useSetClassDate(classes, setSelectedDates);
 
-    const containerRef = useResponsiveCardRows([dataLoaded]);
+    const containerRef = useResponsiveCardRows(true);
     
     if (classes.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online classes with Instructor yet</p>
@@ -51,7 +40,7 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
             <>
                 <ClassRescheduleDisclaimer />
                 <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-                    {classesPreSignedUrl.map((item)=>( 
+                    {classes.map((item)=>( 
                         <Card additionalClass={"gray-border"} key={item.TITLE}>
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
@@ -76,7 +65,7 @@ export default function MyClassesOnlineWithInstructor({classes, dataLoaded}: {cl
                             </Card.Content>
                             <div className="card__section myclasses__classes-list">
                                 {
-                                    item.CLASSES_LIST.map((recipe: Recipe, index: number) => {
+                                    JSON.parse(item.CLASSES_LIST).map((recipe: Recipe, index: number) => {
                                         return (
                                             <React.Fragment key={index}>
                                                 <img className='icon-list' src="/assets/icon-leaf.svg" alt="Leaf icon" />

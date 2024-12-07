@@ -16,6 +16,7 @@ import Tab from '../../_components/Tab';
 import '../../_styles/main.css';
 import Button from '../../_components/Button';
 import useCheckTokenExpiration from '@/hooks/useCheckTokenExpiration';
+import SkeletonMyClasses from '@/_components/SkeletonMyClasses';
 
 export default function Page() {
 
@@ -25,7 +26,7 @@ export default function Page() {
     const [classesOnlineSelfPaced, setClassesOnlineSelfPaced] = useState<MyCookingClass[]>([]);
     const [classesOnlineWithInstructor, setClassesOnlineWithInstructor] = useState<MyCookingClass[]>([]);
     const [classesInPerson, setClassesInPerson] = useState<MyCookingClass[]>([]);
-    const [isTokenValid, setIsTokenValid] = useState(false);
+    const [isTokenValid, setIsTokenValid] = useState(true);
 
     const { userInfo, token } = useContext(StateContext)
 
@@ -59,17 +60,22 @@ export default function Page() {
             <section className="container section-my-classes">
                 <Button size="medium" additionalClass={"btn--back-home"} link={"/"}>&larr; Back to home</Button>
                 <SectionHeader title="My Classes" />
-                <Tabs>
-                    <Tab label="Self-Paced">
-                        <MyClassesOnlineSelfPaced classes={classesOnlineSelfPaced} dataLoaded={!isLoading} />
-                    </Tab>
-                    <Tab label="Online Instructor">
-                        <MyClassesOnlineWithInstructor classes={classesOnlineWithInstructor} dataLoaded={!isLoading}/>
-                    </Tab>
-                    <Tab label="In Person">
-                        <MyClassesInPerson classes={classesInPerson} dataLoaded={!isLoading}/>
-                    </Tab>
-                </Tabs>
+                {
+                    isLoading ?
+                        <SkeletonMyClasses/>
+                    :
+                    <Tabs>
+                        <Tab label="Self-Paced">
+                            <MyClassesOnlineSelfPaced classes={classesOnlineSelfPaced}/>
+                        </Tab>
+                        <Tab label="Online Instructor">
+                            <MyClassesOnlineWithInstructor classes={classesOnlineWithInstructor}/>
+                        </Tab>
+                        <Tab label="In Person">
+                            <MyClassesInPerson classes={classesInPerson}/>
+                        </Tab>
+                    </Tabs>
+            }
             </section>
         </>
     );
