@@ -6,7 +6,7 @@ import CustomDatePicker from './CustomDatePicker';
 import VideoCallLink from './VideoCallLink';
 import ClassRescheduleDisclaimer from './ClassRescheduleDisclaimer';
 import { useSetClassDate } from '../hooks/useSetClassDate';
-import { handleSetMyClasstDate } from '../_lib/oimyClassesHelper';
+import { handleSetMyClasstDate } from '../_lib/myClassesHelper';
 import { StateContext } from '../StateProvider';
 import ReviewDisplay from './ReviewDisplay';
 import { useSelector } from 'react-redux';
