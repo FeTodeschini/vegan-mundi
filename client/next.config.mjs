@@ -6,6 +6,7 @@ const nextConfig = {
     disableOptimizedLoading: true,
     optimizeCss: true,
     webpack(config, { isServer }) {
+      config.resolve.alias['@'] = path.resolve(__dirname, 'app');
       return config;
     },
   }
