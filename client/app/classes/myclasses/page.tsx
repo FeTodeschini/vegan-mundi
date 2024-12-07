@@ -13,10 +13,10 @@ import { StateContext } from '../../StateProvider';
 import { MyCookingClass } from '../../_types/cooking-class';
 import Tabs from '../../_components/Tabs';
 import Tab from '../../_components/Tab';
-import '../../_styles/main.css';
 import Button from '../../_components/Button';
-import useCheckTokenExpiration from '@/hooks/useCheckTokenExpiration';
-import SkeletonMyClasses from '@/_components/SkeletonMyClasses';
+import useCheckTokenExpiration from '../../hooks/useCheckTokenExpiration';
+import SkeletonMyClasses from '../../_components/SkeletonMyClasses';
+import '../../_styles/main.css';
 
 export default function Page() {
 

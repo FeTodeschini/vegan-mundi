@@ -5,7 +5,6 @@ import { useState, useEffect, useContext, useMemo } from "react";
 import { useParams } from 'next/navigation'
 import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSignedUrlToArray";
 import FilteredClasses from "../../_components/FilteredClasses";
-// import useAdjustCardRowsHeight from "@/hooks/useResponsiveCardRows";
 import useSetToken from "../../hooks/useSetToken";
 import { CookingClass } from "../../_types/cooking-class"
 import config from "../../_lib/config";

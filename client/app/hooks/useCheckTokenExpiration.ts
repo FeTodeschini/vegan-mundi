@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useRouter } from 'next/navigation';
-import { StateContext } from "@/StateProvider";
-import { checkTokenExpiration } from "@/_lib/tokenHelper";
+import { StateContext } from "../StateProvider";
+import { checkTokenExpiration } from "../_lib/tokenHelper";
 
 const useCheckTokenExpiration = (token: string, setIsTokenValid: React.Dispatch<React.SetStateAction<boolean>>) => {
     const router = useRouter();
