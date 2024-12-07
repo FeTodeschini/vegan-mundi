@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 // Adjust the height of the rows of all cards in a specific page. The baseline for the adjustment is the height of the row with more content
 // The logic is based on the classes (css) applied to the <Card/> component
 // Only the rows with the class .card-content will be adjusted
-export default function useResponsiveCardRows(dependencyArray: any) {
+export default function useResponsiveCardRows(dependencyArray: any, setLoadCount: React.Dispatch<React.SetStateAction<number>> | null=null) {
     // Creates a ref to the card container so it can be manipulated in the DOM
     const containerRef = useRef<HTMLDivElement | null>(null);
     const cardSelector = ".card";
@@ -56,6 +56,12 @@ export default function useResponsiveCardRows(dependencyArray: any) {
 
         // makes sure that the resize function is called in case the browser is resized
         window.addEventListener("resize", responsiveCardRows);
+
+        // Counter for controlling Skeleton in pages that use it
+        if (setLoadCount){
+            console.log("loadCount useResponsiveCardRows")
+            setLoadCount(count=> count+1)
+        }
 
         // Cleanup function for removing the event listener when the component is unmounted
         return () => window.removeEventListener("resize", responsiveCardRows);
