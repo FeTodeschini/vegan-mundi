@@ -15,8 +15,8 @@ import { generateOrderNumber } from "../_lib/miscHelper";
 import config from "../_lib/config";
 import "../_styles/layout.css";
 import "../_styles/card.css";
-import { isUserLogged } from "@/_lib/accountHelper";
-import { checkTokenExpiration } from "@/_lib/tokenHelper";
+import { isUserLogged } from "../_lib/accountHelper";
+import { checkTokenExpiration } from "../_lib/tokenHelper";
 
 export default function Page () {
 

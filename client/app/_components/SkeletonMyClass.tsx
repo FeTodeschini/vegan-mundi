@@ -1,4 +1,4 @@
-import { enumSkeletonShapes } from "@/_lib/enums"
+import { enumSkeletonShapes } from "../_lib/enums"
 import SkeletonShape from "./SkeletonShape"
 
 const SkeletonMyClass = () => {

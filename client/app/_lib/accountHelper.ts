@@ -1,4 +1,4 @@
-import { UserInfo } from "@/_types/global";
+import { UserInfo } from "../_types/global";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const objUserInfo = {
