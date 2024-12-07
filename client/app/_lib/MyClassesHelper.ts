@@ -26,9 +26,9 @@ async function updateClassDate(email: string, date: Date, classId: number){
     }
     catch (err: any){
         if (err.response) {
-            const message = err.response.data.message || "An error occurred while adding your order."
+            const message = err.response.data.message || "An error occurred while adding your order"
         } else {
-            const message = "An unexpected error occurred.";
+            const message = "An unexpected error occurred while adding your order";
         }
     }
 
