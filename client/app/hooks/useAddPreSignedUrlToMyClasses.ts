@@ -2,8 +2,7 @@ import { addPreSignedUrlToString } from '../_lib/s3Helper';
 import { useEffect } from 'react';
 import { MyCookingClass } from '../_types/cooking-class';
 
-//export default function useGetMyClasses(classes: MyCookingClass[], setClassesPreSignedUrl: React.Dispatch<SetStateAction<MyCookingClass>>) {
-export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[], setClassesPreSignedUrl: (arg: MyCookingClass[]) => void) {
+export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[],setClassesPreSignedUrl: (arg: MyCookingClass[]) => void){
     useEffect(() => {
         const addPreSignedUrl = async () => {
             const updatedClasses = await Promise.all(classes.map(async (item: MyCookingClass) => {
@@ -21,7 +20,8 @@ export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[],
                 return undefined;
             }));
 
-            setClassesPreSignedUrl(updatedClasses.filter((item): item is MyCookingClass => item !== undefined));
+            const preSignedClasses = updatedClasses.filter((item): item is MyCookingClass => item !== undefined)
+            setClassesPreSignedUrl(preSignedClasses);
         };
 
         addPreSignedUrl();

@@ -31,6 +31,7 @@ export const StateContext = createContext<StateContextType>(
     }
 );
 
+//  StateProvider is the Provider itself, which should wrap all components that needs the global states
 export default function StateProvider ({ children }: ChildrenProps) {
     const [keyword, setKeyword] = useState<string>("");
     const [cartQuantity, setCartQuantity] = useState<number>(0);
