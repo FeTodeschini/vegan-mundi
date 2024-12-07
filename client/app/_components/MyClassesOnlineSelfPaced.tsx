@@ -2,7 +2,7 @@ import TokenProvider from '../_components/TokenProvider';
 import { MyCookingClass, Recipe } from '../_types/cooking-class';
 import { ArrayProps } from '../_types/global';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import ReviewDisplay from './ReviewDisplay';
@@ -15,7 +15,7 @@ import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
 import "../_styles/myclasses.css"
 
 
-export default function MyClassesOnlineSelfPaced({classes, dataLoaded}: {classes: MyCookingClass[], dataLoaded: boolean}) {
+export default function MyClassesOnlineSelfPaced({classes}: {classes: MyCookingClass[]}) {
     const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
 
@@ -23,14 +23,22 @@ export default function MyClassesOnlineSelfPaced({classes, dataLoaded}: {classes
     // so the div container height of the ExpandableText will be recalculated
     const [reloadPage, setReloadPage] = useState<{ [key: number]: boolean }>({});
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useGetUnsubmittedReviews()
 
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
-    useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl, );
+    useAddPreSignedUrlToMyClasses(classes, setClassesPreSignedUrl);
 
-    const containerRef = useResponsiveCardRows([dataLoaded]);
-    
-    if (classes.length ===0)
+    const containerRef = useResponsiveCardRows(true);
+
+    useEffect(()=> {
+        setIsLoading(false)
+    },[classesPreSignedUrl])
+
+    if (isLoading) return;
+
+    if (classesPreSignedUrl.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online Self Paced classes yet</p>
     else 
         return (
