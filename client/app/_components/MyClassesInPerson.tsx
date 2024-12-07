@@ -1,19 +1,19 @@
-import { MyCookingClass, Recipe } from '@/_types/cooking-class';
+import { MyCookingClass, Recipe } from '../_types/cooking-class';
 import React, { useContext, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
 import ClassRescheduleDisclaimer from './ClassRescheduleDisclaimer';
-import { useSetClassDate } from '@/hooks/useSetClassDate';
+import { useSetClassDate } from '../hooks/useSetClassDate';
 import { handleSetMyClasstDate } from '@/_lib/myClassesHelper';
-import { StateContext } from '@/StateProvider';
+import { StateContext } from '../StateProvider';
 import ReviewCollector from './ReviewCollector';
 import ReviewDisplay from './ReviewDisplay';
-import useResponsiveCardRows from '@/hooks/useResponsiveCardRows';
+import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
 import { useSelector } from 'react-redux';
-import { useGetUnsubmittedReviews } from '@/hooks/useGetUnsubmittedReviews';
-import { ReduxRootState } from '@/_types/redux';
-import "@/_styles/myclasses.css"
+import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
+import { ReduxRootState } from '../_types/redux';
+import "../_styles/myclasses.css"
 
 export default function MyClassesInPerson({classes}: {classes: MyCookingClass[]}) {
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
