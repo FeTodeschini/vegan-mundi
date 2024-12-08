@@ -6,11 +6,13 @@ import { useRouter } from 'next/navigation';
 import { PrimitiveTypeProp } from "../_types/global";
 
 async function handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>, keyword: string, router: ReturnType<typeof useRouter>) {
+    console.log('onKeyUp triggered');
     if (e.key === "Enter") {
         handleSearch(keyword, router);
     } }
 
 function handleSearch(keyword: string, router: ReturnType<typeof useRouter>){
+    console.log('handleSearch called with:', keyword);
     if (keyword.length > 3) {
         router.push(`/search?keyword=${keyword}`);
     }
