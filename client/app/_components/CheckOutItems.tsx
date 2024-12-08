@@ -32,7 +32,7 @@ export default function CheckoutItems() {
                             <SectionHeader subTitle="Classes in your shopping cart"/>
                             <div className="checkout__summary--items regular-text">
                                 {cartItems.map( item => 
-                                    <div >
+                                    <div key={item.CLASS_ID}>
                                         <p>{item.TITLE}</p>
                                         <p className="regular-text-small">{item.PRICE_TYPE_DESCRIPTION} - ${item.PRICE}</p>
                                     </div>
