@@ -38,7 +38,7 @@ pipeline {
                             chmod 777 package.json
                             chmod -R 777 . 
                             npm cache clean --force
-                            npm install
+                            npm install --omit=dev
                         '''
                     }
                 }
