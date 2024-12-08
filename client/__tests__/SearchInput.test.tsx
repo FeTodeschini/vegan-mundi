@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import user from '@testing-library/user-event';
 import SearchInput from '../app/_components/SearchInput';
 import StateProvider from '../app/StateProvider';
+import { useRouter } from 'next/navigation'; 
 
 // Create a mock router
 jest.mock('next/navigation', () => ({
@@ -14,9 +15,6 @@ const mockPush = jest.fn();
 
 //  Function for rendering SearchInput
 function renderSearchInput() {
-    // Import the mocked useRouter. Require (instead of import) needs to be used to access it dynamically and make sure that the mocked version is returned
-    const { useRouter } = require('next/navigation');
-
     // Mock the behavior of useRouter to return the mock push method
     useRouter.mockReturnValue({ push: mockPush });
 
