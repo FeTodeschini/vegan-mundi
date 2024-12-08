@@ -11,7 +11,7 @@ export default function VideoPlayer() {
     const [isVideoLoaded, setIsVideoLoaded ] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const params = useParams();
-    const videoName = params.videoName.toString();
+    const videoName = params.videoName!.toString();
 
     useEffect(()=>{
         // gets the pre-signed URL required by AWS for accessing private S3 objects
@@ -52,7 +52,9 @@ export default function VideoPlayer() {
     return (
         <div className="video-player">
             <video ref={videoRef} preload="none" controls style={{width: "100vw", height: "100vh"}}>
-                <source src={preSignedUrl} type="video/mp4"></source>
+                {preSignedUrl && (
+                    <source src={preSignedUrl} type="video/mp4" />
+                )}
             </video>
         </div>
     )
