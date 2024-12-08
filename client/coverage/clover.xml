@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1733686696828" clover="3.2.0">
-  <project timestamp="1733686696828" name="All files">
-    <metrics statements="126" coveredstatements="124" conditionals="11" coveredconditionals="10" methods="18" coveredmethods="7" elements="155" coveredelements="141" complexity="0" loc="126" ncloc="126" packages="2" files="2" classes="2"/>
+<coverage generated="1733697501967" clover="3.2.0">
+  <project timestamp="1733697501967" name="All files">
+    <metrics statements="124" coveredstatements="122" conditionals="11" coveredconditionals="10" methods="18" coveredmethods="7" elements="153" coveredelements="139" complexity="0" loc="124" ncloc="124" packages="2" files="2" classes="2"/>
     <package name="app">
       <metrics statements="84" coveredstatements="82" conditionals="3" coveredconditionals="2" methods="12" coveredmethods="1"/>
       <file name="StateProvider.tsx" path="C:\Todeschini\Tech\websites\vegan-mundi\client\app\StateProvider.tsx">
@@ -93,9 +93,9 @@
       </file>
     </package>
     <package name="app._components">
-      <metrics statements="42" coveredstatements="42" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6"/>
+      <metrics statements="40" coveredstatements="40" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6"/>
       <file name="SearchInput.tsx" path="C:\Todeschini\Tech\websites\vegan-mundi\client\app\_components\SearchInput.tsx">
-        <metrics statements="42" coveredstatements="42" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6"/>
+        <metrics statements="40" coveredstatements="40" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -104,19 +104,19 @@
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="19" type="cond" truecount="1" falsecount="0"/>
-        <line num="9" count="19" type="stmt"/>
-        <line num="10" count="19" type="cond" truecount="1" falsecount="0"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="12" count="19" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
+        <line num="9" count="19" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="19" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="3" type="cond" truecount="1" falsecount="0"/>
         <line num="14" count="3" type="cond" truecount="1" falsecount="0"/>
-        <line num="15" count="3" type="stmt"/>
-        <line num="16" count="3" type="cond" truecount="1" falsecount="0"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="19" count="3" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="20" count="20" type="stmt"/>
+        <line num="21" count="20" type="stmt"/>
         <line num="22" count="20" type="stmt"/>
         <line num="23" count="20" type="stmt"/>
         <line num="24" count="20" type="stmt"/>
@@ -126,18 +126,16 @@
         <line num="28" count="20" type="stmt"/>
         <line num="29" count="20" type="stmt"/>
         <line num="30" count="20" type="stmt"/>
-        <line num="31" count="20" type="stmt"/>
-        <line num="32" count="20" type="stmt"/>
-        <line num="33" count="20" type="cond" truecount="1" falsecount="0"/>
+        <line num="31" count="20" type="cond" truecount="1" falsecount="0"/>
+        <line num="32" count="20" type="cond" truecount="1" falsecount="0"/>
+        <line num="33" count="20" type="stmt"/>
         <line num="34" count="20" type="cond" truecount="1" falsecount="0"/>
         <line num="35" count="20" type="stmt"/>
-        <line num="36" count="20" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="20" type="stmt"/>
         <line num="37" count="20" type="stmt"/>
         <line num="38" count="20" type="stmt"/>
         <line num="39" count="20" type="stmt"/>
         <line num="40" count="20" type="stmt"/>
-        <line num="41" count="20" type="stmt"/>
-        <line num="42" count="20" type="stmt"/>
       </file>
     </package>
   </project>
