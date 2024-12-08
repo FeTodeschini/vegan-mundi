@@ -38,19 +38,19 @@ pipeline {
                             chmod 777 package.json
                             chmod -R 777 . 
                             npm cache clean --force
-                            npm install --omit=dev
+                            npm install
                         '''
                     }
                 }
 
-                // stage('Run Jest Unit Tests') {
-                //     steps {
-                //         sh '''
-                //             cd client
-                //             npm test
-                //         '''
-                //     }
-                // }
+                stage('Run Jest Unit Tests') {
+                    steps {
+                        sh '''
+                            cd client
+                            npm test
+                        '''
+                    }
+                }
 
                 stage('Build TEST App') {
                     environment {
