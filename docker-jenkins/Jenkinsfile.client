@@ -37,7 +37,8 @@ pipeline {
                             cd client
                             chmod 777 package.json
                             chmod -R 777 . 
-                            npm install --omit=dev
+                            npm cache clean --force
+                            npm install
                         '''
                     }
                 }
