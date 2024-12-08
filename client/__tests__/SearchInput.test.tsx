@@ -5,18 +5,20 @@ import SearchInput from '../app/_components/SearchInput';
 import StateProvider from '../app/StateProvider';
 import { useRouter } from 'next/navigation'; 
 
-// Create a mock router
-jest.mock('next/navigation', () => ({
-    useRouter: jest.fn(),
-}));
-
 // Create a mock function for the router's push method
 const mockPush = jest.fn();
+
+// Create a mock router
+jest.mock('next/navigation', () => ({
+    useRouter: jest.fn(() => ({
+        push: mockPush,
+    })),
+}));
 
 //  Function for rendering SearchInput
 function renderSearchInput() {
     // Mock the behavior of useRouter to return the mock push method
-    useRouter.mockReturnValue({ push: mockPush });
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
 
     render(
         <StateProvider>
