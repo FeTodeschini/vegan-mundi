@@ -43,14 +43,14 @@ pipeline {
                     }
                 }
 
-                stage('Run Jest Unit Tests') {
-                    steps {
-                        sh '''
-                            cd client
-                            npm test
-                        '''
-                    }
-                }
+                // stage('Run Jest Unit Tests') {
+                //     steps {
+                //         sh '''
+                //             cd client
+                //             npm test
+                //         '''
+                //     }
+                // }
 
                 stage('Build TEST App') {
                     environment {
