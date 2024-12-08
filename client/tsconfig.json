@@ -5,14 +5,11 @@
     "module": "ESNext", /* Specify what module code is generated. */ // "rootDir": "./",                                  /* Specify the root folder within your source files. */
     "baseUrl": ".", /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "@/*": [
-        "./app/*"
-      ], // This points to app files
-      "client/*": [
-        "*"
-      ] // This allows access to StateProvider
+      "@/*": ["./app/*"], // This points to app files
+      "client/*": ["./client/*"] // This allows access to StateProvider
     }, /* Specify a set of entries that re-map imports to additional lookup locations. */ // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "allowJs": true, /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
+    "allowSyntheticDefaultImports": true,
     "checkJs": true, /* Enable error reporting in type-checked JavaScript files. */ // "maxNodeModuleJsDepth": 1,                        /* Specify the maximum folder depth used for checking JavaScript files from 'node_modules'. Only applicable with 'allowJs'. */
     "isolatedModules": true,                             /* Ensure that each file can be safely transpiled without relying on other imports. */// "verbatimModuleSyntax": true,                     /* Do not transform or elide any imports or exports not marked as type-only, ensuring they are written in the output file's format based on the 'module' setting. */
     "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */ // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
@@ -25,6 +22,7 @@
       "esnext"
     ],
     "noEmit": true,
+    "types": ["jest", "node"],
     "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -37,8 +35,9 @@
   "include": [
     "./app/**/*", // Ensure all files in the app directory are included
     "./app/_types/**/*",
-    ".next/types/**/*.ts"
-, "./page.tsx"  ],
+    ".next/types/**/*.ts", "./page.tsx",
+    "./__tests__/**/*"
+  ],
   "exclude": [
     "node_modules"
   ]
