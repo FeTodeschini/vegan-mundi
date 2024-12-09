@@ -3,6 +3,9 @@ build/
 npm-debug.log*
 .env*
 **/package-lock.json
+coverage/
+.swc/
+
 
 # Next.js
 .next
