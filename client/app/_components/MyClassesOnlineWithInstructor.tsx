@@ -1,5 +1,5 @@
 import { MyCookingClass, Recipe } from '../_types/cooking-class';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Card from './Card';
 import MyClassTitle from './MyClassTitle';
 import CustomDatePicker from './CustomDatePicker';
@@ -13,34 +13,74 @@ import { useSelector } from 'react-redux';
 import { ReduxRootState } from '../_types/redux';
 import { useGetUnsubmittedReviews } from '../hooks/useGetUnsubmittedReviews';
 import useResponsiveCardRows from '../hooks/useResponsiveCardRows';
-import "../_styles/myclasses.css"
+import { useRouter } from 'next/navigation';
 import ReviewCollector from './ReviewCollector';
+import { enumDeliveryMethods } from '@/_lib/enums';
+import { fetchMyClasses } from '@/_lib/dataHelper';
+import PaginationBar from './PaginationBar';
+import SkeletonMyClasses from './SkeletonMyClasses';
+import "../_styles/myclasses.css"
 
-export default function MyClassesOnlineWithInstructor({classes}: {classes: MyCookingClass[]}) {
+export default function MyClassesOnlineWithInstructor() {
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [myClasses, setMyClasses] = useState<MyCookingClass[]>([]);
+    const [pageNumber, setPageNumber] = useState<number>(0);
+    const [isTokenValid, setIsTokenValid] = useState(true);
+    const [totalPages, setTotalPages] = useState(0);
+    
     const { classesReview, unsubmittedReviews } = useSelector((state: ReduxRootState)=> state.review)
     
     // Trick to resize page in case the ExpandableText component is being used in a page that uses the useResponsiveCardRows hook
     // so the div container height of the ExpandableText will be recalculated
     const [reloadPage, setReloadPage] = useState<{ [key: number]: boolean }>({});;
 
-    const { userInfo } = useContext(StateContext)
+    const { userInfo, token } = useContext(StateContext)
+
+    const router = useRouter();
+
+    const header = { Authorization: `Bearer ${token}` }
 
     useGetUnsubmittedReviews()
+
+    const fetchData = async (pageNumber: number) => {
+        const params = 
+            userInfo?.email ? { 
+                email: userInfo.email,
+                deliveryMethod: Number(enumDeliveryMethods.ONLINE_WITH_INSTRUCTOR),
+                pageNumber: Number(pageNumber)
+            } : null;
     
+            const totalPages = await fetchMyClasses(setMyClasses, 'classes/user', params, router, header, isTokenValid);
+            return totalPages;
+    }
+
+    useEffect(()=>{
+        const asyncFetchData = async ()=> {
+            const pages = await fetchData(pageNumber);
+            setTotalPages(pages);
+            setIsLoading(false);
+        }
+
+        asyncFetchData();
+    },[pageNumber])
+
     // Create an array with the CLASS_DATE from each cooking class to be displayed in the CustomDatePicker
-    useSetClassDate(classes, setSelectedDates);
+    useSetClassDate(myClasses, setSelectedDates);
 
     const containerRef = useResponsiveCardRows(true);
+
+    if (isLoading) return <SkeletonMyClasses />
     
-    if (classes.length ===0)
+    if (myClasses.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online classes with Instructor yet</p>
     else 
         return (
             <>
                 <ClassRescheduleDisclaimer />
+                <PaginationBar page={pageNumber} onPageChange={setPageNumber} pageNumber={pageNumber} totalPages={totalPages}/>
                 <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-                    {classes.map((item)=>( 
+                    {myClasses.map((item)=>( 
                         <Card additionalClass={"gray-border"} key={item.TITLE}>
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>

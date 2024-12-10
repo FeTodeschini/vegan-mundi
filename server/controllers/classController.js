@@ -1,5 +1,6 @@
 const connectToDb = require('../config/dbConfig');
 const { CustomError } = require('../middlewares/errorHandler');
+const config = require('../config');
 
 const sqlStarsAverage = ` (SELECT TRUNCATE(AVG(STARS),1) FROM REVIEW REV WHERE REV.CLASS_ID = CLS.CLASS_ID GROUP BY CLASS_ID ) AS AVERAGE_STARS, `
 
@@ -192,39 +193,50 @@ async function getUserClasses (req, res, next) {
     let connection;
 
     try {
-        const email = req.query.email || null
+        const email = req.query.email || null;
+        const pageSize = Number(config.pageSize);
+        const deliveryMethod = req.query.deliveryMethod;
+        const offset = Number(req.query.pageNumber) * pageSize;
    
         connection = await connectToDb();
         let query = `SELECT DISTINCT CLS.CATEGORY_ID, CAT.TITLE AS CATEGORY_TITLE, ` +
-                ` OCL.DELIVERY_METHOD_ID, DME.TITLE , OCL.CLASS_DATE, ` +
-                ` CLS.CLASS_ID,   CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO , ` +
-                ` (SELECT CONCAT( ` +
-                `        '[', ` +
-                `        GROUP_CONCAT( ` +
-                `            CONCAT('{"TITLE":"', R.TITLE, '","PHOTO":"', R.PHOTO, '"}') ` +
-                `            SEPARATOR ',' ` +
-                `        ), ` +
-                `        ']') ` +
-                `    FROM RECIPE R ` +
-                `    INNER JOIN CLASS_RECIPE C ON R.RECIPE_ID = C.RECIPE_ID ` +
-                `        AND C.CLASS_ID = CLS.CLASS_ID ` +
-                `    WHERE C.CLASS_ID = CLS.CLASS_ID ` +
-                ` ) AS CLASSES_LIST, ` + 
-                ` REV.STARS , REV.REVIEW_TITLE, REV.REVIEW_TEXT ` +
-                ` FROM CLASS_CATEGORY CAT ` +
-                ` INNER JOIN CLASS CLS ON ` +
-                `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` +
-                `   AND CLS.CLASS_ID IN (SELECT CLASS_ID FROM ORDER_CLASS OCL WHERE EMAIL = ?) ` +
-                ` INNER JOIN ORDER_CLASS OCL ON CLS.CLASS_ID = OCL.CLASS_ID ` +
-                ` 	AND OCL.EMAIL = ? ` +
-                ` INNER JOIN DELIVERY_METHOD DME ON OCL.DELIVERY_METHOD_ID = DME.ID ` + 
-                ` LEFT JOIN REVIEW REV ON CLS.CLASS_ID = REV.CLASS_ID AND REV.EMAIL = ?`
+                        ` OCL.DELIVERY_METHOD_ID, DME.TITLE , OCL.CLASS_DATE, ` +
+                        ` CLS.CLASS_ID, CLS.TITLE, CLS.DESCRIPTION, CLS.PHOTO, ` +
+                        ` (SELECT CONCAT( ` +
+                        `        '[', ` +
+                        `        GROUP_CONCAT( ` +
+                        `            CONCAT('{"TITLE":"', R.TITLE, '","PHOTO":"', R.PHOTO, '"}') ` +
+                        `            SEPARATOR ',' ` +
+                        `        ), ` +
+                        `        ']') ` +
+                        `    FROM RECIPE R ` +
+                        `    INNER JOIN CLASS_RECIPE C ON R.RECIPE_ID = C.RECIPE_ID ` +
+                        `        AND C.CLASS_ID = CLS.CLASS_ID ` +
+                        `    WHERE C.CLASS_ID = CLS.CLASS_ID ` +
+                        ` ) AS CLASSES_LIST, ` + 
+                        `   REV.STARS , REV.REVIEW_TITLE, REV.REVIEW_TEXT, ` +
+                        `   COUNT(*) OVER() AS TOTAL_RECORDS ` +
+                        ` FROM CLASS_CATEGORY CAT ` +
+                        ` INNER JOIN CLASS CLS ON ` +
+                        `   CAT.CATEGORY_ID = CLS.CATEGORY_ID ` +
+                        `   AND CLS.CLASS_ID IN (SELECT CLASS_ID FROM ORDER_CLASS OCL WHERE EMAIL = ?) ` +
+                        ` INNER JOIN ORDER_CLASS OCL ON CLS.CLASS_ID = OCL.CLASS_ID ` +
+                        ` 	AND OCL.EMAIL = ? ` +
+                        ` INNER JOIN DELIVERY_METHOD DME ON ` +
+                        `   OCL.DELIVERY_METHOD_ID = DME.ID ` + 
+                        `   AND DME.ID  = ? ` +
+                        ` LEFT JOIN REVIEW REV ON CLS.CLASS_ID = REV.CLASS_ID AND REV.EMAIL = ?` + 
+                        ` LIMIT ? OFFSET ? `
 
         // result needs to be destructured as mysql2/promise returns 2 items: the rows themselves plus metadata about the result
-        const [result] = await connection.query(query, [email, email, email]);
-        // In the old version of this API using mysql.createConnection (single connection), the whole data returned by the db was stored in result 
-        // Now that mysql2/promises wth createPool is being used, it is necessary to add the "top level" of the db return to result (categoryTitle and classes)
-        res.send(result);
+        const [result] = await connection.query(query, [email, email, deliveryMethod, email, pageSize, offset]);
+        const totalRecords = result.length > 0 ? result[0].TOTAL_RECORDS : 0;
+        const totalPages = Math.ceil(totalRecords / pageSize);
+
+        res.send({
+            data: result,
+            totalPages
+        });
     } catch (err) {
         next(new CustomError(err.message, 500));
     }

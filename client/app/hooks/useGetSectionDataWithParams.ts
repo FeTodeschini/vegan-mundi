@@ -19,7 +19,7 @@ export function useGetSectionDataWithParams<T extends SectionData>(
     const router = useRouter();
     // Fetch from the database the data for the landing page section received as an input parameter
     useEffect( ()=> {
-        // Fetches data only if there is no token provided (route is not protected) or, if a token was provided, if  is valid/not expired (protected route)
+        // Fetches data only if there is no token provided (route is not protected) or, if a token was provided, if it is valid/not expired (protected route)
         if (params && (isTokenValid === undefined || isTokenValid)) {
             getSectionDataWithParams(setSectionData, apiEndpoint, params, header)
         }
