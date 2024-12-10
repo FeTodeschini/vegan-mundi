@@ -1,0 +1,29 @@
+.pagination-bar {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagination-bar__navigation {
+    margin-top: 2rem;
+    display: flex;
+}
+
+.pagination-bar__navigation-button {
+    width: 4rem !important;
+    height: 4rem !important;
+    color: var(--color-primary-dark);
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-bar__navigation-button--active,
+.pagination-bar__navigation-button:hover {
+    background-color: var(--color-primary-light);
+    border-radius: 50%;
+}
