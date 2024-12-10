@@ -5,6 +5,7 @@ import { MyCookingClass } from '../_types/cooking-class';
 export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[],setClassesPreSignedUrl: (arg: MyCookingClass[]) => void){
     useEffect(() => {
         const addPreSignedUrl = async () => {
+            console.log('Called useAddPreSignedUrlToMyClasses Self-Paced')
             const updatedClasses = await Promise.all(classes.map(async (item: MyCookingClass) => {
                 if (item.CLASSES_LIST) {
                     const recipes = JSON.parse(item.CLASSES_LIST);
@@ -21,6 +22,7 @@ export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[],
             }));
 
             const preSignedClasses = updatedClasses.filter((item): item is MyCookingClass => item !== undefined)
+            console.log('Executed useAddPreSignedUrlToMyClasses Self-Paced')
             setClassesPreSignedUrl(preSignedClasses);
         };
 

@@ -12,7 +12,7 @@ export type ArrayProps<T> = {
 };
 
 export type ObjectProperty = {
-    [key: string]: string;
+    [key: string]: string | number;
 };
 
 export type Setter<T> = (value: T | ((prevState: T) => T)) => void;

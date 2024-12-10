@@ -10,3 +10,11 @@ export const enumSkeletonShapes = {
     CLASS_DESCRIPTION: 3,
     SINGLE_LINE_HALF: 4
 };
+
+export const enumPagination = {
+    FIRST_PAGE: 0,
+    PREVIOUS_PAGE: 1,
+    NEXT_PAGE: 2,
+    SPECIFIC_PAGE: 3,
+    LAST_PAGE: 4
+};
