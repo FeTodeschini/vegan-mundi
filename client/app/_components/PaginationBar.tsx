@@ -45,8 +45,8 @@ const PaginationBar = ({page, onPageChange, pageNumber, totalPages}:{page: numbe
             <div className="pagination-bar">        
                 <span className="heading-tertiary">Showing page {page + 1} of {totalPages}</span>
                 <div className="pagination-bar__navigation">
-                    <span className="pagination-bar__navigation-button" onClick={()=>handlePageChange(enumPagination.FIRST_PAGE)}>&lt;&lt;</span>
-                    <span className="pagination-bar__navigation-button" onClick={()=>handlePageChange(enumPagination.PREVIOUS_PAGE)}>&lt;</span>
+                    <span className="pagination-bar__navigation-button--medium" onClick={()=>handlePageChange(enumPagination.FIRST_PAGE)}>&lt;&lt; First</span>
+                    <span className="pagination-bar__navigation-button--medium" onClick={()=>handlePageChange(enumPagination.PREVIOUS_PAGE)}>&lt; Previous</span>
                     {
                         pageNumbers.map((number)=>(
                             <span
@@ -57,8 +57,8 @@ const PaginationBar = ({page, onPageChange, pageNumber, totalPages}:{page: numbe
                             </span>
                         ))
                     }
-                    <span className="pagination-bar__navigation-button" onClick={()=>handlePageChange(enumPagination.NEXT_PAGE)}>&gt;</span>
-                    <span className="pagination-bar__navigation-button" onClick={()=>handlePageChange(enumPagination.LAST_PAGE)}>&gt;&gt;</span>
+                    <span className="pagination-bar__navigation-button--medium" onClick={()=>handlePageChange(enumPagination.NEXT_PAGE)}>Next &gt;</span>
+                    <span className="pagination-bar__navigation-button--medium" onClick={()=>handlePageChange(enumPagination.LAST_PAGE)}>Last &gt;&gt;</span>
                 </div>
             </div>
     )

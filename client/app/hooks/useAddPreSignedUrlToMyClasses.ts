@@ -22,11 +22,10 @@ export default function useAddPreSignedUrlToMyClasses(classes: MyCookingClass[],
             }));
 
             const preSignedClasses = updatedClasses.filter((item): item is MyCookingClass => item !== undefined)
-            console.log('Executed useAddPreSignedUrlToMyClasses Self-Paced')
             setClassesPreSignedUrl(preSignedClasses);
         };
 
-        addPreSignedUrl();
+        if (classes) addPreSignedUrl();
 
     }, [classes]);
 }

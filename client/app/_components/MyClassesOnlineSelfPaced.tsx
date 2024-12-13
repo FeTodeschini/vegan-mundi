@@ -24,9 +24,9 @@ export default function MyClassesOnlineSelfPaced() {
     // Trick to resize page in case the ExpandableText component is being used in a page that uses the useResponsiveCardRows hook
     // so the div container height of the ExpandableText will be recalculated
     const [reloadPage, setReloadPage] = useState<{ [key: number]: boolean }>({});
-    const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]>([]);
+    const [classesPreSignedUrl, setClassesPreSignedUrl] = useState<MyCookingClass[]|null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [myClasses, setMyClasses] = useState<MyCookingClass[]>([]);
+    const [myClasses, setMyClasses] = useState<MyCookingClass[]|null>(null);
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [isTokenValid, setIsTokenValid] = useState(true);
     const [totalPages, setTotalPages] = useState(0);
@@ -64,18 +64,17 @@ export default function MyClassesOnlineSelfPaced() {
     },[pageNumber, userInfo]) // userInfo was added to the dependency array, so when it is ready, fetchData is called again. Would using promisse.all be a better solution? 
 
     // Fetch MyClasses and also if there is any unsubmitted review in case user reloads the page or change tabs while reviewing a class
-    useAddPreSignedUrlToMyClasses(myClasses, setClassesPreSignedUrl);
+    useAddPreSignedUrlToMyClasses(myClasses!, setClassesPreSignedUrl);
 
     const containerRef = useResponsiveCardRows(true);
 
     useEffect(()=> {
-        setIsLoading(false)
-        console.log("classesPreSignedUrl: ", classesPreSignedUrl)
+        if (classesPreSignedUrl) setIsLoading(false)
     },[classesPreSignedUrl])
 
     if (isLoading) return <SkeletonMyClasses />
 
-    if (classesPreSignedUrl.length ===0)
+    if (classesPreSignedUrl!.length ===0)
         return <p className="regular-text myclasses__nopurchase">You have not purchased any Online Self Paced classes yet</p>
     else 
         return (
@@ -87,7 +86,7 @@ export default function MyClassesOnlineSelfPaced() {
                     totalPages={totalPages}
                 />
                 <div ref={containerRef} className="grid-auto-fit grid-auto-fit--large top-margin--medium">
-                    {classesPreSignedUrl.map((item)=>( 
+                    {classesPreSignedUrl!.map((item)=>( 
                         <Card key={item.TITLE} additionalClass={"gray-border"}>
                             <Card.Title>
                                 <MyClassTitle title={item.TITLE} classId={item.CLASS_ID}/>
