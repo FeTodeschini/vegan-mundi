@@ -1,0 +1,4 @@
+server/
+terraform/
+client/node_modules/
+*.log
