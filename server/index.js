@@ -31,23 +31,38 @@ const accountRouter = require('./routes/accountRouter');
 const orderRouter = require('./routes/orderRouter');
 const reviewRouter = require('./routes/reviewRouter');
 
-// For production and test, starts the server using HTTPS
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
-  // Load SSL certificate and key for HTTPS
-  const privateKey = fs.readFileSync('/etc/letsencrypt/live/veganmundi.com/privkey.pem', 'utf8');
-  const certificate = fs.readFileSync('/etc/letsencrypt/live/veganmundi.com/fullchain.pem', 'utf8');
-  const ca = fs.readFileSync('/etc/letsencrypt/live/veganmundi.com/chain.pem', 'utf8');
+// In production and test, server HTTPS is used. Locally, HTTP is used
+const PORT = process.env.PORT || 4000;
 
-  // Create an HTTPS service
-  const credentials = { key: privateKey, cert: certificate, ca: ca };
-  https.createServer(credentials, app).listen(4000, () => {
-    console.log('Server listening on https://localhost:4000');
-  });
+// Certificate handling:
+// - Production: as the app is hosted on Render.com, certificate is managed by Render itself
+// - Test: Certificate is hosted on disk for test environment (VPS)
+// - Local: No certificate. HTTP is used
+const isRender = process.env.RENDER === 'true';
+
+const certPath = '/etc/letsencrypt/live/veganmundi.com/fullchain.pem';
+const keyPath = '/etc/letsencrypt/live/veganmundi.com/privkey.pem';
+
+if (!isRender && fs.existsSync(certPath) && fs.existsSync(keyPath)) {
+    try {
+        const credentials = {
+            key: fs.readFileSync(keyPath, 'utf8'),
+            cert: fs.readFileSync(certPath, 'utf8'),
+            ca: fs.readFileSync('/etc/letsencrypt/live/veganmundi.com/chain.pem', 'utf8')
+        };
+        
+        https.createServer(credentials, app).listen(PORT, '0.0.0.0', () => {
+            console.log(`[TEST ENVIRONMENT] Server running with manual SSL on port ${PORT}`);
+        });
+    } catch (err) {
+        console.error("SSL failed, falling back to HTTP:", err.message);
+        startHttp();
+    }
 } else {
-  // For local environment (development), uses HTTP
-  app.listen(4000, () => {
-    console.log('Server listening on http://localhost:4000');
-  });
+    app.listen(PORT, '0.0.0.0', () => {
+        const envName = process.env.NODE_ENV || 'development';
+        console.log(`[${envName.toUpperCase()} ENVIRONMENT] Server listening on port ${PORT}`);
+    });
 }
 
 app.use('/prices', priceRouter);
