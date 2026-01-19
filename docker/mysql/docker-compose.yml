@@ -1,0 +1,30 @@
+services:
+  # PRODUCTION ENVIRONMENT
+  db-prod:
+    image: mysql:8.0
+    container_name: mysql-prod
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_PROD}
+      MYSQL_DATABASE: vegan-mundi
+    ports:
+      - "3306:3306"
+    volumes:
+      # This is the folder in the EBS volume that stores prod data
+      - /mnt/database-data/prod:/var/lib/mysql
+    command: --performance_schema=OFF # Saves ~100MB RAM
+
+  # TESTING ENVIRONMENT
+  db-test:
+    image: mysql:8.0
+    container_name: mysql-test
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_TEST}
+      MYSQL_DATABASE: vegan-mundi
+    ports:
+      - "3307:3306" # External 3307 -> Internal 3306
+    volumes:
+      # This is the folder in the EBS volume that stores test data
+      - /mnt/database-data/test:/var/lib/mysql
+    command: --performance_schema=OFF

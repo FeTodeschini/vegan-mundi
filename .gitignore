@@ -5,6 +5,7 @@ npm-debug.log*
 **/package-lock.json
 coverage/
 .swc/
+bat/
 
 
 # Next.js
