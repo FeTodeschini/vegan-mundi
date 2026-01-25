@@ -1,17 +1,19 @@
-node_modules/
-build/
-npm-debug.log*
 .env*
-**/package-lock.json
-coverage/
-.swc/
 bat/
+build/
+coverage/
+db/dump/*.sql
+node_modules/
+npm-debug.log*
+**/package-lock.json
+.swc/
+
 
 
 # Next.js
 .next
-next-env.d.ts
 dist
+next-env.d.ts
 
 # Terraform
 terraform/*terraform*
