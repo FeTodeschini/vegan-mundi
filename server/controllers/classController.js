@@ -100,7 +100,7 @@ async function getCategories (req, res, next) {
 
     try {
         connection = await connectToDb();
-        const query = 'SELECT * FROM CLASS_CATEGORY WHERE CATEGORY_ID IN (1, 2, 3) ORDER BY DISPLAY_ORDER';
+        const query = 'SELECT * FROM CLASS_CATEGORY WHERE CATEGORY_ID IN (2, 3, 4) ORDER BY DISPLAY_ORDER';
         // result needs to be destructured as mysql2/promise returns 2 items: the rows themselves plus metadata about the result
         const [result] = await connection.query(query);
         res.send(result);
