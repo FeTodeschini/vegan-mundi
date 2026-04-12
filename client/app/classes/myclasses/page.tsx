@@ -1,18 +1,17 @@
 'use client'
 
 import { useContext, useEffect, useMemo, useState } from 'react';
-import SectionHeader from '../../_components/SectionHeader';
-import TokenProvider from '../../_components/TokenProvider';
-import MyClassesOnlineSelfPaced from '../../_components/MyClassesOnlineSelfPaced';
-import MyClassesInPerson from '../../_components/MyClassesInPerson';
-import MyClassesOnlineWithInstructor from '../../_components/MyClassesOnlineWithInstructor';
+import SectionHeader from '../../_components/common-ui/SectionHeader';
+import TokenProvider from '../../_components/token/TokenProvider';
+import MyClassesOnlineSelfPaced from '../../_components/classes/MyClassesOnlineSelfPaced';
+import MyClassesInPerson from '../../_components/classes/MyClassesInPerson';
+import MyClassesOnlineWithInstructor from '../../_components/classes/MyClassesOnlineWithInstructor';
 import { StateContext } from '../../StateProvider';
 import { MyCookingClass } from '../../_types/cooking-class';
-import Tabs from '../../_components/Tabs';
-import Tab from '../../_components/Tab';
-import Button from '../../_components/Button';
+import Tabs from '../../_components/common-ui/Tabs';
+import Tab from '../../_components/common-ui/Tab';
+import Button from '../../_components/common-ui/Button';
 import useCheckTokenExpiration from '../../hooks/useCheckTokenExpiration';
-import SkeletonMyClasses from '../../_components/SkeletonMyClasses';
 import '../../_styles/main.css';
 
 export default function Page() {

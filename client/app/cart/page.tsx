@@ -2,10 +2,10 @@
 
 import { useContext, useEffect } from "react";
 import { StateContext } from "../StateProvider";
-import SeactionHeader from '../_components/SectionHeader';
-import Button from "../_components/Button";
-import ButtonRemoveFromCart from "../_components/ButtonRemoveFromCart";
-import Card from "../_components/Card"
+import SeactionHeader from '../_components/common-ui/SectionHeader';
+import Button from "../_components/common-ui/Button";
+import ButtonRemoveFromCart from "../_components/common-ui/ButtonRemoveFromCart";
+import Card from "../_components/card/Card"
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from "react-redux";

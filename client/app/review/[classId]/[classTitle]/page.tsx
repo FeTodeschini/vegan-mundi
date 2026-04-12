@@ -7,7 +7,7 @@ import SectionHeader from '../../../_components/SectionHeader';
 import Button from '../../../_components/Button';
 import Card from '../../../_components/Card';
 import { Review } from '../../../_types/review';
-import ReviewStarsContainer from '../../../_components/ReviewStarsContainer';
+import ReviewStarsContainer from '../../../_components/review/ReviewStarsContainer';
 import '../../../_styles/main.css';
 import '../../../_styles/review.css';
 

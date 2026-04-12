@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useState, useEffect, useContext } from "react";
 import { StateContext } from "../StateProvider";
 import { useAddPreSignedUrlToArray } from "../hooks/useAddPreSignedUrlToArray";
-import FilteredClasses from "../_components/FilteredClasses";
+import FilteredClasses from "../_components/classes/FilteredClasses";
 import config from "../_lib/config";
 import { CookingClass } from '../_types/cooking-class'
 import '../_styles/main.css';

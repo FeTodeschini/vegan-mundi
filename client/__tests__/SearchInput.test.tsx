@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import user from '@testing-library/user-event';
-import SearchInput from '../app/_components/SearchInput';
+import SearchInput from '../app/_components/search/SearchInput';
 import StateProvider from '../app/StateProvider';
 import { useRouter } from 'next/navigation'; 
 
