@@ -1,5 +1,3 @@
-import Tab from "./Tab"
-import Tabs from "./Tabs"
 import 'react-loading-skeleton/dist/skeleton.css';
 import SkeletonMyClass from "./SkeletonMyClass";
 
