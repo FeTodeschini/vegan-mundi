@@ -10,7 +10,6 @@ import { ReduxRootState } from '../../_types/redux';
 import useAddPreSignedUrlToMyClasses from '../../hooks/useAddPreSignedUrlToMyClasses';
 import { useGetUnsubmittedReviews } from '../../hooks/useGetUnsubmittedReviews';
 import useResponsiveCardRows from '../../hooks/useResponsiveCardRows';
-import "../../_styles/myclasses.css"
 import { StateContext } from '@/StateProvider';
 import useCheckTokenExpiration from '@/hooks/useCheckTokenExpiration';
 import { fetchMyClasses } from '@/_lib/dataHelper';

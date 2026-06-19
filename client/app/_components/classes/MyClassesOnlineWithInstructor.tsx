@@ -19,7 +19,6 @@ import { enumDeliveryMethods } from '@/_lib/enums';
 import { fetchMyClasses } from '@/_lib/dataHelper';
 import PaginationBar from '../common-ui/PaginationBar';
 import SkeletonMyClasses from '../skeleton/SkeletonMyClass';
-import "../../_styles/myclasses.css"
 
 export default function MyClassesOnlineWithInstructor() {
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});

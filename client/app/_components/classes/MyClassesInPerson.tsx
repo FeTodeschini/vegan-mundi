@@ -19,7 +19,6 @@ import useCheckTokenExpiration from '@/hooks/useCheckTokenExpiration';
 import PaginationBar from '../common-ui/PaginationBar';
 import { fetchMyClasses } from '@/_lib/dataHelper';
 import SkeletonMyClasses from '../skeleton/SkeletonMyClasses';
-import "../../_styles/myclasses.css"
 
 export default function MyClassesInPerson() {
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});

@@ -13,6 +13,7 @@ import Tab from '../../_components/common-ui/Tab';
 import Button from '../../_components/common-ui/Button';
 import useCheckTokenExpiration from '../../hooks/useCheckTokenExpiration';
 import '../../_styles/main.css';
+import '../../_styles/myclasses.css';
 
 export default function Page() {
 
