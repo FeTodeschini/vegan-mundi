@@ -15,8 +15,8 @@ import { StateContext } from '@/StateProvider';
 import useCheckTokenExpiration from '@/hooks/useCheckTokenExpiration';
 import { fetchMyClasses } from '@/_lib/dataHelper';
 import { enumDeliveryMethods } from '@/_lib/enums';
-import PaginationBar from '../PaginationBar';
-import SkeletonMyClasses from '../SkeletonMyClasses';
+import PaginationBar from '../common-ui/PaginationBar';
+import SkeletonMyClasses from '../skeleton/SkeletonMyClasses';
 import { useRouter } from 'next/navigation';
 
 

@@ -1,8 +1,8 @@
 import { MyCookingClass, Recipe } from '../../_types/cooking-class';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Card from './Card';
+import Card from '../card/Card';
 import MyClassTitle from './MyClassTitle';
-import CustomDatePicker from '../CustomDatePicker';
+import CustomDatePicker from '../common-ui/CustomDatePicker';
 import ClassRescheduleDisclaimer from './ClassRescheduleDisclaimer';
 import { useSetClassDate } from '../../hooks/useSetClassDate';
 import { handleSetMyClasstDate } from '../../_lib/myClassesHelper';
@@ -16,10 +16,10 @@ import { ReduxRootState } from '../../_types/redux';
 import { useRouter } from 'next/navigation';
 import { enumDeliveryMethods } from '@/_lib/enums';
 import useCheckTokenExpiration from '@/hooks/useCheckTokenExpiration';
-import PaginationBar from '../PaginationBar';
+import PaginationBar from '../common-ui/PaginationBar';
 import { fetchMyClasses } from '@/_lib/dataHelper';
-import SkeletonMyClasses from '../SkeletonMyClasses';
-import "../_styles/myclasses.css"
+import SkeletonMyClasses from '../skeleton/SkeletonMyClasses';
+import "../../_styles/myclasses.css"
 
 export default function MyClassesInPerson() {
     const [selectedDates, setSelectedDates] = useState<{ [key: number]: Date | null }>({});
