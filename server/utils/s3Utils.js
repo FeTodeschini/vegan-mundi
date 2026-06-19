@@ -4,7 +4,8 @@ async function generatePreSignedUrl({ bucket, key }) {
     const { GetObjectCommand, S3Client } = require("@aws-sdk/client-s3");
     const { getSignedUrl }  = require("@aws-sdk/s3-request-presigner");
   
-    // No need to pass the object with the region and the credentials to the S3 as this parameters were configured in AWS CLI by running the AWS CONFIGURE command in both the EC2 instance and the dev environment
+    // Credentials and region are resolved from the runtime environment (for example Render env vars/IAM),
+    // so S3Client can rely on the default AWS SDK provider chain.
     const client = new S3Client();
     const command = new GetObjectCommand({ Bucket: bucket, Key: key });
     const url = (await getSignedUrl(client, command));
