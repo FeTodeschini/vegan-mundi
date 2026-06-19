@@ -3,9 +3,9 @@
 import { useGetSectionDataWithParams } from '../../../hooks/useGetSectionDataWithParams';
 import { useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
-import SectionHeader from '../../../_components/SectionHeader';
-import Button from '../../../_components/Button';
-import Card from '../../../_components/Card';
+import SectionHeader from '../../../_components/common-ui/SectionHeader';
+import Button from '../../../_components/common-ui/Button';
+import Card from '../../../_components/card/Card';
 import { Review } from '../../../_types/review';
 import ReviewStarsContainer from '../../../_components/review/ReviewStarsContainer';
 import '../../../_styles/main.css';
