@@ -1,6 +1,6 @@
 import { enumPagination } from "@/_lib/enums";
-import config from '../_lib/config';
-import '../_styles/pagination.css';
+import config from '../../_lib/config';
+import '../../_styles/pagination.css';
 import { useState } from "react";
 
 const PaginationBar = ({page, onPageChange, pageNumber, totalPages}:{page: number, onPageChange: React.Dispatch<React.SetStateAction<number>>, pageNumber: number, totalPages: number}) => {

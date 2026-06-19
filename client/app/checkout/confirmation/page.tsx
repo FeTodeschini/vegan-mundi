@@ -2,9 +2,9 @@
 
 import { useContext } from "react";
 import { StateContext } from "../../StateProvider";
-import SectionHeader from "../../_components/SectionHeader";
+import SectionHeader from "../../_components/common-ui/SectionHeader";
 import Link from "next/link";
-import Button from "../../_components/Button";
+import Button from "../../_components/common-ui/Button";
 
 export default function Page () {
     const { error, userInfo, orderNumber  } = useContext(StateContext)

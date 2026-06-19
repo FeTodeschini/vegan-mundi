@@ -1,5 +1,5 @@
 import ReviewStarsContainer from "./ReviewStarsContainer";
-import ExpandableText from "../ExpandableText";
+import ExpandableText from "../common-ui/ExpandableText";
 import { Dispatch, SetStateAction } from "react";
 
 export default function ReviewDisplay({stars, reviewTitle, reviewText, setReloadPage, itemIndex}: 

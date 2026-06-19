@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import SectionHeader from './SectionHeader';
-import { SelectedCookingClassWithPrices } from '../_types/cooking-class';
+import SectionHeader from '../common-ui/SectionHeader';
+import { SelectedCookingClassWithPrices } from '../../_types/cooking-class';
 import { useSelector } from 'react-redux';
-import { ReduxRootState } from '../_types/redux';
-import '../_styles/form.css';
-import '../_styles/layout.css';
+import { ReduxRootState } from '../../_types/redux';
+import '../../_styles/form.css';
+import '../../_styles/layout.css';
 
 export default function CheckoutItems() {
 

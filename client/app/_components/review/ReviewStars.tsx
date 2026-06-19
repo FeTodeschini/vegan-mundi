@@ -5,7 +5,7 @@ import { StateContext } from "../../StateProvider";
 import StarFull from "./StarFull";
 import StarEmpty from "./StarEmpty";
 import { PrimitiveTypeProp } from "../../_types/global";
-import "../_styles/review.css";
+import "../../_styles/review.css";
 
 export default function ReviewStars({classId, pendingStars}: {classId: number | null, pendingStars: number | null}) {
   const [stars, setStars] = useState(0);
