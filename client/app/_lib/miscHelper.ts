@@ -1,9 +1,27 @@
 import config from './config';
 
 export async function getPrices() {
+    const url = `${config.serverEndpoint}prices`;
+    let attempts = 0;
+    let data: unknown = [];
 
-    var data = await fetch(`${config.serverEndpoint}prices`);
-    data = await data.json();
+    // Java-mode services may still be warming up when the first SSR request hits.
+    while (attempts < 3) {
+        try {
+            const response = await fetch(url, { cache: 'no-store' });
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
+            data = await response.json();
+            break;
+        } catch {
+            attempts += 1;
+            if (attempts >= 3) {
+                return [];
+            }
+            await new Promise((resolve) => setTimeout(resolve, 250));
+        }
+    }
 
     // Because of Typescript, it is necessary to check if data is an array
     if (Array.isArray(data) && data.length > 0) {
