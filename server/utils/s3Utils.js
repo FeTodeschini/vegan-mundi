@@ -6,10 +6,10 @@ async function generatePreSignedUrl({ bucket, key }) {
   
     // Credentials and region are resolved from the runtime environment (for example Render env vars/IAM),
     // so S3Client can rely on the default AWS SDK provider chain.
-    const client = new S3Client();
+    const client = new S3Client({ region: process.env.AWS_REGION });
     const command = new GetObjectCommand({ Bucket: bucket, Key: key });
     const url = (await getSignedUrl(client, command));
-    return JSON.stringify(url);
+    return url;
   }
 
   module.exports = generatePreSignedUrl;
