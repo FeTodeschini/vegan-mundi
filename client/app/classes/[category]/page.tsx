@@ -4,13 +4,13 @@ import axios from "axios";
 import { useState, useEffect, useContext, useMemo } from "react";
 import { useParams } from 'next/navigation'
 import { useAddPreSignedUrlToArray } from "../../hooks/useAddPreSignedUrlToArray";
-import FilteredClasses from "../../_components/FilteredClasses";
+import FilteredClasses from "../../_components/classes/FilteredClasses";
 import useSetToken from "../../hooks/useSetToken";
 import { CookingClass } from "../../_types/cooking-class"
 import config from "../../_lib/config";
 import { StateContext } from "../../StateProvider";
 import '../../_styles/main.css';
-import "../../_styles/card.css";
+import '../../_styles/card.css';
 import '../../_styles/review.css';
 
 export default function CategoryClasses(){

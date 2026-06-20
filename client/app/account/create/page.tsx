@@ -4,12 +4,12 @@ import { FormEvent, useContext, useEffect, useRef } from "react";
 import { StateContext } from "../../StateProvider";
 import axios from "axios";
 
-import SuccessMessage from "../../_components/SuccessMessage";
-import ErrorMessage from "../../_components/ErrorMessage";
+import SuccessMessage from "../../_components/common-ui/SuccessMessage";
+import ErrorMessage from "../../_components/common-ui/ErrorMessage";
 import { useFocus } from "../../hooks/useFocus";
-import Logo from "../../_components/Logo";
-import SectionHeader from "../../_components/SectionHeader";
-import Button from "../../_components/Button";
+import Logo from "../../_components/header/Logo";
+import SectionHeader from "../../_components/common-ui/SectionHeader";
+import Button from "../../_components/common-ui/Button";
 
 import config from "../../_lib/config";
 import "../../_styles/form.css";   

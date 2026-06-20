@@ -4,14 +4,14 @@ variable "region" {
   default     = "us-east-2"
 }
 
-variable "DB_USER_NAME" {
-  description = "The user name for the RDS database"
-  type        = string
-  sensitive   = false
+variable "media_bucket_names" {
+  description = "S3 bucket names used for media assets (thumbnails, gallery, videos)."
+  type        = list(string)
+  default     = ["vegan-mundi-thumbnails", "vegan-mundi-gallery", "vegan-mundi-videos"]
 }
 
-variable "DB_PASSWORD" {
-  description = "The password for the RDS database"
-  type        = string
-  sensitive   = true
+variable "force_destroy_media_buckets" {
+  description = "When true, bucket objects are removed on destroy. Keep false for safety in shared environments."
+  type        = bool
+  default     = false
 }

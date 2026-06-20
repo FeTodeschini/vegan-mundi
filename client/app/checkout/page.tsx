@@ -1,9 +1,9 @@
 'use client';
 
-import Button from "../_components/Button";
+import Button from "../_components/common-ui/Button";
 import { FormEvent, useContext, useState } from "react";
-import CheckoutItems from "../_components/CheckOutItems";
-import SectionHeader from "../_components/SectionHeader";
+import CheckoutItems from "../_components/checkout/CheckOutItems";
+import SectionHeader from "../_components/common-ui/SectionHeader";
 import { useRouter } from "next/navigation";
 import { StateContext } from "../StateProvider";
 import { emptyCart } from "../redux/slices/cartSlice";

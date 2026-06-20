@@ -1,0 +1,38 @@
+import SectionHeader from '../common-ui/SectionHeader';
+import Button from "../common-ui/Button";
+import Card from '../card/Card';
+import { CookingClassDeliveryMethods } from '../../_types/cooking-class';
+import { ArrayProps } from '../../_types/global';
+
+export default function DeliveryMethods({ deliveryMethods }: ArrayProps<CookingClassDeliveryMethods>) {
+
+    return (
+            <section className="delivery-methods container">
+                <SectionHeader 
+                    title="Learn in your preferred environment" 
+                    subTitle="Different Delivery Methods"/>
+
+                <div className="grid-auto-fit grid-auto-fit--wide-items">
+                    {
+                        // Line that had to be added after Typescript implementation
+                        Array.isArray(deliveryMethods) && deliveryMethods.length > 0 && (
+                            deliveryMethods.map((item)=>
+                                // Line that hadd to be added after Typescript implementation to check if item is SectionDataDeliveryMethods and assert its type
+                                item && "ICON" in item ? (
+                                    <Card key={item.TITLE}>
+                                        <Card.Title>
+                                            {<div className="align-items-flex--c">
+                                                <img src={`/assets/${item.ICON}`} alt="In Person Classes" className="icon-medium" />{item.TITLE}
+                                            </div>}
+                                        </Card.Title>
+                                        <Card.Content>{item.DESCRIPTION}</Card.Content>                                        
+                                        <Button >Learn More &rarr;</Button>
+                                    </ Card>
+                                ) : null
+                            )
+                        )
+                    }
+                </div>
+            </section>
+    )
+}
