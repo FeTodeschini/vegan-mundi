@@ -10,19 +10,21 @@ import { getPrices } from "../_lib/miscHelper";
 import config from '../_lib/config';
 import axios from "axios";
 
+async function getSectionArray(endpoint: string) {
+    try {
+        const response = await axios.get(`${config.serverEndpoint}${endpoint}`);
+        return Array.isArray(response.data) ? response.data : [];
+    } catch {
+        return [];
+    }
+}
 
 export default async function LandingPage (){
 
-    // Fetch data for SSG (Static Site Generation) components
-    let response;
-
-    const prices = await getPrices()
-
-    response = await axios.get(`${config.serverEndpoint}delivery-methods`);
-    const deliveryMethods = response.data;
-
-    response = await axios.get(`${config.serverEndpoint}classes/categories`);
-    const categories = response.data;
+    // Fetch data for SSG components; fail open during backend switchovers.
+    const prices = await getPrices();
+    const deliveryMethods = await getSectionArray('delivery-methods');
+    const categories = await getSectionArray('classes/categories');
     
     return (
         <>

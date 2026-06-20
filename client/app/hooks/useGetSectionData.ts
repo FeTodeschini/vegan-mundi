@@ -5,6 +5,13 @@ import axios from "axios";
 import config from '../_lib/config';
 import { SectionData } from "../_types/section-data"
 
+const SECTION_FETCH_RETRIES = 5;
+const SECTION_FETCH_DELAY_MS = 350;
+
+async function delay(ms: number) {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export function useGetSectionData<T extends SectionData>(
         setSectionData: (data: T[]) => void, 
         apiEndpoint: string,
@@ -20,25 +27,31 @@ export function useGetSectionData<T extends SectionData>(
 
     async function getSectionData(setSectionData: (data: T[]) => void, apiEndpoint: string, params: {} | null) {
 
-        let response;
+        const apiParams = params ? { params } : {};
+        const apiUrl = `${config.serverEndpoint}${apiEndpoint}`;
 
-        try {
-            const apiParams = params ? { params } : {};
-            let apiUrl = `${config.serverEndpoint}${apiEndpoint}`
-            
-            // The API being called may or may not have parameters
-            if (Object.keys(apiParams).length === 0)
-                response = await axios.get(apiUrl);
-            else
-                response = await axios.get(apiUrl, apiParams);
+        for (let attempt = 1; attempt <= SECTION_FETCH_RETRIES; attempt += 1) {
+            try {
+                const response = Object.keys(apiParams).length === 0
+                    ? await axios.get(apiUrl)
+                    : await axios.get(apiUrl, apiParams);
 
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            throw error;
+                if (response && Array.isArray(response.data)) {
+                    setSectionData([...response.data]);
+                    return;
+                }
+
+                setSectionData([]);
+                return;
+            } catch (error) {
+                if (attempt === SECTION_FETCH_RETRIES) {
+                    console.error("Error fetching data:", error);
+                    setSectionData([]);
+                    return;
+                }
+
+                await delay(SECTION_FETCH_DELAY_MS * attempt);
+            }
         }
-
-        if (response && response.data) {
-            setSectionData([...response.data]);
-        }        
     }
 }
